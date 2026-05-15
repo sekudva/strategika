@@ -1,0 +1,4 @@
+package presets
+
+// masochist
+// sadist
