@@ -3,7 +3,7 @@ package presets
 import "github.com/sekudva/strategika/internal/domain"
 
 // original logic tit-for-tat: with only share/take
-func Tit_for_Tat() *domain.Strategy {
+func TitForTat() *domain.Strategy {
 	nice := domain.MirrorNice
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
@@ -15,13 +15,30 @@ func Tit_for_Tat() *domain.Strategy {
 	}
 }
 
-// tit-for-two-tats NEW logic
-func Tit_for_Two_Tats() *domain.Strategy {
-	direct := domain.MirrorDirect
+// tit-for-two-tats NEW logic (If 1 Take - Hold, 2 Take - Take)
+func TitFor2Tats() *domain.Strategy {
+	m := domain.MirrorDefense
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
 			Fix:    domain.Share,
-			Mirror: &direct,
+			Mirror: &m,
+		},
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 2,
+			Reaction: domain.RuleValue{
+				Fix: domain.Take,
+			},
+		},
+		State: make(map[string]int),
+	}
+}
+
+// tit-for-two-tats OLD logic
+func TitFor2TatsOLD() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Share,
 		},
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
@@ -35,7 +52,7 @@ func Tit_for_Two_Tats() *domain.Strategy {
 }
 
 // new logic tit-for-tat: exact Mirror with Hold
-func Tit_for_Tat_NEW() *domain.Strategy {
+func TitForTatNEW() *domain.Strategy {
 	direct := domain.MirrorDirect
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
@@ -48,7 +65,7 @@ func Tit_for_Tat_NEW() *domain.Strategy {
 }
 
 // Evil tit-for-tat: exact Mirror, first round Take
-func Tit_for_Tat_EVIL() *domain.Strategy {
+func TitForTatEVIL() *domain.Strategy {
 	direct := domain.MirrorDirect
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
@@ -75,6 +92,29 @@ func Joss() *domain.Strategy {
 			Count: 1,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
+			},
+		},
+		State: make(map[string]int),
+	}
+}
+
+// 30% to not triggered on Take
+func ForgivingTitForTat() *domain.Strategy {
+	direct := domain.MirrorDirect
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &direct,
+		},
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 1,
+			Reaction: domain.RuleValue{
+				Fix: domain.Take,
+				Prob: map[domain.Act]float64{
+					domain.Share: 0.2,
+					domain.Hold:  0.1,
+				},
 			},
 		},
 		State: make(map[string]int),

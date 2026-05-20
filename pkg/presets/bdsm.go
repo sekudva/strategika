@@ -41,3 +41,55 @@ func Sadist() *domain.Strategy {
 		State: make(map[string]int),
 	}
 }
+
+// pacifist
+func Pacifist() *domain.Strategy {
+	def := domain.MirrorDefense
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &def,
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}
+
+// crazy and irrational
+func Crazy() *domain.Strategy {
+	m := domain.MirrorOpp
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &m,
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}
+
+// never coop
+func Unfriendly() *domain.Strategy {
+	m := domain.MirrorCold
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &m,
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}
+
+// zero tolerance to Hold
+func Irreconcilable() *domain.Strategy {
+	m := domain.MirrorBad
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &m,
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}

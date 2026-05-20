@@ -1,0 +1,1 @@
+WARNING: Commentaries in my project often written in Russian, please use translator if you need clarity
