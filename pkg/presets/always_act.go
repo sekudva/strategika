@@ -36,3 +36,34 @@ func AlwaysTake() *domain.Strategy {
 		State:   make(map[string]int),
 	}
 }
+
+// true random
+func Random() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Hold,
+			Prob: map[domain.Act]float64{
+				domain.Share: 0.33,
+				domain.Hold:  0.34,
+				domain.Take:  0.33,
+			},
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}
+
+// true random without Hold
+func Random_OLD() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Hold,
+			Prob: map[domain.Act]float64{
+				domain.Share: 0.5,
+				domain.Take:  0.5,
+			},
+		},
+		Trigger: nil,
+		State:   make(map[string]int),
+	}
+}

@@ -50,14 +50,17 @@ func (m *Memory) MyLastAct(partnerID AgID) Act {
 // Счетчик триггера для стратегий
 func (m *Memory) CountTrigger(partnerID AgID, trigger Act) int {
 	history, here := m.History[partnerID]
-	if !here {
+	if !here || len(history) == 0 {
 		return 0
 	}
 
 	count := 0
-	for _, round := range history {
-		if round.OpAct == trigger {
+
+	for i := len(history) - 1; i >= 0; i-- {
+		if history[i].OpAct == trigger {
 			count++
+		} else {
+			break
 		}
 	}
 
