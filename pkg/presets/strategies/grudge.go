@@ -1,4 +1,4 @@
-package presets
+package strategies
 
 // Grudger (after Take only Take)
 // NEED MODIFIER!

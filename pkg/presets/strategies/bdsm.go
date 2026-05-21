@@ -1,4 +1,4 @@
-package presets
+package strategies
 
 import "github.com/sekudva/strategika/internal/domain"
 
@@ -42,7 +42,7 @@ func Sadist() *domain.Strategy {
 	}
 }
 
-// pacifist
+// pacifist, never Take
 func Pacifist() *domain.Strategy {
 	def := domain.MirrorDefense
 	return &domain.Strategy{
@@ -55,41 +55,19 @@ func Pacifist() *domain.Strategy {
 	}
 }
 
-// crazy and irrational
-func Crazy() *domain.Strategy {
-	m := domain.MirrorOpp
+// Fear then opponent do Take
+func Bully() *domain.Strategy {
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
-			Fix:    domain.Share,
-			Mirror: &m,
+			Fix: domain.Take,
 		},
-		Trigger: nil,
-		State:   make(map[string]int),
-	}
-}
-
-// never coop
-func Unfriendly() *domain.Strategy {
-	m := domain.MirrorCold
-	return &domain.Strategy{
-		Neutral: domain.RuleValue{
-			Fix:    domain.Share,
-			Mirror: &m,
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 1,
+			Reaction: domain.RuleValue{
+				Fix: domain.Hold,
+			},
 		},
-		Trigger: nil,
-		State:   make(map[string]int),
-	}
-}
-
-// zero tolerance to Hold
-func Irreconcilable() *domain.Strategy {
-	m := domain.MirrorBad
-	return &domain.Strategy{
-		Neutral: domain.RuleValue{
-			Fix:    domain.Share,
-			Mirror: &m,
-		},
-		Trigger: nil,
-		State:   make(map[string]int),
+		State: make(map[string]int),
 	}
 }

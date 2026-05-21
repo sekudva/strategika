@@ -2,6 +2,7 @@ package domain
 
 type Agent struct {
 	ID        AgID
+	Name      string
 	Memory    *Memory
 	Strategy  *Strategy
 	Modifiers []Modifier
@@ -11,6 +12,7 @@ type Agent struct {
 func NewAgent(strat *Strategy, id AgID) *Agent {
 	return &Agent{
 		ID:       id,
+		Name:     "Default",
 		Strategy: strat,
 		Memory:   NewMemory(),
 		Score:    0,

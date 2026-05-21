@@ -20,6 +20,8 @@ func (g *IDGenerator) Next() AgID {
 func (g *IDGenerator) Request(id AgID) AgID {
 	if id > g.lastID {
 		g.lastID = id
+	} else {
+		id = g.Next()
 	}
 	return id
 }

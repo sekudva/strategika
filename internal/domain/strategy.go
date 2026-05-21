@@ -57,6 +57,66 @@ var mirrorTable = map[MirrorMode]map[Act]Act{
 	},
 }
 
+type TriggerMode int
+
+const (
+	TriggerEvery       TriggerMode = iota // каждый N-й подряд в серии (n=1 = на каждый)
+	TriggerTotalAfter                     // после N раз (навсегда)
+	TriggerExactly                        // ровно на N-й, потом пропускать ответ на триггер
+	TriggerStreakAfter                    // После N раз (пока не закончится серия)
+)
+
+type TriggerTest func(history []Round, act Act, n int) bool
+
+var triggerTable = map[TriggerMode]TriggerTest{
+
+	TriggerEvery: func(h []Round, act Act, n int) bool {
+		streak := 0
+		for i := len(h) - 1; i >= 0; i-- {
+			if h[i].OpAct == act {
+				streak++
+			} else {
+				break
+			}
+		}
+		return streak >= n && streak%n == 0
+	},
+
+	TriggerTotalAfter: func(h []Round, act Act, n int) bool {
+		count := 0
+		for _, r := range h {
+			if r.OpAct == act {
+				count++
+			}
+		}
+		return count >= n
+	},
+
+	TriggerExactly: func(h []Round, act Act, n int) bool {
+		streak := 0
+		for i := len(h) - 1; i >= 0; i-- {
+			if h[i].OpAct == act {
+				streak++
+			} else {
+				break
+			}
+		}
+		return streak == n
+	},
+
+	TriggerStreakAfter: func(h []Round, act Act, n int) bool {
+		streak := 0
+		for i := len(h) - 1; i >= 0; i-- {
+			if h[i].OpAct == act {
+				streak++
+			} else {
+				break
+			}
+		}
+		return streak >= n
+	},
+}
+
 // Фиксированное значение хода
 type RuleValue struct {
 	Fix    Act
@@ -68,6 +128,7 @@ type RuleValue struct {
 type Trigger struct {
 	Act      Act
 	Count    int
+	Mode     TriggerMode
 	Reaction RuleValue // ответ на триггер
 }
 

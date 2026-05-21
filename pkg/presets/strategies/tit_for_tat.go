@@ -1,4 +1,4 @@
-package presets
+package strategies
 
 import "github.com/sekudva/strategika/internal/domain"
 

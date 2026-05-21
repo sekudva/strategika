@@ -9,9 +9,10 @@ func (s *Strategy) CoreDecision(memory *Memory, opID AgID) Act {
 	act := s.evaluate(s.Neutral, opLast, myLast)
 
 	if s.Trigger != nil {
-		count := memory.CountTrigger(opID, s.Trigger.Act)
-		if count >= s.Trigger.Count {
-			return s.evaluate(s.Trigger.Reaction, opLast, myLast)
+		if test, valid := triggerTable[s.Trigger.Mode]; valid {
+			if test(memory.History[opID], s.Trigger.Act, s.Trigger.Count) {
+				return s.evaluate(s.Trigger.Reaction, opLast, myLast)
+			}
 		}
 	}
 
@@ -30,10 +31,8 @@ func (s *Strategy) evaluate(rule RuleValue, opLast, myLast Act) Act {
 
 // Если в реальном столкновении возвращается NoAct - некорректная стратегия
 func (s *Strategy) evaluateFix(rule RuleValue) Act {
-	if rule.Fix != NoAct {
-		return rule.Fix
-	}
-	return NoAct // При нормальном поведении NoAct не дойдет до CoreDecision
+	// При нормальном поведении NoAct не дойдет до CoreDecision
+	return rule.Fix
 }
 func (s *Strategy) evaluateMirror(act Act, rule RuleValue, opLast, myLast Act) Act {
 	if rule.Mirror == nil || opLast == NoAct {
@@ -46,8 +45,8 @@ func (s *Strategy) evaluateMirror(act Act, rule RuleValue, opLast, myLast Act) A
 		return myLast
 	}
 
-	if mapped, ok := mirrorTable[mode][opLast]; ok {
-		return mapped
+	if mappedAct, valid := mirrorTable[mode][opLast]; valid {
+		return mappedAct
 	}
 
 	return act
