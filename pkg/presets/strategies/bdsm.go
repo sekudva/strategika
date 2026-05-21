@@ -12,11 +12,11 @@ func Masochist() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
 			Count: 1,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Share,
 			},
 		},
-		State: make(map[string]int),
 	}
 }
 
@@ -34,11 +34,11 @@ func Sadist() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Share,
 			Count: 1,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
 			},
 		},
-		State: make(map[string]int),
 	}
 }
 
@@ -51,7 +51,6 @@ func Pacifist() *domain.Strategy {
 			Mirror: &def,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -62,12 +61,10 @@ func Bully() *domain.Strategy {
 			Fix: domain.Take,
 		},
 		Trigger: &domain.Trigger{
-			Act:   domain.Take,
-			Count: 1,
+			Act: domain.Take,
 			Reaction: domain.RuleValue{
 				Fix: domain.Hold,
 			},
 		},
-		State: make(map[string]int),
 	}
 }

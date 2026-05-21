@@ -9,6 +9,12 @@ func (s *Strategy) CoreDecision(memory *Memory, opID AgID) Act {
 	act := s.evaluate(s.Neutral, opLast, myLast)
 
 	if s.Trigger != nil {
+
+		//default value
+		if s.Trigger.Count == 0 {
+			s.Trigger.Count = 1
+		}
+
 		if test, valid := triggerTable[s.Trigger.Mode]; valid {
 			if test(memory.History[opID], s.Trigger.Act, s.Trigger.Count) {
 				return s.evaluate(s.Trigger.Reaction, opLast, myLast)
@@ -68,6 +74,9 @@ func (s *Strategy) evaluateProb(act Act, rule RuleValue) Act {
 	return act
 }
 func (s *Strategy) evaluateState(act Act) Act {
+	if s.State == nil {
+		return act
+	}
 	// Заглушка для дальнейшего опционала
 	return act
 }

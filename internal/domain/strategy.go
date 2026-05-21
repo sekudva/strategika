@@ -60,15 +60,28 @@ var mirrorTable = map[MirrorMode]map[Act]Act{
 type TriggerMode int
 
 const (
-	TriggerEvery       TriggerMode = iota // каждый N-й подряд в серии (n=1 = на каждый)
+	TriggerStreakAfter TriggerMode = iota // После N раз (пока не закончится серия)
+	TriggerEvery                          // каждый N-й подряд в серии (n=1 = на каждый)
 	TriggerTotalAfter                     // после N раз (навсегда)
 	TriggerExactly                        // ровно на N-й, потом пропускать ответ на триггер
-	TriggerStreakAfter                    // После N раз (пока не закончится серия)
+
 )
 
 type TriggerTest func(history []Round, act Act, n int) bool
 
 var triggerTable = map[TriggerMode]TriggerTest{
+
+	TriggerStreakAfter: func(h []Round, act Act, n int) bool {
+		streak := 0
+		for i := len(h) - 1; i >= 0; i-- {
+			if h[i].OpAct == act {
+				streak++
+			} else {
+				break
+			}
+		}
+		return streak >= n
+	},
 
 	TriggerEvery: func(h []Round, act Act, n int) bool {
 		streak := 0
@@ -102,18 +115,6 @@ var triggerTable = map[TriggerMode]TriggerTest{
 			}
 		}
 		return streak == n
-	},
-
-	TriggerStreakAfter: func(h []Round, act Act, n int) bool {
-		streak := 0
-		for i := len(h) - 1; i >= 0; i-- {
-			if h[i].OpAct == act {
-				streak++
-			} else {
-				break
-			}
-		}
-		return streak >= n
 	},
 }
 

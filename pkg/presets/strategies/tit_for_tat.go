@@ -11,7 +11,6 @@ func TitForTat() *domain.Strategy {
 			Mirror: &nice,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -26,11 +25,11 @@ func TitFor2Tats() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
 			Count: 2,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
 			},
 		},
-		State: make(map[string]int),
 	}
 }
 
@@ -43,11 +42,11 @@ func TitFor2TatsOLD() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
 			Count: 2,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
 			},
 		},
-		State: make(map[string]int),
 	}
 }
 
@@ -60,7 +59,6 @@ func TitForTatNEW() *domain.Strategy {
 			Mirror: &direct,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -73,7 +71,6 @@ func TitForTatEVIL() *domain.Strategy {
 			Mirror: &direct,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -90,11 +87,11 @@ func Joss() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
 			Count: 1,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
 			},
 		},
-		State: make(map[string]int),
 	}
 }
 
@@ -109,6 +106,7 @@ func ForgivingTitForTat() *domain.Strategy {
 		Trigger: &domain.Trigger{
 			Act:   domain.Take,
 			Count: 1,
+			Mode:  domain.TriggerStreakAfter,
 			Reaction: domain.RuleValue{
 				Fix: domain.Take,
 				Prob: map[domain.Act]float64{
@@ -117,6 +115,5 @@ func ForgivingTitForTat() *domain.Strategy {
 				},
 			},
 		},
-		State: make(map[string]int),
 	}
 }

@@ -11,7 +11,6 @@ func Crazy() *domain.Strategy {
 			Mirror: &m,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -24,7 +23,6 @@ func Unfriendly() *domain.Strategy {
 			Mirror: &m,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -37,6 +35,5 @@ func Irreconcilable() *domain.Strategy {
 			Mirror: &m,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }

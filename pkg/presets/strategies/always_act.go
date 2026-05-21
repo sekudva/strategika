@@ -11,7 +11,6 @@ func AlwaysShare() *domain.Strategy {
 			Fix: domain.Share,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -22,7 +21,6 @@ func AlwaysHold() *domain.Strategy {
 			Fix: domain.Hold,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -33,7 +31,6 @@ func AlwaysTake() *domain.Strategy {
 			Fix: domain.Take,
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -49,7 +46,6 @@ func Random() *domain.Strategy {
 			},
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
 
@@ -64,6 +60,5 @@ func Random_OLD() *domain.Strategy {
 			},
 		},
 		Trigger: nil,
-		State:   make(map[string]int),
 	}
 }
