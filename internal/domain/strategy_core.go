@@ -31,7 +31,6 @@ func (s *Strategy) evaluate(rule RuleValue, opLast, myLast Act) Act {
 	act := s.evaluateFix(rule)
 	act = s.evaluateMirror(act, rule, opLast, myLast)
 	act = s.evaluateProb(act, rule)
-	act = s.evaluateState(act)
 	return act
 }
 
@@ -71,12 +70,5 @@ func (s *Strategy) evaluateProb(act Act, rule RuleValue) Act {
 		}
 	}
 
-	return act
-}
-func (s *Strategy) evaluateState(act Act) Act {
-	if s.State == nil {
-		return act
-	}
-	// Заглушка для дальнейшего опционала
 	return act
 }
