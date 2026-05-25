@@ -68,3 +68,18 @@ func Bully() *domain.Strategy {
 		},
 	}
 }
+
+// Always Take, but if Share - Share
+func Melting() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Take,
+		},
+		Trigger: &domain.Trigger{
+			Act: domain.Share,
+			Reaction: domain.RuleValue{
+				Fix: domain.Share,
+			},
+		},
+	}
+}

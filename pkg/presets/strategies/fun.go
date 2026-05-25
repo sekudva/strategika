@@ -37,3 +37,39 @@ func Irreconcilable() *domain.Strategy {
 		Trigger: nil,
 	}
 }
+
+// StrictTeacher
+// start Share, for two Takes - one Take and forgives
+func StrictTeacher() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Share,
+		},
+
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 2,
+			Mode:  domain.TriggerExactly,
+			Reaction: domain.RuleValue{
+				Fix: domain.Take,
+			},
+		},
+	}
+}
+
+// Only after 3 Takes do Take
+func Patient() *domain.Strategy {
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix: domain.Share,
+		},
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 3,
+			Mode:  domain.TriggerStreakAfter,
+			Reaction: domain.RuleValue{
+				Fix: domain.Take,
+			},
+		},
+	}
+}
