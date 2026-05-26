@@ -1,13 +1,10 @@
 package tournament
 
-import (
-	"github.com/sekudva/strategika/internal/domain"
-)
+type RoundLogger interface {
+	// Log вызывается для каждой пары агентов после applyPhase.
+	Log(entry RoundLog)
 
-type Tournament interface {
-	Run(agents []*domain.Agent, rounds int, noise float64) Result
-}
-
-type Result interface {
-	Summary() string
+	// Flush вызывается в конце симуляции (для вывода накопленного).
+	// Возвращает историю раундов (может быть nil, если логгер её не хранит).
+	Flush() []RoundLog
 }

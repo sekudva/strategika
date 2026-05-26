@@ -2,14 +2,28 @@ package tournament
 
 import (
 	"fmt"
-	"strings"
+	"math/rand/v2"
 
 	"github.com/sekudva/strategika/internal/domain"
 )
 
+// Run запускает симуляцию и проверяет параметры конфигурации
+func (cfg SimConfig) Run(agents []*domain.Agent) (map[domain.AgID]int, error) {
+
+	if err := cfg.validate(len(agents)); err != nil {
+		return nil, fmt.Errorf("invalid config: %w", err)
+	}
+
+	cfg = cfg.defVars()
+
+	scores := cfg.runSimulation(agents)
+
+	return scores, nil
+}
+
 // RunSimulation выполняет все раунды согласно конфигурации.
 // Возвращает итоговые счета агентов и ошибку (пока nil).
-func RunSimulation(cfg SimConfig, agents []*domain.Agent) (map[domain.AgID]int, error) {
+func (cfg SimConfig) runSimulation(agents []*domain.Agent) map[domain.AgID]int {
 	for round := 1; round <= cfg.Rounds; round++ {
 
 		// 1. Фаза решений (параллельно)
@@ -19,7 +33,7 @@ func RunSimulation(cfg SimConfig, agents []*domain.Agent) (map[domain.AgID]int, 
 		decisions = noisePhase(decisions, cfg.Noise, cfg.RNG)
 
 		// 3. Фаза применения
-		applyPhase(agents, decisions, cfg.Pairs, round)
+		applyPhase(agents, decisions, cfg.Pairs, round, cfg.Logger)
 
 	}
 
@@ -29,24 +43,48 @@ func RunSimulation(cfg SimConfig, agents []*domain.Agent) (map[domain.AgID]int, 
 		scores[a.ID] = a.Score
 	}
 
-	return scores, nil
+	return scores
 }
 
-func LogRound(round int, a1, a2 *domain.Agent, act1, act2 domain.Act, s1, s2 int) {
-	fmt.Printf(
-		"[%3d] %-6s vs %-6s | %-5s (%-+3d) vs %-5s (%-+3d)\n",
-		round,
-		a1.ID, a2.ID,
-		act1.String(), s1,
-		act2.String(), s2,
-	)
+// валидация значений
+func (cfg SimConfig) validate(agentCount int) error {
+	if agentCount <= 0 {
+		return fmt.Errorf("no agents provided")
+	}
+
+	if cfg.Rounds <= 0 {
+		return fmt.Errorf("rounds must be > 0, got %d", cfg.Rounds)
+	}
+
+	if cfg.Noise < 0 || cfg.Noise > 1 {
+		return fmt.Errorf("noise must be between 0 and 1, got %f", cfg.Noise)
+	}
+
+	if len(cfg.Pairs) == 0 {
+		return fmt.Errorf("no pairs defined")
+	}
+
+	for _, p := range cfg.Pairs {
+
+		if p[0] >= agentCount || p[1] >= agentCount {
+			return fmt.Errorf("pair (%d,%d) references non-existent agent (max index %d)", p[0], p[1], agentCount-1)
+		}
+
+		if p[0] == p[1] {
+			return fmt.Errorf("pair (%d,%d) is self-play, not allowed", p[0], p[1])
+		}
+	}
+
+	return nil
 }
 
-func LogResult(a1, a2 *domain.Agent, score1, score2 int) {
-	fmt.Println(strings.Repeat("─", 55))
-	fmt.Printf(
-		"Result: %s %d — %d %s\n",
-		a1.ID, score1, score2, a2.ID,
-	)
-	fmt.Println(strings.Repeat("─", 55))
+// заполнение незаполненных полей
+func (cfg SimConfig) defVars() SimConfig {
+	if cfg.RNG == nil {
+		cfg.RNG = rand.New(rand.NewPCG(0, 0))
+	}
+	if cfg.Logger == nil {
+		cfg.Logger = &SilentLogger{}
+	}
+	return cfg
 }

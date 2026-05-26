@@ -21,6 +21,7 @@ func decidePhase(agents []*domain.Agent, pairs []Pair, round int) map[DirectedPa
 
 	for _, p := range pairs {
 		wg.Add(2) // по одной горутине на каждое направление
+
 		go func(from, to int) {
 			defer wg.Done()
 			act := agents[from].Decide(agents[to].ID, round)
@@ -65,7 +66,7 @@ func randomAct(rng *rand.Rand) domain.Act {
 }
 
 // Бухгалтерская фаза, считает выплаты и записывает в память агентов историю
-func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, pairs []Pair, round int) {
+func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, pairs []Pair, round int, logger RoundLogger) {
 	for _, p := range pairs {
 		i, j := p[0], p[1]
 		actItoJ := decisions[DirectedPair{i, j}]
@@ -78,5 +79,15 @@ func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, p
 
 		agents[i].Memory.Record(round, agents[j].ID, actItoJ, actJtoI)
 		agents[j].Memory.Record(round, agents[i].ID, actJtoI, actItoJ)
+
+		logger.Log(RoundLog{
+			Round:  round,
+			Agent1: agents[i].ID,
+			Agent2: agents[j].ID,
+			Act1:   actItoJ,
+			Act2:   actJtoI,
+			Score1: payoffI,
+			Score2: payoffJ,
+		})
 	}
 }
