@@ -1,6 +1,9 @@
 package tournament
 
-import "math/rand/v2"
+import (
+	"fmt"
+	"math/rand/v2"
+)
 
 // Типы для хранения индексов в срезе []*domain.Agent
 // DirectedPair — направленная пара агентов
@@ -18,28 +21,30 @@ type SimConfig struct {
 	Logger RoundLogger
 }
 
-func DuelConfig(rounds int, noise float64) SimConfig {
-	return SimConfig{
-		Rounds: rounds,
-		Noise:  noise,
-		Pairs:  []Pair{{0, 1}},
-		RNG:    rand.New(rand.NewPCG(0, 0)),
-		Logger: &AllLogger{},
+// валидация значений
+func (cfg SimConfig) Validate() error {
+	if cfg.Rounds <= 0 {
+		return fmt.Errorf("rounds must be > 0, got %d", cfg.Rounds)
 	}
+
+	if cfg.Noise < 0 || cfg.Noise > 1 {
+		return fmt.Errorf("noise must be between 0 and 1, got %f", cfg.Noise)
+	}
+
+	if len(cfg.Pairs) == 0 {
+		return fmt.Errorf("no pairs defined")
+	}
+
+	return nil
 }
 
-func ArenaConfig(agentCount int, rounds int, noise float64) SimConfig {
-	pairs := make([]Pair, 0, agentCount*(agentCount-1)/2)
-	for i := range agentCount {
-		for j := i + 1; j < agentCount; j++ {
-			pairs = append(pairs, Pair{i, j})
-		}
+// заполнение незаполненных полей
+func (cfg SimConfig) DefVars() SimConfig {
+	if cfg.RNG == nil {
+		cfg.RNG = rand.New(rand.NewPCG(0, 0))
 	}
-	return SimConfig{
-		Rounds: rounds,
-		Noise:  noise,
-		Pairs:  pairs,
-		RNG:    rand.New(rand.NewPCG(0, 0)),
-		Logger: &AggregateLogger{Interval: 10},
+	if cfg.Logger == nil {
+		cfg.Logger = &SilentLogger{}
 	}
+	return cfg
 }

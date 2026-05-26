@@ -32,3 +32,7 @@ func (a *Agent) Decide(opID AgID, round int) Act {
 	}
 	return core
 }
+
+func (a *Agent) ResetMemory() {
+	a.Memory = NewMemory()
+}

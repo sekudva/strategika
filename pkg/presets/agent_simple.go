@@ -1,4 +1,4 @@
-package agents
+package presets
 
 import (
 	"github.com/sekudva/strategika/internal/domain"
@@ -27,11 +27,31 @@ func TitForTat() *domain.Agent {
 	}
 }
 
+func TitForTatOrig() *domain.Agent {
+	return &domain.Agent{
+		Name:     "TitForTatOrig",
+		ID:       RequestID(2),
+		Strategy: strategies.TitForTat(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
 func TitFor2Tats() *domain.Agent {
 	return &domain.Agent{
 		Name:     "TitFor2Tats",
-		ID:       RequestID(2),
+		ID:       RequestID(3),
 		Strategy: strategies.TitFor2Tats(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func TitFor2TatsOrig() *domain.Agent {
+	return &domain.Agent{
+		Name:     "TitFor2TatsOLD",
+		ID:       RequestID(4),
+		Strategy: strategies.TitFor2TatsOLD(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}
@@ -40,7 +60,7 @@ func TitFor2Tats() *domain.Agent {
 func Joss() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Joss",
-		ID:       RequestID(3),
+		ID:       RequestID(5),
 		Strategy: strategies.Joss(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
@@ -50,17 +70,17 @@ func Joss() *domain.Agent {
 func ForgivingTitForTat() *domain.Agent {
 	return &domain.Agent{
 		Name:     "ForgivingTFT",
-		ID:       RequestID(4),
+		ID:       RequestID(6),
 		Strategy: strategies.ForgivingTitForTat(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}
 }
 
-func Tullock() *domain.Agent {
+func EvilTFT() *domain.Agent {
 	return &domain.Agent{
 		Name:     "EvilTFT",
-		ID:       RequestID(5),
+		ID:       RequestID(7),
 		Strategy: strategies.TitForTatEVIL(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
@@ -109,6 +129,16 @@ func Random() *domain.Agent {
 	}
 }
 
+func RandomOLD() *domain.Agent {
+	return &domain.Agent{
+		Name:     "RandomOLD",
+		ID:       RequestID(14),
+		Strategy: strategies.Random_OLD(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
 // ========== 3. BDSM FAMILY  ==========
 
 func Masochist() *domain.Agent {
@@ -144,19 +174,81 @@ func Pacifist() *domain.Agent {
 func Bully() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Bully",
-		ID:       RequestID(30),
+		ID:       RequestID(23),
 		Strategy: strategies.Bully(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}
 }
 
-// ========== 4. FUN FAMILY ==========
+func Melting() *domain.Agent {
+	return &domain.Agent{
+		Name:     "Melting",
+		ID:       RequestID(24),
+		Strategy: strategies.Melting(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+// ========== 4. CYCLE FAMILY ==========
+
+func EvilCyclist() *domain.Agent {
+	return &domain.Agent{
+		Name:     "EvilCyclist",
+		ID:       RequestID(30),
+		Strategy: strategies.EvilCyclist(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func GoodCyclist() *domain.Agent {
+	return &domain.Agent{
+		Name:     "GoodCyclist",
+		ID:       RequestID(31),
+		Strategy: strategies.GoodCyclist(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func ColdCyclist() *domain.Agent {
+	return &domain.Agent{
+		Name:     "ColdCyclist",
+		ID:       RequestID(32),
+		Strategy: strategies.ColdCyclist(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func WarmCyclist() *domain.Agent {
+	return &domain.Agent{
+		Name:     "WarmCyclist",
+		ID:       RequestID(33),
+		Strategy: strategies.WarmCyclist(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func ColdGhost() *domain.Agent {
+	return &domain.Agent{
+		Name:     "ColdGhost",
+		ID:       RequestID(34),
+		Strategy: strategies.ColdGhost(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+// ========== 5. FUN FAMILY ==========
 
 func Crazy() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Crazy",
-		ID:       RequestID(23),
+		ID:       RequestID(40),
 		Strategy: strategies.Crazy(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
@@ -166,7 +258,7 @@ func Crazy() *domain.Agent {
 func Unfriendly() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Unfriendly",
-		ID:       RequestID(31),
+		ID:       RequestID(41),
 		Strategy: strategies.Unfriendly(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
@@ -176,8 +268,40 @@ func Unfriendly() *domain.Agent {
 func Irreconcilable() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Irreconcilable",
-		ID:       RequestID(32),
+		ID:       RequestID(42),
 		Strategy: strategies.Irreconcilable(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func StrictTeacher() *domain.Agent {
+	return &domain.Agent{
+		Name:     "StrictTeacher",
+		ID:       RequestID(43),
+		Strategy: strategies.StrictTeacher(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+func Patient() *domain.Agent {
+	return &domain.Agent{
+		Name:     "Patient",
+		ID:       RequestID(44),
+		Strategy: strategies.Patient(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+// ========== 6. GRUDGE FAMILY ==========
+
+func Grudger() *domain.Agent {
+	return &domain.Agent{
+		Name:     "Grudger",
+		ID:       RequestID(50),
+		Strategy: strategies.Grudger(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}

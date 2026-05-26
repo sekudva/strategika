@@ -62,7 +62,6 @@ type TriggerMode int
 const (
 	TriggerStreakAfter TriggerMode = iota // После N раз (пока не закончится серия)
 	TriggerEvery                          // каждый N-й подряд в серии (n=1 = на каждый)
-	TriggerTotalAfter                     // после N раз (навсегда)
 	TriggerExactly                        // ровно на N-й, потом пропускать ответ на триггер
 
 )
@@ -93,16 +92,6 @@ var triggerTable = map[TriggerMode]TriggerTest{
 			}
 		}
 		return streak >= n && streak%n == 0
-	},
-
-	TriggerTotalAfter: func(h []Round, act Act, n int) bool {
-		count := 0
-		for _, r := range h {
-			if r.OpAct == act {
-				count++
-			}
-		}
-		return count >= n
 	},
 
 	TriggerExactly: func(h []Round, act Act, n int) bool {
