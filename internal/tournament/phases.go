@@ -72,14 +72,25 @@ func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, p
 		actItoJ := decisions[DirectedPair{i, j}]
 		actJtoI := decisions[DirectedPair{j, i}]
 
+		// высчет очков
 		payoffI, payoffJ := domain.Payoff(actItoJ, actJtoI)
 
 		agents[i].Score += payoffI
 		agents[j].Score += payoffJ
 
+		// реп
+		prevI := agents[i].Memory.OpLastAct(agents[j].ID)
+		prevJ := agents[j].Memory.OpLastAct(agents[i].ID)
+
+		//запись в память ходов
 		agents[i].Memory.Record(round, agents[j].ID, actItoJ, actJtoI)
 		agents[j].Memory.Record(round, agents[i].ID, actJtoI, actItoJ)
 
+		//обновление репы
+		agents[i].UpdRep(actItoJ, prevI)
+		agents[j].UpdRep(actJtoI, prevJ)
+
+		// лог
 		logger.Log(RoundLog{
 			Round:  round,
 			Agent1: agents[i].ID,

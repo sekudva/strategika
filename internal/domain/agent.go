@@ -7,6 +7,7 @@ type Agent struct {
 	Strategy  *Strategy
 	Modifiers []Modifier
 	Score     int
+	Rep       Reputation
 }
 
 func NewAgent(strat *Strategy, id AgID) *Agent {
@@ -35,4 +36,8 @@ func (a *Agent) Decide(opID AgID, round int) Act {
 
 func (a *Agent) ResetMemory() {
 	a.Memory = NewMemory()
+}
+
+func (a *Agent) UpdRep(myAct, opAct Act) {
+	UpdRep(&a.Rep, myAct, opAct)
 }
