@@ -18,6 +18,9 @@ func (cfg SimConfig) RunSimulation(agents []*domain.Agent) map[domain.AgID]int {
 		// 3. Фаза применения
 		applyPhase(agents, decisions, cfg.Pairs, round, cfg.Logger)
 
+		if cfg.Logger != nil {
+			cfg.Logger.Flush()
+		}
 	}
 
 	scores := make(map[domain.AgID]int, len(agents))

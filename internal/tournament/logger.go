@@ -48,11 +48,41 @@ func NewAggregateLogger(interval int, pairs []Pair, agents []*domain.Agent, w io
 }
 
 func (l *AggregateLogger) Log(entry RoundLog) {
-	p := Pair{0, 1} // для дуэли
-	// В общем случае нужно найти пару по Agent1/Agent2
-	// Но для дуэли это тривиально, для арены — ищем в l.Pairs
-	c := l.counters[p]
-	switch entry.Act1 {
+	p1, ok1 := l.findPair(entry.Agent1, entry.Agent2)
+	p2, ok2 := l.findPair(entry.Agent2, entry.Agent1)
+
+	if ok1 {
+		c := l.counters[p1]
+		l.increment(&c, entry.Act1)
+		l.counters[p1] = c
+	}
+
+	if ok2 {
+		c := l.counters[p2]
+		l.increment(&c, entry.Act2)
+		l.counters[p2] = c
+	}
+
+	l.round = entry.Round
+}
+
+// findPair ищет направленную пару по ID агентов.
+// Возвращает Pair{fromIndex, toIndex} и true, если пара найдена.
+func (l *AggregateLogger) findPair(a1, a2 domain.AgID) (Pair, bool) {
+	for _, p := range l.Pairs {
+		if l.Agents[p[0]].ID == a1 && l.Agents[p[1]].ID == a2 {
+			return Pair{p[0], p[1]}, true
+		}
+		if l.Agents[p[0]].ID == a2 && l.Agents[p[1]].ID == a1 {
+			return Pair{p[1], p[0]}, true
+		}
+	}
+	return Pair{}, false
+}
+
+// increment увеличивает соответствующий счётчик действия.
+func (l *AggregateLogger) increment(c *[3]int, act domain.Act) {
+	switch act {
 	case domain.Share:
 		c[0]++
 	case domain.Hold:
@@ -60,27 +90,17 @@ func (l *AggregateLogger) Log(entry RoundLog) {
 	case domain.Take:
 		c[2]++
 	}
-	l.counters[p] = c
-
-	// Аналогично для Act2 (второго агента в паре)
-	p2 := Pair{1, 0}
-	c2 := l.counters[p2]
-	switch entry.Act2 {
-	case domain.Share:
-		c2[0]++
-	case domain.Hold:
-		c2[1]++
-	case domain.Take:
-		c2[2]++
-	}
-	l.counters[p2] = c2
-
-	l.round = entry.Round
 }
 
+// Flush выводит финальную статистику и не хранит историю.
 func (l *AggregateLogger) Flush() []RoundLog {
-	fmt.Fprint(l.Writer, l.Stats())
-	return nil // не хранит историю
+
+	if l.round%l.Interval == 0 {
+		fmt.Fprintf(l.Writer, "\n--- Round %d ---\n%s", l.round, l.Stats())
+		l.counters = make(map[Pair][3]int)
+	}
+
+	return nil
 }
 
 // PrintStats вызывается из Flush или отдельно
@@ -130,7 +150,10 @@ func NewAllLogger(w io.Writer) *AllLogger {
 	if w == nil {
 		w = os.Stdout
 	}
-	return &AllLogger{Writer: w}
+	return &AllLogger{
+		Writer: w,
+		Logs:   make([]RoundLog, 0),
+	}
 }
 
 func (l *AllLogger) Log(entry RoundLog) {
@@ -139,14 +162,16 @@ func (l *AllLogger) Log(entry RoundLog) {
 
 func (l *AllLogger) Flush() []RoundLog {
 	for _, entry := range l.Logs {
-		fmt.Fprintf(l.Writer, "[%3d] %d → %d | %s vs %s\n",
+		fmt.Fprintf(l.Writer, "[%3d] %d → %d | %s vs %s| %+d / %+d\n",
 			entry.Round,
 			entry.Agent1, entry.Agent2,
 			entry.Act1.String(), entry.Act2.String(),
-		)
+			entry.Score1, entry.Score2)
 	}
 
-	return l.Logs
+	result := l.Logs
+	l.Logs = nil
+	return result
 }
 
 // SilentLogger не сохраняет и не выводит ничего.

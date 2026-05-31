@@ -87,8 +87,10 @@ func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, p
 		agents[j].Memory.Record(round, agents[i].ID, actJtoI, actItoJ)
 
 		//обновление репы
-		agents[i].UpdRep(actItoJ, prevI)
-		agents[j].UpdRep(actJtoI, prevJ)
+		if prevI != domain.NoAct && prevJ != domain.NoAct {
+			agents[i].UpdRep(actItoJ, prevI)
+			agents[j].UpdRep(actJtoI, prevJ)
+		}
 
 		// лог
 		logger.Log(RoundLog{
