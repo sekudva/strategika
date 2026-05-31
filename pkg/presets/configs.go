@@ -12,7 +12,7 @@ func DuelConfig(rounds int, noise float64) (tournament.SimConfig, error) {
 	cfg := tournament.SimConfig{
 		Rounds: rounds,
 		Noise:  noise,
-		Pairs:  DuelPairs(),
+		Pairs:  tournament.DuelPairs(),
 		RNG:    DefaultRNG(),
 		Logger: &tournament.AllLogger{},
 	}
@@ -33,7 +33,7 @@ func ArenaConfig(agentCount int, rounds int, noise float64) (tournament.SimConfi
 	cfg := tournament.SimConfig{
 		Rounds: rounds,
 		Noise:  noise,
-		Pairs:  AllPairs(agentCount),
+		Pairs:  tournament.AllPairs(agentCount),
 		RNG:    DefaultRNG(),
 		Logger: &tournament.AggregateLogger{Interval: 10},
 	}
@@ -58,7 +58,7 @@ func TrialConfig(leaderIndex, agentCount int, rounds int, noise float64) (tourna
 	cfg := tournament.SimConfig{
 		Rounds: rounds,
 		Noise:  noise,
-		Pairs:  TrialPairs(leaderIndex, agentCount),
+		Pairs:  tournament.TrialPairs(leaderIndex, agentCount),
 		RNG:    DefaultRNG(),
 		Logger: &tournament.AllLogger{},
 	}
@@ -72,31 +72,6 @@ func TrialConfig(leaderIndex, agentCount int, rounds int, noise float64) (tourna
 }
 
 // ------------------
-func AllPairs(n int) []tournament.Pair {
-	pairs := make([]tournament.Pair, 0, n*(n-1)/2)
-	for i := range n {
-		for j := i + 1; j < n; j++ {
-			pairs = append(pairs, tournament.Pair{i, j})
-		}
-	}
-	return pairs
-}
-
-// DuelPairs возвращает одну пару для дуэли
-func DuelPairs() []tournament.Pair {
-	return []tournament.Pair{{0, 1}}
-}
-
-// TrialPairs возвращает пары лидера со всеми остальными
-func TrialPairs(leaderIndex, agentCount int) []tournament.Pair {
-	pairs := make([]tournament.Pair, 0, agentCount-1)
-	for i := range agentCount {
-		if i != leaderIndex {
-			pairs = append(pairs, tournament.Pair{leaderIndex, i})
-		}
-	}
-	return pairs
-}
 
 func DefaultRNG() *rand.Rand {
 	return rand.New(rand.NewPCG(0, 0))

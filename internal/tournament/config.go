@@ -67,3 +67,30 @@ func (cfg SimConfig) String() string {
 func (cfg SimConfig) InfoTo(w io.Writer) {
 	fmt.Fprintln(w, cfg)
 }
+
+// собирание пар
+func AllPairs(n int) []Pair {
+	pairs := make([]Pair, 0, n*(n-1)/2)
+	for i := range n {
+		for j := i + 1; j < n; j++ {
+			pairs = append(pairs, Pair{i, j})
+		}
+	}
+	return pairs
+}
+
+// DuelPairs возвращает одну пару для дуэли
+func DuelPairs() []Pair {
+	return []Pair{{0, 1}}
+}
+
+// TrialPairs возвращает пары лидера со всеми остальными
+func TrialPairs(leaderIndex, agentCount int) []Pair {
+	pairs := make([]Pair, 0, agentCount-1)
+	for i := range agentCount {
+		if i != leaderIndex {
+			pairs = append(pairs, Pair{leaderIndex, i})
+		}
+	}
+	return pairs
+}
