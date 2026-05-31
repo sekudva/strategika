@@ -26,8 +26,17 @@ func RoundRobin(cfg SimConfig, agents []*domain.Agent) error {
 			duelCfg := cfg
 			duelCfg.Pairs = []Pair{{0, 1}}
 
+			// log
+			duelCfg.Logger = NewAggregateLogger(
+				cfg.Logger.(*AggregateLogger).Interval,
+				duelCfg.Pairs,
+				[]*domain.Agent{agents[i], agents[j]},
+				cfg.Logger.(*AggregateLogger).Writer,
+			)
+
 			// Запускаем дуэль
 			duelCfg.RunSimulation([]*domain.Agent{agents[i], agents[j]})
+			duelCfg.Logger.Flush()
 		}
 	}
 

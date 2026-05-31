@@ -67,7 +67,7 @@ func Joss() *domain.Agent {
 	}
 }
 
-func ForgivingTitForTat() *domain.Agent {
+func ForgivingTFT() *domain.Agent {
 	return &domain.Agent{
 		Name:     "ForgivingTFT",
 		ID:       RequestID(6),

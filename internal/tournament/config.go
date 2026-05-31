@@ -2,6 +2,7 @@ package tournament
 
 import (
 	"fmt"
+	"io"
 	"math/rand/v2"
 )
 
@@ -47,4 +48,22 @@ func (cfg SimConfig) DefVars() SimConfig {
 		cfg.Logger = &SilentLogger{}
 	}
 	return cfg
+}
+
+func (cfg SimConfig) String() string {
+	return fmt.Sprintf(
+		"Tournament Config:\n"+
+			"  Rounds: %d\n"+
+			"  Noise:  %.2f\n"+
+			"  Pairs:  %d\n"+
+			"  Logger: %T\n",
+		cfg.Rounds,
+		cfg.Noise,
+		len(cfg.Pairs),
+		cfg.Logger,
+	)
+}
+
+func (cfg SimConfig) InfoTo(w io.Writer) {
+	fmt.Fprintln(w, cfg)
 }
