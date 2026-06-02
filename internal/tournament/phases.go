@@ -63,6 +63,7 @@ func noisePhase(decisions map[DirectedPair]domain.Act, noise float64, rng *rand.
 
 	return noisy
 }
+
 func randomAct(rng *rand.Rand) domain.Act {
 	return domain.Act(rng.IntN(3))
 }

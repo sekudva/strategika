@@ -186,14 +186,14 @@ func PrintLeaderboard(agents []*domain.Agent) {
 	})
 
 	fmt.Println()
-	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println(strings.Repeat("=", 50))
 	fmt.Println("FINAL LEADERBOARD")
-	fmt.Println(strings.Repeat("=", 60))
-	fmt.Printf("%-20s | %8s\n", "Strategy", "Score")
-	fmt.Println(strings.Repeat("-", 35))
+	fmt.Println(strings.Repeat("=", 50))
+	fmt.Printf("%s	| %-23s	| %8s\n", "TOP", "Strategy", "Score")
+	fmt.Println(strings.Repeat("-", 50))
 
-	for _, a := range agents {
-		fmt.Printf("%d: %-20s | %8d\n", a.ID, a.Name, a.Score)
+	for i, a := range agents {
+		fmt.Printf("№%-3d	%-3d) %-20s	|%8d\n", i+1, a.ID, a.Name, a.Score)
 	}
-	fmt.Println(strings.Repeat("=", 60))
+	fmt.Println(strings.Repeat("=", 50))
 }

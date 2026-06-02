@@ -49,7 +49,8 @@ func (r Rounds) MyLastAct() Act {
 	return r[len(r)-1].MyAct
 }
 
-// Счетчик триггера для стратегий
+// Счетчик триггера TriggerStreakAfter  для МОДИФИКАТОРОЫ
+// Возможно не нужен?
 func (r Rounds) CountTrigger(trigger Act) int {
 	if len(r) <= 0 {
 		return 0
@@ -66,4 +67,17 @@ func (r Rounds) CountTrigger(trigger Act) int {
 	}
 
 	return count
+}
+
+// Для триггера внутри стратегии
+func (r Rounds) streak(act Act) int {
+	s := 0
+	for i := len(r) - 1; i >= 0; i-- {
+		if r[i].OpAct == act {
+			s++
+		} else {
+			break
+		}
+	}
+	return s
 }
