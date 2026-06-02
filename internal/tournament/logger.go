@@ -193,7 +193,7 @@ func PrintLeaderboard(agents []*domain.Agent) {
 	fmt.Println(strings.Repeat("-", 35))
 
 	for _, a := range agents {
-		fmt.Printf("%-20s | %8d\n", a.Name, a.Score)
+		fmt.Printf("%d: %-20s | %8d\n", a.ID, a.Name, a.Score)
 	}
 	fmt.Println(strings.Repeat("=", 60))
 }

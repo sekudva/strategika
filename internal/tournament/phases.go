@@ -24,7 +24,8 @@ func decidePhase(agents []*domain.Agent, pairs []Pair, round int) map[DirectedPa
 
 		go func(from, to int) {
 			defer wg.Done()
-			act := agents[from].Decide(agents[to].ID, round)
+			opRep := agents[to].Memory.Rep
+			act := agents[from].Decide(agents[to].ID, round, opRep)
 			mu.Lock()
 			results[DirectedPair{from, to}] = act
 			mu.Unlock()
@@ -32,7 +33,8 @@ func decidePhase(agents []*domain.Agent, pairs []Pair, round int) map[DirectedPa
 
 		go func(from, to int) {
 			defer wg.Done()
-			act := agents[from].Decide(agents[to].ID, round)
+			opRep := agents[to].Memory.Rep
+			act := agents[from].Decide(agents[to].ID, round, opRep)
 			mu.Lock()
 			results[DirectedPair{from, to}] = act
 			mu.Unlock()
@@ -78,18 +80,18 @@ func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, p
 		agents[i].Score += payoffI
 		agents[j].Score += payoffJ
 
-		// реп
-		prevI := agents[i].Memory.OpLastAct(agents[j].ID)
-		prevJ := agents[j].Memory.OpLastAct(agents[i].ID)
+		// для репутации
+		prevActItoJ := agents[i].Memory.History[agents[j].ID].MyLastAct()
+		prevActJtoI := agents[j].Memory.History[agents[i].ID].MyLastAct()
 
 		//запись в память ходов
 		agents[i].Memory.Record(round, agents[j].ID, actItoJ, actJtoI)
 		agents[j].Memory.Record(round, agents[i].ID, actJtoI, actItoJ)
 
 		//обновление репы
-		if prevI != domain.NoAct && prevJ != domain.NoAct {
-			agents[i].UpdRep(actItoJ, prevI)
-			agents[j].UpdRep(actJtoI, prevJ)
+		if prevActItoJ != domain.NoAct && prevActJtoI != domain.NoAct {
+			agents[i].UpdRep(actItoJ, prevActJtoI)
+			agents[j].UpdRep(actJtoI, prevActItoJ)
 		}
 
 		// лог

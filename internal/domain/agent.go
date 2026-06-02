@@ -1,13 +1,15 @@
 package domain
 
 type Agent struct {
-	ID        AgID
-	Name      string
-	Memory    *Memory
-	Strategy  *Strategy
+	ID   AgID
+	Name string
+
+	Memory   *Memory
+	Strategy *Strategy
+
 	Modifiers []Modifier
-	Score     int
-	Rep       Reputation
+
+	Score int
 }
 
 func NewAgent(strat *Strategy, id AgID) *Agent {
@@ -20,13 +22,13 @@ func NewAgent(strat *Strategy, id AgID) *Agent {
 	}
 }
 
-func (a *Agent) Decide(opID AgID, round int) Act {
-	core := a.Strategy.CoreDecision(a.Memory, opID)
+func (a *Agent) Decide(opID AgID, round int, opRep Reputation) Act {
+	core := a.Strategy.CoreDecision(a.Memory.History[opID])
 	ctx := ModContext{
-		Memory:   a.Memory,
-		OpID:     opID,
+		History:  a.Memory.History[opID],
 		Round:    round,
 		Strategy: a.Strategy,
+		OpRep:    opRep,
 	}
 	for _, mod := range a.Modifiers {
 		core = mod(core, ctx)
@@ -39,5 +41,5 @@ func (a *Agent) ResetMemory() {
 }
 
 func (a *Agent) UpdRep(myAct, opAct Act) {
-	UpdRep(&a.Rep, myAct, opAct)
+	UpdRep(&a.Memory.Rep, myAct, opAct)
 }

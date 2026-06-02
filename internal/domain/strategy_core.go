@@ -2,9 +2,9 @@ package domain
 
 import "math/rand/v2"
 
-func (s *Strategy) CoreDecision(memory *Memory, opID AgID) Act {
-	opLast := memory.OpLastAct(opID)
-	myLast := memory.MyLastAct(opID)
+func (s *Strategy) CoreDecision(history Rounds) Act {
+	opLast := history.OpLastAct()
+	myLast := history.MyLastAct()
 
 	act := s.evaluate(s.Neutral, opLast, myLast)
 
@@ -16,7 +16,7 @@ func (s *Strategy) CoreDecision(memory *Memory, opID AgID) Act {
 		}
 
 		if test, valid := triggerTable[s.Trigger.Mode]; valid {
-			if test(memory.History[opID], s.Trigger.Act, s.Trigger.Count) {
+			if test(history, s.Trigger.Act, s.Trigger.Count) {
 				return s.evaluate(s.Trigger.Reaction, opLast, myLast)
 			}
 		}

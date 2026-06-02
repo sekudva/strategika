@@ -22,7 +22,7 @@ func ClassicStrategies() []*domain.Agent {
 	}
 }
 
-// AggressiveGroup возвращает стратегии, склонные к атаке
+// Неклассические стратегии, использующие необычную логику из конструкторов и частое действие Hold
 func NonClassicGroup() []*domain.Agent {
 	return []*domain.Agent{
 		AlwaysHold(),

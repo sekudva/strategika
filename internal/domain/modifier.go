@@ -4,10 +4,10 @@ package domain
 // Offended (Обижающаяся) - имеет увеличивающийся счетчик (сколько нужно сделать Share чтобы снова начать делать Share)
 
 type ModContext struct {
-	Memory   *Memory
-	OpID     AgID
+	History  Rounds
 	Round    int
 	Strategy *Strategy
+	OpRep    Reputation
 }
 
 type Modifier func(core Act, ctx ModContext) Act

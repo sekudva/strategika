@@ -1,8 +1,8 @@
 package domain
 
 type Reputation struct {
-	Cooperation float64
-	Defense     float64
+	Coop float64
+	Def  float64
 }
 
 /*
@@ -42,11 +42,11 @@ var reputationTable = [3][3]Reputation{
 
 func UpdRep(rep *Reputation, myAct, opAct Act) {
 	delta := reputationTable[myAct][opAct]
-	rep.Cooperation = clamp(rep.Cooperation + delta.Cooperation)
-	rep.Defense = clamp(rep.Defense + delta.Defense)
+	rep.Coop = cut(rep.Coop + delta.Coop)
+	rep.Def = cut(rep.Def + delta.Def)
 }
 
-func clamp(v float64) float64 {
+func cut(v float64) float64 {
 	if v < 0 {
 		return 0
 	}
