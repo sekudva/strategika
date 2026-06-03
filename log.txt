@@ -1,0 +1,531 @@
+Tournament Config:
+  Rounds: 1
+  Noise:  0.00
+  Pairs:  1
+  Logger: *tournament.AggregateLogger
+
+
+--- Round 1 ---
+AlwaysShare     → AlwaysShare     | 100 /   0 /   0	| Score AlwaysShare     : 8
+AlwaysShare     ← AlwaysShare     |   0 /   0 /   0	| Score AlwaysShare     : 8
+
+
+--- Round 1 ---
+AlwaysShare     → Pacifist        | 100 /   0 /   0	| Score AlwaysShare     : 12
+AlwaysShare     ← Pacifist        | 100 /   0 /   0	| Score Pacifist        : 4
+
+
+--- Round 1 ---
+AlwaysShare     → ColdCyclist     | 100 /   0 /   0	| Score AlwaysShare     : 16
+AlwaysShare     ← ColdCyclist     | 100 /   0 /   0	| Score ColdCyclist     : 4
+
+
+--- Round 1 ---
+AlwaysShare     → Unfriendly      | 100 /   0 /   0	| Score AlwaysShare     : 20
+AlwaysShare     ← Unfriendly      | 100 /   0 /   0	| Score Unfriendly      : 4
+
+
+--- Round 1 ---
+AlwaysShare     → AlwaysTake      | 100 /   0 /   0	| Score AlwaysShare     : 17
+AlwaysShare     ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 7
+
+
+--- Round 1 ---
+AlwaysShare     → EvilTFT         | 100 /   0 /   0	| Score AlwaysShare     : 14
+AlwaysShare     ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 7
+
+
+--- Round 1 ---
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : 14
+AlwaysShare     ← Sadist          |   0 / 100 /   0	| Score Sadist          : 1
+
+
+--- Round 1 ---
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : 14
+AlwaysShare     ← Sadist          |   0 / 100 /   0	| Score Sadist          : 1
+
+
+--- Round 1 ---
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : 14
+AlwaysShare     ← Sadist          |   0 / 100 /   0	| Score Sadist          : 1
+
+
+--- Round 1 ---
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : 11
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 7
+
+
+--- Round 1 ---
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : 8
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 7
+
+
+--- Round 1 ---
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : 5
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 7
+
+
+--- Round 1 ---
+AlwaysShare     → Crazy           | 100 /   0 /   0	| Score AlwaysShare     : 9
+AlwaysShare     ← Crazy           | 100 /   0 /   0	| Score Crazy           : 4
+
+
+--- Round 1 ---
+AlwaysShare     → EvilCyclist     | 100 /   0 /   0	| Score AlwaysShare     : 6
+AlwaysShare     ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 7
+
+
+--- Round 1 ---
+Pacifist        → Pacifist        | 100 /   0 /   0	| Score Pacifist        : 12
+Pacifist        ← Pacifist        |   0 /   0 /   0	| Score Pacifist        : 12
+
+
+--- Round 1 ---
+Pacifist        → ColdCyclist     | 100 /   0 /   0	| Score Pacifist        : 16
+Pacifist        ← ColdCyclist     | 100 /   0 /   0	| Score ColdCyclist     : 8
+
+
+--- Round 1 ---
+Pacifist        → Unfriendly      | 100 /   0 /   0	| Score Pacifist        : 20
+Pacifist        ← Unfriendly      | 100 /   0 /   0	| Score Unfriendly      : 8
+
+
+--- Round 1 ---
+Pacifist        → AlwaysTake      | 100 /   0 /   0	| Score Pacifist        : 17
+Pacifist        ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 14
+
+
+--- Round 1 ---
+Pacifist        → EvilTFT         | 100 /   0 /   0	| Score Pacifist        : 14
+Pacifist        ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 14
+
+
+--- Round 1 ---
+Pacifist        → Sadist          | 100 /   0 /   0	| Score Pacifist        : 11
+Pacifist        ← Sadist          |   0 /   0 / 100	| Score Sadist          : 8
+
+
+--- Round 1 ---
+Pacifist        → Sadist          | 100 /   0 /   0	| Score Pacifist        : 8
+Pacifist        ← Sadist          |   0 /   0 / 100	| Score Sadist          : 8
+
+
+--- Round 1 ---
+Pacifist        → Sadist          | 100 /   0 /   0	| Score Pacifist        : 8
+Pacifist        ← Sadist          |   0 / 100 /   0	| Score Sadist          : 2
+
+
+--- Round 1 ---
+Pacifist        → Bully           | 100 /   0 /   0	| Score Pacifist        : 5
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 14
+
+
+--- Round 1 ---
+Pacifist        → Bully           | 100 /   0 /   0	| Score Pacifist        : 2
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 14
+
+
+--- Round 1 ---
+Pacifist        → Bully           | 100 /   0 /   0	| Score Pacifist        : -1
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 14
+
+
+--- Round 1 ---
+Pacifist        → Crazy           | 100 /   0 /   0	| Score Pacifist        : 3
+Pacifist        ← Crazy           | 100 /   0 /   0	| Score Crazy           : 8
+
+
+--- Round 1 ---
+Pacifist        → EvilCyclist     | 100 /   0 /   0	| Score Pacifist        : 0
+Pacifist        ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 14
+
+
+--- Round 1 ---
+ColdCyclist     → ColdCyclist     | 100 /   0 /   0	| Score ColdCyclist     : 16
+ColdCyclist     ← ColdCyclist     |   0 /   0 /   0	| Score ColdCyclist     : 16
+
+
+--- Round 1 ---
+ColdCyclist     → Unfriendly      | 100 /   0 /   0	| Score ColdCyclist     : 20
+ColdCyclist     ← Unfriendly      | 100 /   0 /   0	| Score Unfriendly      : 12
+
+
+--- Round 1 ---
+ColdCyclist     → AlwaysTake      | 100 /   0 /   0	| Score ColdCyclist     : 17
+ColdCyclist     ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 21
+
+
+--- Round 1 ---
+ColdCyclist     → EvilTFT         | 100 /   0 /   0	| Score ColdCyclist     : 14
+ColdCyclist     ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 21
+
+
+--- Round 1 ---
+ColdCyclist     → Sadist          | 100 /   0 /   0	| Score ColdCyclist     : 14
+ColdCyclist     ← Sadist          |   0 / 100 /   0	| Score Sadist          : 9
+
+
+--- Round 1 ---
+ColdCyclist     → Sadist          | 100 /   0 /   0	| Score ColdCyclist     : 11
+ColdCyclist     ← Sadist          |   0 /   0 / 100	| Score Sadist          : 15
+
+
+--- Round 1 ---
+ColdCyclist     → Sadist          | 100 /   0 /   0	| Score ColdCyclist     : 11
+ColdCyclist     ← Sadist          |   0 / 100 /   0	| Score Sadist          : 3
+
+
+--- Round 1 ---
+ColdCyclist     → Bully           | 100 /   0 /   0	| Score ColdCyclist     : 8
+ColdCyclist     ← Bully           |   0 /   0 / 100	| Score Bully           : 21
+
+
+--- Round 1 ---
+ColdCyclist     → Bully           | 100 /   0 /   0	| Score ColdCyclist     : 5
+ColdCyclist     ← Bully           |   0 /   0 / 100	| Score Bully           : 21
+
+
+--- Round 1 ---
+ColdCyclist     → Bully           | 100 /   0 /   0	| Score ColdCyclist     : 2
+ColdCyclist     ← Bully           |   0 /   0 / 100	| Score Bully           : 21
+
+
+--- Round 1 ---
+ColdCyclist     → Crazy           | 100 /   0 /   0	| Score ColdCyclist     : 6
+ColdCyclist     ← Crazy           | 100 /   0 /   0	| Score Crazy           : 12
+
+
+--- Round 1 ---
+ColdCyclist     → EvilCyclist     | 100 /   0 /   0	| Score ColdCyclist     : 3
+ColdCyclist     ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 21
+
+
+--- Round 1 ---
+Unfriendly      → Unfriendly      | 100 /   0 /   0	| Score Unfriendly      : 20
+Unfriendly      ← Unfriendly      |   0 /   0 /   0	| Score Unfriendly      : 20
+
+
+--- Round 1 ---
+Unfriendly      → AlwaysTake      | 100 /   0 /   0	| Score Unfriendly      : 17
+Unfriendly      ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 28
+
+
+--- Round 1 ---
+Unfriendly      → EvilTFT         | 100 /   0 /   0	| Score Unfriendly      : 14
+Unfriendly      ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 28
+
+
+--- Round 1 ---
+Unfriendly      → Sadist          | 100 /   0 /   0	| Score Unfriendly      : 14
+Unfriendly      ← Sadist          |   0 / 100 /   0	| Score Sadist          : 10
+
+
+--- Round 1 ---
+Unfriendly      → Sadist          | 100 /   0 /   0	| Score Unfriendly      : 11
+Unfriendly      ← Sadist          |   0 /   0 / 100	| Score Sadist          : 22
+
+
+--- Round 1 ---
+Unfriendly      → Sadist          | 100 /   0 /   0	| Score Unfriendly      : 8
+Unfriendly      ← Sadist          |   0 /   0 / 100	| Score Sadist          : 10
+
+
+--- Round 1 ---
+Unfriendly      → Bully           | 100 /   0 /   0	| Score Unfriendly      : 5
+Unfriendly      ← Bully           |   0 /   0 / 100	| Score Bully           : 28
+
+
+--- Round 1 ---
+Unfriendly      → Bully           | 100 /   0 /   0	| Score Unfriendly      : 2
+Unfriendly      ← Bully           |   0 /   0 / 100	| Score Bully           : 28
+
+
+--- Round 1 ---
+Unfriendly      → Bully           | 100 /   0 /   0	| Score Unfriendly      : -1
+Unfriendly      ← Bully           |   0 /   0 / 100	| Score Bully           : 28
+
+
+--- Round 1 ---
+Unfriendly      → Crazy           | 100 /   0 /   0	| Score Unfriendly      : 3
+Unfriendly      ← Crazy           | 100 /   0 /   0	| Score Crazy           : 16
+
+
+--- Round 1 ---
+Unfriendly      → EvilCyclist     | 100 /   0 /   0	| Score Unfriendly      : 0
+Unfriendly      ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 28
+
+
+--- Round 1 ---
+AlwaysTake      → AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 24
+AlwaysTake      ← AlwaysTake      |   0 /   0 /   0	| Score AlwaysTake      : 24
+
+
+--- Round 1 ---
+AlwaysTake      → EvilTFT         |   0 /   0 / 100	| Score AlwaysTake      : 22
+AlwaysTake      ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 26
+
+
+--- Round 1 ---
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 22
+AlwaysTake      ← Sadist          |   0 / 100 /   0	| Score Sadist          : 9
+
+
+--- Round 1 ---
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 20
+AlwaysTake      ← Sadist          |   0 /   0 / 100	| Score Sadist          : 20
+
+
+--- Round 1 ---
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 18
+AlwaysTake      ← Sadist          |   0 /   0 / 100	| Score Sadist          : 8
+
+
+--- Round 1 ---
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 16
+AlwaysTake      ← Bully           |   0 /   0 / 100	| Score Bully           : 26
+
+
+--- Round 1 ---
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 14
+AlwaysTake      ← Bully           |   0 /   0 / 100	| Score Bully           : 26
+
+
+--- Round 1 ---
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 12
+AlwaysTake      ← Bully           |   0 /   0 / 100	| Score Bully           : 26
+
+
+--- Round 1 ---
+AlwaysTake      → Crazy           |   0 /   0 / 100	| Score AlwaysTake      : 19
+AlwaysTake      ← Crazy           | 100 /   0 /   0	| Score Crazy           : 13
+
+
+--- Round 1 ---
+AlwaysTake      → EvilCyclist     |   0 /   0 / 100	| Score AlwaysTake      : 17
+AlwaysTake      ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 26
+
+
+--- Round 1 ---
+EvilTFT         → EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : 22
+EvilTFT         ← EvilTFT         |   0 /   0 /   0	| Score EvilTFT         : 22
+
+
+--- Round 1 ---
+EvilTFT         → Sadist          |   0 /   0 / 100	| Score EvilTFT         : 20
+EvilTFT         ← Sadist          |   0 /   0 / 100	| Score Sadist          : 7
+
+
+--- Round 1 ---
+EvilTFT         → Sadist          |   0 /   0 / 100	| Score EvilTFT         : 18
+EvilTFT         ← Sadist          |   0 /   0 / 100	| Score Sadist          : 18
+
+
+--- Round 1 ---
+EvilTFT         → Sadist          |   0 /   0 / 100	| Score EvilTFT         : 16
+EvilTFT         ← Sadist          |   0 /   0 / 100	| Score Sadist          : 6
+
+
+--- Round 1 ---
+EvilTFT         → Bully           |   0 /   0 / 100	| Score EvilTFT         : 14
+EvilTFT         ← Bully           |   0 /   0 / 100	| Score Bully           : 24
+
+
+--- Round 1 ---
+EvilTFT         → Bully           |   0 /   0 / 100	| Score EvilTFT         : 12
+EvilTFT         ← Bully           |   0 /   0 / 100	| Score Bully           : 24
+
+
+--- Round 1 ---
+EvilTFT         → Bully           |   0 /   0 / 100	| Score EvilTFT         : 10
+EvilTFT         ← Bully           |   0 /   0 / 100	| Score Bully           : 24
+
+
+--- Round 1 ---
+EvilTFT         → Crazy           |   0 /   0 / 100	| Score EvilTFT         : 17
+EvilTFT         ← Crazy           | 100 /   0 /   0	| Score Crazy           : 10
+
+
+--- Round 1 ---
+EvilTFT         → EvilCyclist     |   0 /   0 / 100	| Score EvilTFT         : 15
+EvilTFT         ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 24
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 /  50 /  50	| Score Sadist          : 6
+Sadist          ← Sadist          |   0 /   0 /   0	| Score Sadist          : 6
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 /   0 / 100	| Score Sadist          : 6
+Sadist          ← Sadist          |   0 / 100 /   0	| Score Sadist          : 17
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 /   0 / 100	| Score Sadist          : 4
+Sadist          ← Sadist          |   0 /   0 / 100	| Score Sadist          : 4
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 /   0 / 100	| Score Sadist          : 2
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 / 100 /   0	| Score Sadist          : 1
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 24
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 /   0 / 100	| Score Sadist          : -1
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Crazy           |   0 / 100 /   0	| Score Sadist          : 0
+Sadist          ← Crazy           | 100 /   0 /   0	| Score Crazy           : 10
+
+
+--- Round 1 ---
+Sadist          → EvilCyclist     |   0 / 100 /   0	| Score Sadist          : -1
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 24
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 / 100 /   0	| Score Sadist          : 17
+Sadist          ← Sadist          |   0 /   0 /   0	| Score Sadist          : 17
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 /   0 / 100	| Score Sadist          : 17
+Sadist          ← Sadist          |   0 / 100 /   0	| Score Sadist          : 3
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 / 100 /   0	| Score Sadist          : 16
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 /   0 / 100	| Score Sadist          : 14
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 / 100 /   0	| Score Sadist          : 13
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Crazy           |   0 / 100 /   0	| Score Sadist          : 14
+Sadist          ← Crazy           | 100 /   0 /   0	| Score Crazy           : 10
+
+
+--- Round 1 ---
+Sadist          → EvilCyclist     |   0 / 100 /   0	| Score Sadist          : 13
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 24
+
+
+--- Round 1 ---
+Sadist          → Sadist          |   0 /   0 / 100	| Score Sadist          : -1
+Sadist          ← Sadist          |   0 /   0 /   0	| Score Sadist          : -1
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 / 100 /   0	| Score Sadist          : -2
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 /   0 / 100	| Score Sadist          : -4
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 20
+
+
+--- Round 1 ---
+Sadist          → Bully           |   0 / 100 /   0	| Score Sadist          : -5
+Sadist          ← Bully           |   0 /   0 / 100	| Score Bully           : 22
+
+
+--- Round 1 ---
+Sadist          → Crazy           |   0 /   0 / 100	| Score Sadist          : 2
+Sadist          ← Crazy           | 100 /   0 /   0	| Score Crazy           : 7
+
+
+--- Round 1 ---
+Sadist          → EvilCyclist     |   0 /   0 / 100	| Score Sadist          : 0
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 22
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 18
+Bully           ← Bully           |   0 /   0 /   0	| Score Bully           : 18
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 16
+Bully           ← Bully           |   0 /   0 / 100	| Score Bully           : 18
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 14
+Bully           ← Bully           |   0 /   0 / 100	| Score Bully           : 20
+
+
+--- Round 1 ---
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 21
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : 4
+
+
+--- Round 1 ---
+Bully           → EvilCyclist     |   0 /   0 / 100	| Score Bully           : 19
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 20
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 14
+Bully           ← Bully           |   0 /   0 /   0	| Score Bully           : 14
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 12
+Bully           ← Bully           |   0 /   0 / 100	| Score Bully           : 18
+
+
+--- Round 1 ---
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 19
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : 1
+
+
+--- Round 1 ---
+Bully           → EvilCyclist     |   0 /   0 / 100	| Score Bully           : 17
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 18
+
+
+--- Round 1 ---
+Bully           → Bully           |   0 /   0 / 100	| Score Bully           : 14
+Bully           ← Bully           |   0 /   0 /   0	| Score Bully           : 14
+
+
+--- Round 1 ---
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 21
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2
+
+
+--- Round 1 ---
+Bully           → EvilCyclist     |   0 /   0 / 100	| Score Bully           : 19
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 16
+
+
+--- Round 1 ---
+Crazy           → Crazy           | 100 /   0 /   0	| Score Crazy           : 6
+Crazy           ← Crazy           |   0 /   0 /   0	| Score Crazy           : 6
+
+
+--- Round 1 ---
+Crazy           → EvilCyclist     | 100 /   0 /   0	| Score Crazy           : 3
+Crazy           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 23
+
+
+--- Round 1 ---
+EvilCyclist     → EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : 19
+EvilCyclist     ← EvilCyclist     |   0 /   0 /   0	| Score EvilCyclist     : 19
+

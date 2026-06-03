@@ -18,13 +18,13 @@ func main() {
 	defer f.Close()
 
 	// Конфигурация с AggregateLogger для статистики
-	cfg, err := presets.DuelConfig(10, 0.0)
+	cfg, err := presets.DuelConfig(1, 0.0)
 	if err != nil {
 		fmt.Printf("config error: %v\n", err)
 		return
 	}
 	// Переопределяем логгер на AggregateLogger с выводом каждые 10 раундов
-	cfg.Logger = tournament.NewAggregateLogger(10, cfg.Pairs, agents, f)
+	cfg.Logger = tournament.NewAggregateLogger(1, cfg.Pairs, agents, f)
 
 	cfg.InfoTo(f)
 

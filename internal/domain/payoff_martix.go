@@ -15,6 +15,14 @@ var PayoffMatrixORIGINAL = [3][3]int{
 	/* Take */ {+3, 0, -1},
 }
 
+// Альтернативные весы
+var PayoffMatrixALT = [3][3]int{
+	//		Share  Hold  Take
+	/* Share*/ {+4, -0, -3},
+	/* Hold */ {+1, -0, -1},
+	/* Take */ {+6, +2, -2},
+}
+
 // my - мой ход, op (opponent) - ход противника
 // счетчик очков на один ход
 func Payoff(my, op Act) (int, int) {
