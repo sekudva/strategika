@@ -10,6 +10,7 @@ type Agent struct {
 	Modifiers []Modifier
 
 	Score int
+	Dead  bool
 }
 
 func NewAgent(strat *Strategy, id AgID) *Agent {

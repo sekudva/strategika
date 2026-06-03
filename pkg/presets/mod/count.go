@@ -27,3 +27,34 @@ func Doubler() domain.Modifier {
 		return core
 	}
 }
+
+// Doubler WITHOUT HOLD
+func JournalistMod() domain.Modifier {
+	repeatCount := 0
+	var lastAct domain.Act
+
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if len(ctx.History) == 0 {
+			return core
+		}
+
+		currentLast := ctx.History.OpLastAct()
+
+		if currentLast == domain.Hold {
+			return core
+		}
+
+		if currentLast != lastAct {
+			lastAct = currentLast
+			repeatCount = 0
+		}
+
+		repeatCount++
+
+		if repeatCount <= 2 {
+			return lastAct
+		}
+
+		return core
+	}
+}

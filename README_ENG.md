@@ -1,10 +1,8 @@
-
-
 # STRATEGIKA
 ## Legacy of Axelrod's Tournament
 
 Author: Selena Kudinova
-WARNING: Commentaries in my project often written in Russian, please use translator if you need clarity
+WARNING: Commentaries in that project often written in Russian(my native language), please use translator if you need clarity!
 
 ### History of the Strategy Tournament
 

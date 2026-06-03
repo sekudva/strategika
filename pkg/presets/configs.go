@@ -2,6 +2,7 @@ package presets
 
 import (
 	"fmt"
+	"math"
 	"math/rand/v2"
 
 	"github.com/sekudva/strategika/internal/tournament"
@@ -10,11 +11,12 @@ import (
 // DuelConfig возвращает конфигурацию для дуэли двух агентов
 func DuelConfig(rounds int, noise float64) (tournament.SimConfig, error) {
 	cfg := tournament.SimConfig{
-		Rounds: rounds,
-		Noise:  noise,
-		Pairs:  tournament.DuelPairs(),
-		RNG:    DefaultRNG(),
-		Logger: &tournament.AllLogger{},
+		Rounds:         rounds,
+		Noise:          noise,
+		Pairs:          tournament.DuelPairs(),
+		RNG:            DefaultRNG(),
+		Logger:         &tournament.AllLogger{},
+		DeathThreshold: math.MinInt,
 	}
 
 	if err := cfg.Validate(); err != nil {
@@ -31,11 +33,12 @@ func ArenaConfig(agentCount int, rounds int, noise float64) (tournament.SimConfi
 	}
 
 	cfg := tournament.SimConfig{
-		Rounds: rounds,
-		Noise:  noise,
-		Pairs:  tournament.AllPairs(agentCount),
-		RNG:    DefaultRNG(),
-		Logger: &tournament.AggregateLogger{Interval: 10},
+		Rounds:         rounds,
+		Noise:          noise,
+		Pairs:          tournament.AllPairs(agentCount),
+		RNG:            DefaultRNG(),
+		Logger:         &tournament.AggregateLogger{Interval: 10},
+		DeathThreshold: math.MinInt,
 	}
 
 	if err := cfg.Validate(); err != nil {
@@ -56,11 +59,12 @@ func TrialConfig(leaderIndex, agentCount int, rounds int, noise float64) (tourna
 	}
 
 	cfg := tournament.SimConfig{
-		Rounds: rounds,
-		Noise:  noise,
-		Pairs:  tournament.TrialPairs(leaderIndex, agentCount),
-		RNG:    DefaultRNG(),
-		Logger: &tournament.AllLogger{},
+		Rounds:         rounds,
+		Noise:          noise,
+		Pairs:          tournament.TrialPairs(leaderIndex, agentCount),
+		RNG:            DefaultRNG(),
+		Logger:         &tournament.AllLogger{},
+		DeathThreshold: math.MinInt,
 	}
 
 	if err := cfg.Validate(); err != nil {
