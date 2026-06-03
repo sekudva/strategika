@@ -19,13 +19,11 @@ type Trigger struct {
 type Strategy struct {
 	Neutral RuleValue // нейтральное состояние
 	Trigger *Trigger
-	State   map[string]int // счетчик стратегии, используется редко
 }
 
 func NewStrategy(neutral RuleValue, trigger *Trigger) *Strategy {
 	return &Strategy{
 		Neutral: neutral,
 		Trigger: trigger,
-		State:   make(map[string]int),
 	}
 }

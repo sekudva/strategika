@@ -1,13 +1,21 @@
 package domain
 
-// STRATEGY MODIFIERS LIST (1/1 duels)
-// Offended (Обижающаяся) - имеет увеличивающийся счетчик (сколько нужно сделать Share чтобы снова начать делать Share)
-
 type ModContext struct {
 	History  Rounds
 	Round    int
-	Strategy *Strategy
+	ModState map[Counter]int
 	OpRep    Reputation
 }
 
+// храниться в агенте
 type Modifier func(core Act, ctx ModContext) Act
+
+// храниться в памяти, используется агентом
+type Counter int
+
+const (
+	RepeatCounter     Counter = iota // сколько раз повторили действие
+	GoodStreakCounter                // сколько Share подряд от партнёра
+	EscalationCounter                // шаг эскалации
+	PhaseStepCounter                 // шаг фазы оценки
+)

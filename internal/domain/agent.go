@@ -25,9 +25,9 @@ func NewAgent(strat *Strategy, id AgID) *Agent {
 func (a *Agent) Decide(opID AgID, round int, opRep Reputation) Act {
 	core := a.Strategy.CoreDecision(a.Memory.History[opID])
 	ctx := ModContext{
-		History:  a.Memory.History[opID],
 		Round:    round,
-		Strategy: a.Strategy,
+		History:  a.Memory.History[opID],
+		ModState: a.Memory.ModState[opID],
 		OpRep:    opRep,
 	}
 	for _, mod := range a.Modifiers {

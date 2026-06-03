@@ -1,5 +1,3 @@
-// pkg/presets/agent_groups.go
-
 package presets
 
 import (

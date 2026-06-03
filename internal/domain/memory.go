@@ -8,8 +8,9 @@ type Round struct {
 type Rounds []Round
 
 type Memory struct {
-	History map[AgID]Rounds
-	Rep     Reputation
+	History  map[AgID]Rounds
+	ModState map[AgID]map[Counter]int
+	Rep      Reputation
 }
 
 func NewMemory() *Memory {
@@ -47,26 +48,6 @@ func (r Rounds) MyLastAct() Act {
 		return NoAct
 	}
 	return r[len(r)-1].MyAct
-}
-
-// Счетчик триггера TriggerStreakAfter  для МОДИФИКАТОРОЫ
-// Возможно не нужен?
-func (r Rounds) CountTrigger(trigger Act) int {
-	if len(r) <= 0 {
-		return 0
-	}
-
-	count := 0
-
-	for i := len(r) - 1; i >= 0; i-- {
-		if r[i].OpAct == trigger {
-			count++
-		} else {
-			break
-		}
-	}
-
-	return count
 }
 
 // Для триггера внутри стратегии
