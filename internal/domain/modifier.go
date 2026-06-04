@@ -18,4 +18,5 @@ const (
 	GoodStreakCounter                // сколько Share подряд от партнёра
 	EscalationCounter                // шаг эскалации
 	PhaseStepCounter                 // шаг фазы оценки
+	ActRecorder                      // Так как действия тоже INT их можно хранить в счетчиках для удобства
 )

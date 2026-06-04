@@ -24,6 +24,11 @@ func NewAgent(strat *Strategy, id AgID) *Agent {
 }
 
 func (a *Agent) Decide(opID AgID, round int, opRep Reputation) Act {
+	// инициализация внутренних счетчиков для каждого агента отдельно
+	if _, ok := a.Memory.ModState[opID]; !ok {
+		a.Memory.ModState[opID] = make(map[Counter]int)
+	}
+
 	core := a.Strategy.CoreDecision(a.Memory.History[opID])
 	ctx := ModContext{
 		Round:    round,

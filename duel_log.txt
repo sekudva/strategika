@@ -1,0 +1,30 @@
+Tournament Config:
+  Rounds: 20
+  Noise:  0.00
+  Pairs:  1
+  Logger: *tournament.AllLogger
+
+[  1] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  2] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  3] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  4] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  5] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  6] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  7] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  8] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[  9] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 10] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 11] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 12] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 13] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 14] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 15] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 16] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 17] Journalist           vs ColdGhost            | Take  vs Hold  |  +0 /  -1
+[ 18] Journalist           vs ColdGhost            | Hold  vs Take  |  -1 /  +0
+[ 19] Journalist           vs ColdGhost            | Take  vs Hold  |  +0 /  -1
+[ 20] Journalist           vs ColdGhost            | Take  vs Take  |  -2 /  -2
+
+=== FINAL SCORES ===
+Journalist: -3
+ColdGhost: -4

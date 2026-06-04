@@ -15,7 +15,8 @@ type Memory struct {
 
 func NewMemory() *Memory {
 	return &Memory{
-		History: make(map[AgID]Rounds),
+		History:  make(map[AgID]Rounds),
+		ModState: make(map[AgID]map[Counter]int),
 		Rep: Reputation{
 			Coop: 0.5,
 			Def:  0.5,
@@ -39,6 +40,14 @@ func (r Rounds) OpLastAct() Act {
 		return NoAct
 	}
 	return r[len(r)-1].OpAct
+}
+
+// Возвращает ПРЕДпоследний ход ПРОТИВНИКА
+func (r Rounds) Op2LastAct() Act {
+	if len(r) <= 0 {
+		return NoAct
+	}
+	return r[len(r)-2].OpAct
 }
 
 // Возвращает МОЙ последний ход

@@ -2,39 +2,29 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"log"
 
-	"github.com/sekudva/strategika/internal/tournament"
-	"github.com/sekudva/strategika/pkg/presets"
+	"github.com/sekudva/strategika/pkg/benchmark"
 )
 
 func main() {
-	agents := presets.EvilDominates()
+	// ========== ВЫБЕРИ ТЕСТ ==========
+	// Раскомментируй нужную строку:
 
-	//agents := append(presets.ClassicStrategies(), presets.NonClassicGroup()...)
+	// 1. Круговой турнир всех стратегий
+	// if err := benchmark.RunRoundRobinTournament(); err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	f, _ := os.Create("log.txt")
-	//s := os.Stdout
-	defer f.Close()
-
-	// Конфигурация с AggregateLogger для статистики
-	cfg, err := presets.DuelConfig(1, 0.0)
-	if err != nil {
-		fmt.Printf("config error: %v\n", err)
-		return
-	}
-	// Переопределяем логгер на AggregateLogger с выводом каждые 10 раундов
-	cfg.Logger = tournament.NewAggregateLogger(1, cfg.Pairs, agents, f)
-
-	cfg.InfoTo(f)
-
-	// Запускаем RoundRobin
-	err = tournament.RoundRobin(cfg, agents)
-	if err != nil {
-		fmt.Printf("tournament error: %v\n", err)
-		return
+	// 2. Дуэль двух агентов (выбери агентов внутри benchmarks.RunDuel)
+	if err := benchmark.RunDuel(); err != nil {
+		log.Fatal(err)
 	}
 
-	// Итоговая таблица
-	tournament.PrintLeaderboard(agents)
+	// 3. Арена с группой (выбери группу внутри benchmarks.RunArena)
+	// if err := benchmark.RunArena(); err != nil {
+	//     log.Fatal(err)
+	// }
+
+	fmt.Println("Done!")
 }

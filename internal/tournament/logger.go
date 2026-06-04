@@ -143,14 +143,16 @@ func pct(count, total int) int {
 // AllLogger сохраняет все раунды в срез.
 type AllLogger struct {
 	Logs   []RoundLog
+	Agents []*domain.Agent
 	Writer io.Writer
 }
 
-func NewAllLogger(w io.Writer) *AllLogger {
+func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
 	if w == nil {
 		w = os.Stdout
 	}
 	return &AllLogger{
+		Agents: agents,
 		Writer: w,
 		Logs:   make([]RoundLog, 0),
 	}
@@ -161,12 +163,27 @@ func (l *AllLogger) Log(entry RoundLog) {
 }
 
 func (l *AllLogger) Flush() []RoundLog {
+	names := make(map[domain.AgID]string)
+	for _, a := range l.Agents {
+		names[a.ID] = a.Name
+	}
+
 	for _, entry := range l.Logs {
-		fmt.Fprintf(l.Writer, "[%3d] %d → %d | %s vs %s| %+d / %+d\n",
+		name1 := names[entry.Agent1]
+		name2 := names[entry.Agent2]
+		if name1 == "" {
+			name1 = fmt.Sprintf("Agent-%d", entry.Agent1)
+		}
+		if name2 == "" {
+			name2 = fmt.Sprintf("Agent-%d", entry.Agent2)
+		}
+
+		fmt.Fprintf(l.Writer, "[%3d] %-20s vs %-20s | %-5s vs %-5s | %+3d / %+3d\n",
 			entry.Round,
-			entry.Agent1, entry.Agent2,
+			name1, name2,
 			entry.Act1.String(), entry.Act2.String(),
-			entry.Score1, entry.Score2)
+			entry.Score1, entry.Score2,
+		)
 	}
 
 	result := l.Logs

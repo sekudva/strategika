@@ -1,57 +1,59 @@
-func (cfg SimConfig) RunSimulation(agents []*domain.Agent) map[domain.AgID]int {
-	active := make([]*domain.Agent, len(agents))
-	copy(active, agents)
+package tournament
 
-	for round := 1; round <= cfg.Rounds; round++ {
-		// Фильтруем живых (только если есть порог смерти)
-		if cfg.DeathThreshold > math.MinInt {
-			var alive []*domain.Agent
-			for _, a := range active {
-				if !a.Dead {
-					alive = append(alive, a)
-				}
-			}
-			active = alive
-			if len(active) < 2 {
-				break
-			}
-		}
+// func (cfg SimConfig) RunSimulation(agents []*domain.Agent) map[domain.AgID]int {
+// 	active := make([]*domain.Agent, len(agents))
+// 	copy(active, agents)
 
-		// Строим пары для активных агентов
-		var activePairs []Pair
-		for i := range active {
-			for j := i + 1; j < len(active); j++ {
-				activePairs = append(activePairs, Pair{i, j})
-			}
-		}
+// 	for round := 1; round <= cfg.Rounds; round++ {
+// 		// Фильтруем живых (только если есть порог смерти)
+// 		if cfg.DeathThreshold > math.MinInt {
+// 			var alive []*domain.Agent
+// 			for _, a := range active {
+// 				if !a.Dead {
+// 					alive = append(alive, a)
+// 				}
+// 			}
+// 			active = alive
+// 			if len(active) < 2 {
+// 				break
+// 			}
+// 		}
 
-		decisions := decidePhase(active, activePairs, round)
-		decisions = noisePhase(decisions, cfg.Noise, cfg.RNG)
-		applyPhase(active, decisions, activePairs, round, cfg.Logger)
+// 		// Строим пары для активных агентов
+// 		var activePairs []Pair
+// 		for i := range active {
+// 			for j := i + 1; j < len(active); j++ {
+// 				activePairs = append(activePairs, Pair{i, j})
+// 			}
+// 		}
 
-		// Проверка смерти
-		if cfg.DeathThreshold > math.MinInt {
-			for _, a := range active {
-				if a.Score <= cfg.DeathThreshold {
-					a.Dead = true
-					cfg.Logger.Log(RoundLog{
-						Round:  round,
-						Agent1: a.ID,
-						Act1:   domain.NoAct,
-						Score1: a.Score,
-					})
-				}
-			}
-		}
-	}
+// 		decisions := decidePhase(active, activePairs, round)
+// 		decisions = noisePhase(decisions, cfg.Noise, cfg.RNG)
+// 		applyPhase(active, decisions, activePairs, round, cfg.Logger)
 
-	if cfg.Logger != nil {
-		cfg.Logger.Flush()
-	}
+// 		// Проверка смерти
+// 		if cfg.DeathThreshold > math.MinInt {
+// 			for _, a := range active {
+// 				if a.Score <= cfg.DeathThreshold {
+// 					a.Dead = true
+// 					cfg.Logger.Log(RoundLog{
+// 						Round:  round,
+// 						Agent1: a.ID,
+// 						Act1:   domain.NoAct,
+// 						Score1: a.Score,
+// 					})
+// 				}
+// 			}
+// 		}
+// 	}
 
-	scores := make(map[domain.AgID]int, len(agents))
-	for _, a := range agents {
-		scores[a.ID] = a.Score
-	}
-	return scores
-}
+// 	if cfg.Logger != nil {
+// 		cfg.Logger.Flush()
+// 	}
+
+// 	scores := make(map[domain.AgID]int, len(agents))
+// 	for _, a := range agents {
+// 		scores[a.ID] = a.Score
+// 	}
+// 	return scores
+// }

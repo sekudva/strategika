@@ -1,58 +1,58 @@
 package mod
 
-import "github.com/sekudva/strategika/internal/domain"
+import (
+	"github.com/sekudva/strategika/internal/domain"
+)
 
 // Doubler
 func Doubler() domain.Modifier {
-	repeatCount := 0
-	var lastAct domain.Act
-
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if len(ctx.History) == 0 {
+			ctx.ModState[domain.RepeatCounter] = 0
 			return core
 		}
 
-		currentLast := ctx.History.OpLastAct()
-
-		if currentLast != lastAct {
-			lastAct = currentLast
-			repeatCount = 0
+		if ctx.ModState[domain.RepeatCounter] == 0 {
+			ctx.ModState[domain.ActRecorder] = int(ctx.History.OpLastAct())
 		}
 
-		repeatCount++
-		if repeatCount <= 2 {
-			return lastAct
+		ctx.ModState[domain.RepeatCounter]++
+
+		if ctx.ModState[domain.RepeatCounter] <= 2 {
+			return domain.Act(ctx.ModState[domain.ActRecorder])
 		}
 
-		return core
+		ctx.ModState[domain.ActRecorder] = int(ctx.History.OpLastAct())
+		ctx.ModState[domain.RepeatCounter] = 1
+		return domain.Act(ctx.ModState[domain.ActRecorder])
 	}
 }
 
-// Doubler WITHOUT HOLD
+// Дважды повторяет только Share и Take
 func JournalistMod() domain.Modifier {
-	repeatCount := 0
-	var lastAct domain.Act
-
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if len(ctx.History) == 0 {
+			ctx.ModState[domain.RepeatCounter] = 0
 			return core
 		}
 
-		currentLast := ctx.History.OpLastAct()
-
-		if currentLast == domain.Hold {
-			return core
+		if ctx.ModState[domain.RepeatCounter] == 0 {
+			ctx.ModState[domain.ActRecorder] = int(ctx.History.OpLastAct())
 		}
 
-		if currentLast != lastAct {
-			lastAct = currentLast
-			repeatCount = 0
+		ctx.ModState[domain.RepeatCounter]++
+
+		if ctx.ModState[domain.RepeatCounter] <= 2 {
+			if domain.Act(ctx.ModState[domain.ActRecorder]) != domain.Hold {
+				return domain.Act(ctx.ModState[domain.ActRecorder])
+			}
 		}
 
-		repeatCount++
+		ctx.ModState[domain.ActRecorder] = int(ctx.History.OpLastAct())
 
-		if repeatCount <= 2 {
-			return lastAct
+		if domain.Act(ctx.ModState[domain.ActRecorder]) != domain.Hold {
+			ctx.ModState[domain.RepeatCounter] = 1
+			return domain.Act(ctx.ModState[domain.ActRecorder])
 		}
 
 		return core

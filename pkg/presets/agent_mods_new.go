@@ -7,6 +7,8 @@ import (
 
 // ========== 10. PREDICTABLE BEHAVIOR ==========
 
+// Рассказывает в своих статьях о самых знаменательных событиях!
+// И почему-то иногда от скуки решает придумать кричащий заголовок сама...
 func Journalist() *domain.Agent {
 	return &domain.Agent{
 		Name: "Journalist",
@@ -15,7 +17,7 @@ func Journalist() *domain.Agent {
 		Strategy: &domain.Strategy{
 			Neutral: domain.RuleValue{
 				Fix:  domain.Hold,
-				Prob: map[domain.Act]float64{domain.Take: 0.1},
+				Prob: map[domain.Act]float64{domain.Take: 0.05},
 			},
 		},
 
