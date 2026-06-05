@@ -57,25 +57,6 @@ func StrictTeacher() *domain.Strategy {
 	}
 }
 
-// При первом Take → с вероятностью 2/7 ответить Take, 5/7 Share
-func GroFman() *domain.Strategy {
-	return &domain.Strategy{
-		Neutral: domain.RuleValue{Fix: domain.Share},
-		Trigger: &domain.Trigger{
-			Act:   domain.Take,
-			Count: 1,
-			Mode:  domain.TriggerStreakAfter,
-			Reaction: domain.RuleValue{
-				Fix: domain.Share,
-				Prob: map[domain.Act]float64{
-					domain.Share: 0.7142857, // 5/7 ≈ 71.4%
-					domain.Take:  0.2857143, // 2/7 ≈ 28.6%
-				},
-			},
-		},
-	}
-}
-
 // Only after 3 Takes do Take
 func Patient() *domain.Strategy {
 	return &domain.Strategy{

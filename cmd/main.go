@@ -23,7 +23,7 @@ func main() {
 
 	// 3. Арена с группой (выбери группу внутри benchmarks.RunArena)
 	// if err := benchmark.RunArena(); err != nil {
-	//     log.Fatal(err)
+	// 	log.Fatal(err)
 	// }
 
 	fmt.Println("Done!")

@@ -20,11 +20,11 @@ Tournament Config:
 [ 14] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
 [ 15] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
 [ 16] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
-[ 17] Journalist           vs ColdGhost            | Take  vs Hold  |  +0 /  -1
-[ 18] Journalist           vs ColdGhost            | Hold  vs Take  |  -1 /  +0
-[ 19] Journalist           vs ColdGhost            | Take  vs Hold  |  +0 /  -1
-[ 20] Journalist           vs ColdGhost            | Take  vs Take  |  -2 /  -2
+[ 17] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 18] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 19] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
+[ 20] Journalist           vs ColdGhost            | Hold  vs Hold  |  +0 /  +0
 
 === FINAL SCORES ===
-Journalist: -3
-ColdGhost: -4
+Journalist: 0
+ColdGhost: 0

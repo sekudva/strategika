@@ -36,7 +36,7 @@ func SeekSneak() domain.Modifier {
 }
 
 // Рыцарь - ищет агрессивных и атакует
-// Защищает слабых
+// Кооперирует со слабыми
 func Knight() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if ctx.OpRep.Coop < 0.15 && ctx.OpRep.Def > 0.75 {

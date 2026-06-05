@@ -1,0 +1,6 @@
+Tournament Config:
+  Rounds: 20
+  Noise:  0.00
+  Pairs:  91
+  Logger: *tournament.AggregateLogger
+

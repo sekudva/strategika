@@ -41,7 +41,7 @@ func ColdCyclist() *domain.Strategy {
 	m := domain.MirrorCold
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
-			Fix:    domain.Share,
+			Fix:    domain.Hold,
 			Mirror: &m,
 		},
 		Trigger: &domain.Trigger{

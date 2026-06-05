@@ -12,7 +12,7 @@ import (
 // Игнорирование применения модификатора если оппонент сделал Hold
 func IgnoreHold(next domain.Modifier) domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		if len(ctx.History) > 0 && (ctx.History.OpLastAct() == domain.Hold && ctx.History.Op2LastAct() == domain.Hold) {
+		if len(ctx.History) > 0 && (ctx.History.OpLastAct() == domain.Hold) {
 			return core
 		}
 		return next(core, ctx)
