@@ -1,5 +1,7 @@
 package domain
 
+import "sync"
+
 type Agent struct {
 	ID   AgID
 	Name string
@@ -11,6 +13,8 @@ type Agent struct {
 
 	Score int
 	Dead  bool
+
+	mu sync.RWMutex
 }
 
 func NewAgent(strat *Strategy, id AgID) *Agent {
@@ -24,6 +28,9 @@ func NewAgent(strat *Strategy, id AgID) *Agent {
 }
 
 func (a *Agent) Decide(opID AgID, round int, opRep Reputation) Act {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
 	// инициализация внутренних счетчиков для каждого агента отдельно
 	if _, ok := a.Memory.ModState[opID]; !ok {
 		a.Memory.ModState[opID] = make(map[Counter]int)

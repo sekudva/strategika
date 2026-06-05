@@ -74,22 +74,31 @@ func TitForTatEVIL() *domain.Strategy {
 	}
 }
 
-// Probalistic tit-for-tat, orig logic, Joss
+// Probalistic tit-for-tat, NEW logic, Joss
 func Joss() *domain.Strategy {
+	direct := domain.MirrorDirect
 	return &domain.Strategy{
 		Neutral: domain.RuleValue{
-			Fix: domain.Share,
+			Fix:    domain.Share,
+			Mirror: &direct,
 
 			Prob: map[domain.Act]float64{
 				domain.Take: 0.1,
 			},
 		},
-		Trigger: &domain.Trigger{
-			Act:   domain.Take,
-			Count: 1,
-			Mode:  domain.TriggerStreakAfter,
-			Reaction: domain.RuleValue{
-				Fix: domain.Take,
+	}
+}
+
+// Probalistic tit-for-tat, NEW logic, Joss, starts with Take
+func HardJoss() *domain.Strategy {
+	direct := domain.MirrorDirect
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Take,
+			Mirror: &direct,
+
+			Prob: map[domain.Act]float64{
+				domain.Take: 0.1,
 			},
 		},
 	}

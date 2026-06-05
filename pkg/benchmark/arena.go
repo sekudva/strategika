@@ -12,8 +12,8 @@ import (
 // Выбери группу, раскомментировав нужную строку
 func RunArena() error {
 	// ========== ВЫБЕРИ ГРУППУ ==========
-	agents := presets.EvilDominates()
-	// agents := presets.ClassicStrategies()
+	//agents := presets.EvilDominates()
+	agents := presets.ClassicStrategies()
 	// agents := presets.NonClassicGroup()
 	// ===================================
 
@@ -28,7 +28,7 @@ func RunArena() error {
 		return fmt.Errorf("config error: %w", err)
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(5, cfg.Pairs, agents, f)
+	cfg.Logger = tournament.NewAggregateLogger(20, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
 	scores := cfg.RunSimulation(agents)
@@ -38,11 +38,7 @@ func RunArena() error {
 		fmt.Fprintf(f, "%2d. %-20s: %d\n", i+1, a.Name, scores[a.ID])
 	}
 
-	// Также выводим в консоль краткую таблицу
-	fmt.Printf("\n=== ARENA RESULTS ===\n")
-	for i, a := range agents {
-		fmt.Printf("%2d. %-20s: %d\n", i+1, a.Name, scores[a.ID])
-	}
+	tournament.PrintLeaderboard(agents)
 
 	return nil
 }

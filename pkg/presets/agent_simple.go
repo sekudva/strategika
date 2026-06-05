@@ -61,6 +61,28 @@ func TitFor2TatsOrig() *domain.Agent {
 	}
 }
 
+// not always triggers on take
+func ForgivingTFT() *domain.Agent {
+	return &domain.Agent{
+		Name:     "ForgivingTFT",
+		ID:       RequestID(12),
+		Strategy: strategies.ForgivingTitForTat(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+// start with take
+func EvilTFT() *domain.Agent {
+	return &domain.Agent{
+		Name:     "EvilTFT",
+		ID:       RequestID(13),
+		Strategy: strategies.TitForTatEVIL(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
 // take prob
 func Joss() *domain.Agent {
 	return &domain.Agent{
@@ -72,23 +94,12 @@ func Joss() *domain.Agent {
 	}
 }
 
-// not always triggers on take
-func ForgivingTFT() *domain.Agent {
+// take prob, take start
+func HardJoss() *domain.Agent {
 	return &domain.Agent{
-		Name:     "ForgivingTFT",
+		Name:     "HardJoss",
 		ID:       RequestID(15),
-		Strategy: strategies.ForgivingTitForTat(),
-		Memory:   domain.NewMemory(),
-		Score:    0,
-	}
-}
-
-// start with take
-func EvilTFT() *domain.Agent {
-	return &domain.Agent{
-		Name:     "EvilTFT",
-		ID:       RequestID(16),
-		Strategy: strategies.TitForTatEVIL(),
+		Strategy: strategies.HardJoss(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}
@@ -319,11 +330,23 @@ func Patient() *domain.Agent {
 
 // ========== 6. ORIGINAL SIMPLE LOGIC FAMILY ==========
 
+// after 1 take forever take
 func Grudger() *domain.Agent {
 	return &domain.Agent{
 		Name:     "Grudger",
 		ID:       RequestID(60),
 		Strategy: strategies.Grudger(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
+	}
+}
+
+// after 2 shares forever share, starts with take
+func AntiGrudger() *domain.Agent {
+	return &domain.Agent{
+		Name:     "Grudger",
+		ID:       RequestID(60),
+		Strategy: strategies.AntiGrudger(),
 		Memory:   domain.NewMemory(),
 		Score:    0,
 	}

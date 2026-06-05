@@ -60,12 +60,15 @@ var mirrorTable = map[MirrorMode]map[Act]Act{
 // тип как часто срабатывает триггер
 type TriggerMode int
 
-// почти бессмысленно, по умолчанию самый логичный вариант
-// можно придумать альтернативу или использовать в комбинации со сложными модификторами
 const (
-	TriggerStreakAfter TriggerMode = iota // После N раз (пока не закончится серия)
-	TriggerEvery                          // каждый N-й подряд в серии (n=1 = на каждый)
-	TriggerExactly                        // ровно на N-й, потом пропускать ответ на триггер
+	// После N раз (пока не закончится серия)
+	TriggerStreakAfter TriggerMode = iota
+
+	// каждый N-й подряд в серии (n=1 = на каждый)
+	TriggerEvery
+
+	// ровно на N-й, потом пропускать ответ на триггер
+	TriggerExactly
 )
 
 type TriggerTest func(history Rounds, act Act, n int) bool

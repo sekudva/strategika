@@ -13,10 +13,12 @@ func ClassicStrategies() []*domain.Agent {
 		AlwaysShare(),
 		AlwaysTake(),
 		Joss(),
+		HardJoss(),
 		TitFor2Tats(),
 		Grudger(),
 		EvilTFT(),
 		Random(),
+		GroFman(),
 	}
 }
 
@@ -39,6 +41,7 @@ func NonClassicGroup() []*domain.Agent {
 		Irreconcilable(),
 		StrictTeacher(),
 		Patient(),
+		AntiGrudger(),
 	}
 }
 

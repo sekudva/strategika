@@ -1,6 +1,297 @@
 Tournament Config:
-  Rounds: 20
+  Rounds: 200
   Noise:  0.00
   Pairs:  91
   Logger: *tournament.AggregateLogger
 
+
+--- Round 200 ---
+AlwaysShare     → Pacifist        | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Pacifist        | 100 /   0 /   0	| Score Pacifist        : -369
+
+AlwaysShare     → ColdCyclist     | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← ColdCyclist     |   0 / 100 /   0	| Score ColdCyclist     : -1468
+
+AlwaysShare     → Unfriendly      | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Unfriendly      |   0 /  99 /   0	| Score Unfriendly      : -1440
+
+AlwaysShare     → AlwaysTake      | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 744
+
+AlwaysShare     → EvilTFT         | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← EvilTFT         |  99 /   0 /   0	| Score EvilTFT         : -568
+
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Sadist          |   0 /   0 /  99	| Score Sadist          : 1188
+
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Sadist          |   0 /   0 /  99	| Score Sadist          : 1247
+
+AlwaysShare     → Sadist          | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Sadist          |   0 /   0 / 100	| Score Sadist          : 1213
+
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 1196
+
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 1161
+
+AlwaysShare     → Bully           | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Bully           |   0 /   0 / 100	| Score Bully           : 1170
+
+AlwaysShare     → Crazy           | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← Crazy           |   0 /   0 /  99	| Score Crazy           : -2684
+
+AlwaysShare     → EvilCyclist     | 100 /   0 /   0	| Score AlwaysShare     : -3097
+AlwaysShare     ← EvilCyclist     |  49 /   0 /  50	| Score EvilCyclist     : -145
+
+Pacifist        → ColdCyclist     |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← ColdCyclist     |   0 / 100 /   0	| Score ColdCyclist     : -1468
+
+Pacifist        → Unfriendly      |   1 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Unfriendly      |   0 /  99 /   0	| Score Unfriendly      : -1440
+
+Pacifist        → AlwaysTake      |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 744
+
+Pacifist        → EvilTFT         |  50 /  50 /   0	| Score Pacifist        : -369
+Pacifist        ← EvilTFT         |  50 /  49 /   0	| Score EvilTFT         : -568
+
+Pacifist        → Sadist          |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Sadist          |   0 /  58 /  42	| Score Sadist          : 1188
+
+Pacifist        → Sadist          |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Sadist          |   0 /  58 /  42	| Score Sadist          : 1247
+
+Pacifist        → Sadist          |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Sadist          |   0 /  54 /  46	| Score Sadist          : 1213
+
+Pacifist        → Bully           |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 1196
+
+Pacifist        → Bully           |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 1161
+
+Pacifist        → Bully           |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Bully           |   0 /   0 / 100	| Score Bully           : 1170
+
+Pacifist        → Crazy           |   1 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← Crazy           |   0 /  98 /   1	| Score Crazy           : -2684
+
+Pacifist        → EvilCyclist     |   0 /  99 /   0	| Score Pacifist        : -369
+Pacifist        ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+ColdCyclist     → Unfriendly      |   0 / 100 /   0	| Score ColdCyclist     : -1468
+ColdCyclist     ← Unfriendly      |   0 /  99 /   0	| Score Unfriendly      : -1440
+
+ColdCyclist     → AlwaysTake      |   0 /   0 /  99	| Score ColdCyclist     : -1468
+ColdCyclist     ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 744
+
+ColdCyclist     → EvilTFT         |   0 /  50 /  50	| Score ColdCyclist     : -1468
+ColdCyclist     ← EvilTFT         |   0 /  50 /  50	| Score EvilTFT         : -568
+
+ColdCyclist     → Sadist          |   0 /  65 /  35	| Score ColdCyclist     : -1468
+ColdCyclist     ← Sadist          |   0 /  64 /  35	| Score Sadist          : 1188
+
+ColdCyclist     → Sadist          |   0 /  61 /  38	| Score ColdCyclist     : -1468
+ColdCyclist     ← Sadist          |   0 /  61 /  38	| Score Sadist          : 1247
+
+ColdCyclist     → Sadist          |   0 /  60 /  40	| Score ColdCyclist     : -1468
+ColdCyclist     ← Sadist          |   0 /  59 /  40	| Score Sadist          : 1213
+
+ColdCyclist     → Bully           |   0 /  50 /  50	| Score ColdCyclist     : -1468
+ColdCyclist     ← Bully           |   0 /  50 /  50	| Score Bully           : 1196
+
+ColdCyclist     → Bully           |   0 /  50 /  50	| Score ColdCyclist     : -1468
+ColdCyclist     ← Bully           |   0 /  50 /  50	| Score Bully           : 1161
+
+ColdCyclist     → Bully           |   0 /  50 /  50	| Score ColdCyclist     : -1468
+ColdCyclist     ← Bully           |   0 /  50 /  50	| Score Bully           : 1170
+
+ColdCyclist     → Crazy           |   0 / 100 /   0	| Score ColdCyclist     : -1468
+ColdCyclist     ← Crazy           |   0 /  99 /   0	| Score Crazy           : -2684
+
+ColdCyclist     → EvilCyclist     |   0 /   0 /  99	| Score ColdCyclist     : -1468
+ColdCyclist     ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Unfriendly      → AlwaysTake      |   0 /   0 /  99	| Score Unfriendly      : -1440
+Unfriendly      ← AlwaysTake      |   0 /   0 / 100	| Score AlwaysTake      : 744
+
+Unfriendly      → EvilTFT         |   0 /  49 /  50	| Score Unfriendly      : -1440
+Unfriendly      ← EvilTFT         |   0 /  49 /  50	| Score EvilTFT         : -568
+
+Unfriendly      → Sadist          |   0 /  60 /  39	| Score Unfriendly      : -1440
+Unfriendly      ← Sadist          |   0 /  61 /  39	| Score Sadist          : 1188
+
+Unfriendly      → Sadist          |   0 /  67 /  32	| Score Unfriendly      : -1440
+Unfriendly      ← Sadist          |   0 /  68 /  32	| Score Sadist          : 1247
+
+Unfriendly      → Sadist          |   0 /  62 /  37	| Score Unfriendly      : -1440
+Unfriendly      ← Sadist          |   0 /  62 /  38	| Score Sadist          : 1213
+
+Unfriendly      → Bully           |   0 /  49 /  50	| Score Unfriendly      : -1440
+Unfriendly      ← Bully           |   0 /  50 /  50	| Score Bully           : 1196
+
+Unfriendly      → Bully           |   0 /  49 /  50	| Score Unfriendly      : -1440
+Unfriendly      ← Bully           |   0 /  50 /  50	| Score Bully           : 1161
+
+Unfriendly      → Bully           |   0 /  49 /  50	| Score Unfriendly      : -1440
+Unfriendly      ← Bully           |   0 /  50 /  50	| Score Bully           : 1170
+
+Unfriendly      → Crazy           |   0 /  99 /   0	| Score Unfriendly      : -1440
+Unfriendly      ← Crazy           |   1 /  98 /   0	| Score Crazy           : -2684
+
+Unfriendly      → EvilCyclist     |   0 /   0 /  99	| Score Unfriendly      : -1440
+Unfriendly      ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+AlwaysTake      → EvilTFT         |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← EvilTFT         |   0 /   0 / 100	| Score EvilTFT         : -568
+
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Sadist          |   0 /  60 /  39	| Score Sadist          : 1188
+
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Sadist          |   0 /  58 /  41	| Score Sadist          : 1247
+
+AlwaysTake      → Sadist          |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Sadist          |   0 /  64 /  36	| Score Sadist          : 1213
+
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Bully           |   0 /  99 /   0	| Score Bully           : 1196
+
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Bully           |   0 /  99 /   0	| Score Bully           : 1161
+
+AlwaysTake      → Bully           |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Bully           |   0 /  99 /   0	| Score Bully           : 1170
+
+AlwaysTake      → Crazy           |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+AlwaysTake      → EvilCyclist     |   0 /   0 / 100	| Score AlwaysTake      : 744
+AlwaysTake      ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+EvilTFT         → Sadist          |   0 /  58 /  41	| Score EvilTFT         : -568
+EvilTFT         ← Sadist          |   0 /  59 /  41	| Score Sadist          : 1188
+
+EvilTFT         → Sadist          |   0 /  57 /  43	| Score EvilTFT         : -568
+EvilTFT         ← Sadist          |   0 /  57 /  42	| Score Sadist          : 1247
+
+EvilTFT         → Sadist          |   0 /  64 /  36	| Score EvilTFT         : -568
+EvilTFT         ← Sadist          |   0 /  64 /  35	| Score Sadist          : 1213
+
+EvilTFT         → Bully           |   0 /  50 /  50	| Score EvilTFT         : -568
+EvilTFT         ← Bully           |   0 /  50 /  50	| Score Bully           : 1196
+
+EvilTFT         → Bully           |   0 /  50 /  50	| Score EvilTFT         : -568
+EvilTFT         ← Bully           |   0 /  50 /  50	| Score Bully           : 1161
+
+EvilTFT         → Bully           |   0 /  50 /  50	| Score EvilTFT         : -568
+EvilTFT         ← Bully           |   0 /  50 /  50	| Score Bully           : 1170
+
+EvilTFT         → Crazy           |  50 /   0 /  50	| Score EvilTFT         : -568
+EvilTFT         ← Crazy           |  50 /   0 /  50	| Score Crazy           : -2684
+
+EvilTFT         → EvilCyclist     |   0 /   0 / 100	| Score EvilTFT         : -568
+EvilTFT         ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Sadist          → Sadist          |   0 /  61 /  39	| Score Sadist          : 1188
+Sadist          ← Sadist          |   0 /  64 /  36	| Score Sadist          : 1247
+
+Sadist          → Sadist          |   0 /  56 /  43	| Score Sadist          : 1188
+Sadist          ← Sadist          |   0 /  65 /  34	| Score Sadist          : 1213
+
+Sadist          → Bully           |   0 /  65 /  35	| Score Sadist          : 1188
+Sadist          ← Bully           |   0 /  35 /  65	| Score Bully           : 1196
+
+Sadist          → Bully           |   0 /  55 /  45	| Score Sadist          : 1188
+Sadist          ← Bully           |   0 /  45 /  55	| Score Bully           : 1161
+
+Sadist          → Bully           |   0 /  60 /  40	| Score Sadist          : 1188
+Sadist          ← Bully           |   0 /  40 /  60	| Score Bully           : 1170
+
+Sadist          → Crazy           |   0 /   0 /  99	| Score Sadist          : 1188
+Sadist          ← Crazy           |  99 /   0 /   0	| Score Crazy           : -2684
+
+Sadist          → EvilCyclist     |   0 /  58 /  42	| Score Sadist          : 1188
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Sadist          → Sadist          |   0 /  56 /  43	| Score Sadist          : 1247
+Sadist          ← Sadist          |   0 /  62 /  37	| Score Sadist          : 1213
+
+Sadist          → Bully           |   0 /  54 /  45	| Score Sadist          : 1247
+Sadist          ← Bully           |   0 /  45 /  55	| Score Bully           : 1196
+
+Sadist          → Bully           |   0 /  54 /  46	| Score Sadist          : 1247
+Sadist          ← Bully           |   0 /  45 /  54	| Score Bully           : 1161
+
+Sadist          → Bully           |   0 /  54 /  45	| Score Sadist          : 1247
+Sadist          ← Bully           |   0 /  45 /  54	| Score Bully           : 1170
+
+Sadist          → Crazy           |   0 /   0 / 100	| Score Sadist          : 1247
+Sadist          ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+Sadist          → EvilCyclist     |   0 /  62 /  38	| Score Sadist          : 1247
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Sadist          → Bully           |   0 /  64 /  36	| Score Sadist          : 1213
+Sadist          ← Bully           |   0 /  36 /  64	| Score Bully           : 1196
+
+Sadist          → Bully           |   0 /  61 /  38	| Score Sadist          : 1213
+Sadist          ← Bully           |   0 /  38 /  61	| Score Bully           : 1161
+
+Sadist          → Bully           |   0 /  60 /  39	| Score Sadist          : 1213
+Sadist          ← Bully           |   0 /  39 /  60	| Score Bully           : 1170
+
+Sadist          → Crazy           |   0 /   0 / 100	| Score Sadist          : 1213
+Sadist          ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+Sadist          → EvilCyclist     |   0 /  65 /  35	| Score Sadist          : 1213
+Sadist          ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Bully           → Bully           |   0 /  50 /  50	| Score Bully           : 1196
+Bully           ← Bully           |   0 /  50 /  50	| Score Bully           : 1161
+
+Bully           → Bully           |   0 /  50 /  50	| Score Bully           : 1196
+Bully           ← Bully           |   0 /  50 /  50	| Score Bully           : 1170
+
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 1196
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+Bully           → EvilCyclist     |   0 /  99 /   0	| Score Bully           : 1196
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Bully           → Bully           |   0 /  50 /  50	| Score Bully           : 1161
+Bully           ← Bully           |   0 /  50 /  50	| Score Bully           : 1170
+
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 1161
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+Bully           → EvilCyclist     |   0 /  99 /   0	| Score Bully           : 1161
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Bully           → Crazy           |   0 /   0 / 100	| Score Bully           : 1170
+Bully           ← Crazy           | 100 /   0 /   0	| Score Crazy           : -2684
+
+Bully           → EvilCyclist     |   0 /  99 /   0	| Score Bully           : 1170
+Bully           ← EvilCyclist     |   0 /   0 / 100	| Score EvilCyclist     : -145
+
+Crazy           → EvilCyclist     |  75 /   0 /  25	| Score Crazy           : -2684
+Crazy           ← EvilCyclist     |  25 /   0 /  75	| Score EvilCyclist     : -145
+
+
+=== FINAL SCORES ===
+ 1. AlwaysShare         : -3097
+ 2. Pacifist            : -369
+ 3. ColdCyclist         : -1468
+ 4. Unfriendly          : -1440
+ 5. AlwaysTake          : 744
+ 6. EvilTFT             : -568
+ 7. Sadist              : 1188
+ 8. Sadist              : 1247
+ 9. Sadist              : 1213
+10. Bully               : 1196
+11. Bully               : 1161
+12. Bully               : 1170
+13. Crazy               : -2684
+14. EvilCyclist         : -145

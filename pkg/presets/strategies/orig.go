@@ -21,6 +21,26 @@ func Grudger() *domain.Strategy {
 	}
 }
 
+// Starts with Take, but if 2 Shares - Share forever
+// 2 shares bcs dont count first
+func AntiGrudger() *domain.Strategy {
+	m := domain.MirrorSelf
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Take,
+			Mirror: &m,
+		},
+		Trigger: &domain.Trigger{
+			Act:   domain.Take,
+			Count: 2,
+			Mode:  domain.TriggerExactly,
+			Reaction: domain.RuleValue{
+				Fix: domain.Take,
+			},
+		},
+	}
+}
+
 // При первом Take → с вероятностью 2/7 ответить Take, 5/7 Share
 func GroFman() *domain.Strategy {
 	return &domain.Strategy{
