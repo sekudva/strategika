@@ -12,7 +12,8 @@ const (
 	MirrorCold // Share → Hold
 	MirrorNice // Hold → Share
 
-	MirrorOpp // Share ↔ Take
+	MirrorOpp   // Share ↔ Take
+	MirrorSaint //  Hold → Share && Take → Hold
 
 	MirrorSelf // копирование своего хода
 
@@ -54,6 +55,12 @@ var mirrorTable = map[MirrorMode]map[Act]Act{
 		Share: Take, // Share ↔ Take RULE
 		Hold:  Hold,
 		Take:  Share, // Take ↔ Share RULE
+	},
+
+	MirrorSaint: {
+		Share: Share,
+		Hold:  Share, // Hold → Share RULE
+		Take:  Hold,  // Take → Hold RULE
 	},
 }
 

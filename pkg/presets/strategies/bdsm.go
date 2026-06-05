@@ -54,6 +54,18 @@ func Pacifist() *domain.Strategy {
 	}
 }
 
+// dont mind hold, on take do take
+func Saint() *domain.Strategy {
+	saint := domain.MirrorSaint
+	return &domain.Strategy{
+		Neutral: domain.RuleValue{
+			Fix:    domain.Share,
+			Mirror: &saint,
+		},
+		Trigger: nil,
+	}
+}
+
 // Fear then opponent do Take
 func Bully() *domain.Strategy {
 	return &domain.Strategy{

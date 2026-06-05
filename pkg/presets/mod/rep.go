@@ -8,7 +8,7 @@ import "github.com/sekudva/strategika/internal/domain"
 // SeekWeak - ищет слабых и эксплуатирует
 func SeekWeak() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		if ctx.OpRep.Coop > 0.65 && ctx.OpRep.Def < 0.3 {
+		if ctx.OpRep.Coop > 0.6 && ctx.OpRep.Def < 0.35 {
 			return domain.Take
 		}
 		return core
@@ -35,15 +35,51 @@ func SeekSneak() domain.Modifier {
 	}
 }
 
-// Рыцарь - ищет агрессивных и атакует
-// Кооперирует со слабыми
-func Knight() domain.Modifier {
+// Воин - ищет агрессивных и воюет с ними
+func Warrior() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if ctx.OpRep.Coop < 0.15 && ctx.OpRep.Def > 0.75 {
 			return domain.Take
 		}
-		if ctx.OpRep.Coop > 0.75 && ctx.OpRep.Def < 0.15 {
+		return core
+	}
+}
+
+// Кооперирует со слабыми
+func Assistant() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if ctx.OpRep.Coop > 0.6 && ctx.OpRep.Def < 0.35 {
 			return domain.Share
+		}
+		return core
+	}
+}
+
+// Кооперирует даже если случайно вошел в цикл зла
+func Mature() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if ctx.OpRep.Coop > 0.7 {
+			return domain.Share
+		}
+		return core
+	}
+}
+
+// Драчун, дерется с сильными
+func Brawler() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if ctx.OpRep.Def > 0.9 {
+			return domain.Take
+		}
+		return core
+	}
+}
+
+// ищет слабых и тянет их на дно
+func Quicksand() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if ctx.OpRep.Def < 0.35 {
+			return domain.Take
 		}
 		return core
 	}

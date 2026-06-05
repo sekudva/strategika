@@ -344,7 +344,7 @@ func Grudger() *domain.Agent {
 // after 2 shares forever share, starts with take
 func AntiGrudger() *domain.Agent {
 	return &domain.Agent{
-		Name:     "Grudger",
+		Name:     "AntiGrudger",
 		ID:       RequestID(60),
 		Strategy: strategies.AntiGrudger(),
 		Memory:   domain.NewMemory(),

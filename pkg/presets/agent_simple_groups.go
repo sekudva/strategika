@@ -41,7 +41,13 @@ func NonClassicGroup() []*domain.Agent {
 		Irreconcilable(),
 		StrictTeacher(),
 		Patient(),
+		Journalist(),
 		AntiGrudger(),
+		Paladin(),
+		Barbarian(),
+		Warlock(),
+		Sorcerer(),
+		Monk(),
 	}
 }
 

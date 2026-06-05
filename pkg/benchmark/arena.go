@@ -13,8 +13,8 @@ import (
 func RunArena() error {
 	// ========== ВЫБЕРИ ГРУППУ ==========
 	//agents := presets.EvilDominates()
-	agents := presets.ClassicStrategies()
-	// agents := presets.NonClassicGroup()
+	//agents := presets.ClassicStrategies()
+	agents := presets.NonClassicGroup()
 	// ===================================
 
 	f, err := os.Create("arena_log.txt")
@@ -23,7 +23,7 @@ func RunArena() error {
 	}
 	defer f.Close()
 
-	cfg, err := presets.ArenaConfig(len(agents), 20, 0.0)
+	cfg, err := presets.ArenaConfig(len(agents), 200, 0.0)
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
