@@ -17,14 +17,14 @@ func main() {
 	// }
 
 	// 2. Дуэль двух агентов (выбери агентов внутри benchmarks.RunDuel)
-	// if err := benchmark.RunDuel(); err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// 3. Арена с группой (выбери группу внутри benchmarks.RunArena)
-	if err := benchmark.RunArena(); err != nil {
+	if err := benchmark.RunDuel(); err != nil {
 		log.Fatal(err)
 	}
+
+	// 3. Арена с группой (выбери группу внутри benchmarks.RunArena)
+	// if err := benchmark.RunArena(); err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	fmt.Println("Done!")
 }

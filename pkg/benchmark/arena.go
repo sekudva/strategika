@@ -28,7 +28,7 @@ func RunArena() error {
 		return fmt.Errorf("config error: %w", err)
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(20, cfg.Pairs, agents, f)
+	cfg.Logger = tournament.NewAggregateLogger(200, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
 	scores := cfg.RunSimulation(agents)
