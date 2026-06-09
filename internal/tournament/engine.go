@@ -19,8 +19,5 @@ func (cfg SimConfig) RunSimulation(agents []*domain.Agent) {
 		applyPhase(agents, decisions, cfg.Pairs, round, cfg.Logger)
 
 		cfg.Logger.Flush()
-
 	}
-
-	cfg.Logger.Finalize(agents)
 }

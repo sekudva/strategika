@@ -3,7 +3,6 @@ package tournament
 import (
 	"fmt"
 	"io"
-	"math"
 	"math/rand/v2"
 )
 
@@ -16,12 +15,11 @@ type Pair [2]int
 
 // Конфигурация турнира
 type SimConfig struct {
-	Rounds         int
-	Noise          float64
-	Pairs          []Pair     // список взаимодействий на каждый раунд
-	RNG            *rand.Rand // воспроизводимость
-	Logger         RoundLogger
-	DeathThreshold int
+	Rounds int
+	Noise  float64
+	Pairs  []Pair     // список взаимодействий на каждый раунд
+	RNG    *rand.Rand // воспроизводимость
+	Logger RoundLogger
 }
 
 // валидация значений
@@ -48,9 +46,6 @@ func (cfg SimConfig) DefVars() SimConfig {
 	}
 	if cfg.Logger == nil {
 		cfg.Logger = &SilentLogger{}
-	}
-	if cfg.DeathThreshold == 0 {
-		cfg.DeathThreshold = math.MinInt
 	}
 	return cfg
 }

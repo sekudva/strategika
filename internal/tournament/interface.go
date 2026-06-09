@@ -11,7 +11,7 @@ type RoundLogger interface {
 	Flush() []RoundLog
 
 	// Finalize prints the final scores and any summary.
-	Finalize(agents []*domain.Agent)
+	Finalize(agents []*domain.Agent, threshold int)
 
 	// MarkDead used in ecosystem to check dead agents.
 	MarkDead(agents []*domain.Agent, threshold int, round int)

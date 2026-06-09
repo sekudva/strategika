@@ -11,7 +11,7 @@ import (
 // RunRoundRobinTournament запускает круговой турнир всех стратегий
 // Результат записывается в log.txt в текущей директории
 func RunRoundRobinTournament() error {
-	agents := append(presets.NonClassicGroup())
+	agents := append(presets.ClassicStrategies())
 
 	f, err := os.Create("log.txt")
 	if err != nil {
@@ -19,20 +19,17 @@ func RunRoundRobinTournament() error {
 	}
 	defer f.Close()
 
-	cfg, err := presets.DuelConfig(1, 0.0)
+	cfg, err := presets.DuelConfig(100, 0.0)
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(1, cfg.Pairs, agents, f)
+	cfg.Logger = tournament.NewAggregateLogger(200, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
 	err = tournament.RoundRobin(cfg, agents)
 	if err != nil {
 		return fmt.Errorf("tournament error: %w", err)
 	}
-
-	cfg.Logger.Finalize(agents)
-
 	return nil
 }

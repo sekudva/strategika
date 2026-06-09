@@ -350,3 +350,5 @@ func GroFman() *domain.Agent {
 		Score:    0,
 	}
 }
+
+//обратное око за око

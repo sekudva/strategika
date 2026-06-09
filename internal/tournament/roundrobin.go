@@ -1,8 +1,8 @@
-// internal/tournament/roundrobin.go
-
 package tournament
 
 import (
+	"math"
+
 	"github.com/sekudva/strategika/internal/domain"
 )
 
@@ -39,5 +39,6 @@ func RoundRobin(cfg SimConfig, agents []*domain.Agent) error {
 		}
 	}
 
+	cfg.Logger.Finalize(agents, math.MinInt)
 	return nil
 }

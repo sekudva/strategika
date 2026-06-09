@@ -2,6 +2,7 @@ package benchmark
 
 import (
 	"fmt"
+	"math"
 	"os"
 
 	"github.com/sekudva/strategika/internal/tournament"
@@ -31,14 +32,6 @@ func RunArena() error {
 	cfg.Logger = tournament.NewAggregateLogger(200, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
-	scores := cfg.RunEcosystem(agents)
-
-	fmt.Fprintf(f, "\n=== FINAL SCORES ===\n")
-	for i, a := range agents {
-		fmt.Fprintf(f, "%2d. %-20s: %d\n", i+1, a.Name, scores[a.ID])
-	}
-
-	cfg.Logger.Finalize(agents)
-
+	cfg.RunEcosystem(agents, math.MinInt)
 	return nil
 }

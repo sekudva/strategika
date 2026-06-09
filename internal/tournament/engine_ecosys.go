@@ -3,7 +3,7 @@ package tournament
 import "github.com/sekudva/strategika/internal/domain"
 
 // RunEcosystem — для арены с жизнью и смертью
-func (cfg SimConfig) RunEcosystem(agents []*domain.Agent) map[domain.AgID]int {
+func (cfg SimConfig) RunEcosystem(agents []*domain.Agent, deathThreshold int) {
 	active := make([]*domain.Agent, len(agents))
 	copy(active, agents)
 
@@ -18,21 +18,10 @@ func (cfg SimConfig) RunEcosystem(agents []*domain.Agent) map[domain.AgID]int {
 		decisions = noisePhase(decisions, cfg.Noise, cfg.RNG)
 		applyPhase(active, decisions, pairs, round, cfg.Logger)
 
-		cfg.Logger.MarkDead(active, cfg.DeathThreshold, round)
+		cfg.Logger.MarkDead(active, deathThreshold, round)
 	}
 
-	cfg.Logger.Finalize(agents)
-
-	return collectScores(agents)
-}
-
-// Вспомогательные (приватные)
-func collectScores(agents []*domain.Agent) map[domain.AgID]int {
-	scores := make(map[domain.AgID]int, len(agents))
-	for _, a := range agents {
-		scores[a.ID] = a.Score
-	}
-	return scores
+	cfg.Logger.Finalize(agents, deathThreshold)
 }
 
 func filterAlive(agents []*domain.Agent) []*domain.Agent {
@@ -53,12 +42,4 @@ func allPairs(agents []*domain.Agent) []Pair {
 		}
 	}
 	return pairs
-}
-
-func markDead(agents []*domain.Agent, threshold int) {
-	for _, a := range agents {
-		if a.Score <= threshold {
-			a.Dead = true
-		}
-	}
 }
