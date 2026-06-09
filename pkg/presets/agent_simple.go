@@ -330,17 +330,6 @@ func Patient() *domain.Agent {
 
 // ========== 6. ORIGINAL SIMPLE LOGIC FAMILY ==========
 
-// after 1 take forever take
-func Grudger() *domain.Agent {
-	return &domain.Agent{
-		Name:     "Grudger",
-		ID:       RequestID(60),
-		Strategy: strategies.Grudger(),
-		Memory:   domain.NewMemory(),
-		Score:    0,
-	}
-}
-
 // after 2 shares forever share, starts with take
 func AntiGrudger() *domain.Agent {
 	return &domain.Agent{

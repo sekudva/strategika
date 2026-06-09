@@ -31,14 +31,14 @@ func RunArena() error {
 	cfg.Logger = tournament.NewAggregateLogger(200, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
-	scores := cfg.RunSimulation(agents)
+	scores := cfg.RunEcosystem(agents)
 
 	fmt.Fprintf(f, "\n=== FINAL SCORES ===\n")
 	for i, a := range agents {
 		fmt.Fprintf(f, "%2d. %-20s: %d\n", i+1, a.Name, scores[a.ID])
 	}
 
-	tournament.PrintLeaderboard(agents)
+	cfg.Logger.Finalize(agents)
 
 	return nil
 }

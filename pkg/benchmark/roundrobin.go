@@ -32,6 +32,7 @@ func RunRoundRobinTournament() error {
 		return fmt.Errorf("tournament error: %w", err)
 	}
 
-	tournament.PrintLeaderboard(agents)
+	cfg.Logger.Finalize(agents)
+
 	return nil
 }

@@ -58,3 +58,30 @@ func JournalistMod() domain.Modifier {
 		return core
 	}
 }
+
+func GoByMajorityMod() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if len(ctx.History) == 0 {
+			return domain.Share
+		}
+
+		sum := 0.0
+		for _, round := range ctx.History {
+			switch round.OpAct {
+			case domain.Share:
+				sum += 1.0
+			case domain.Hold:
+				sum += 0.5
+			case domain.Take:
+				sum += 0.0
+			}
+		}
+		average := sum / float64(len(ctx.History))
+
+		if average < 0.5 {
+			return domain.Take
+		}
+
+		return domain.Share
+	}
+}

@@ -40,16 +40,7 @@ func RunDuel() error {
 	cfg.Logger = tournament.NewAllLogger([]*domain.Agent{agent1, agent2}, f)
 	cfg.InfoTo(f)
 
-	scores := cfg.RunSimulation([]*domain.Agent{agent1, agent2})
-
-	fmt.Fprintf(f, "\n=== FINAL SCORES ===\n")
-	fmt.Fprintf(f, "%s: %d\n", agent1.Name, scores[agent1.ID])
-	fmt.Fprintf(f, "%s: %d\n", agent2.Name, scores[agent2.ID])
-
-	// Также выводим в консоль краткий итог
-	fmt.Printf("\n=== DUEL RESULT ===\n")
-	fmt.Printf("%s: %d\n", agent1.Name, scores[agent1.ID])
-	fmt.Printf("%s: %d\n", agent2.Name, scores[agent2.ID])
+	cfg.RunSimulation([]*domain.Agent{agent1, agent2})
 
 	return nil
 }

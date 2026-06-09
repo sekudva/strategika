@@ -30,6 +30,9 @@ type AggregateLogger struct {
 	counters map[Pair][3]int // [ShareCount, HoldCount, TakeCount]
 	round    int
 
+	// дата смерти
+	deathLog map[domain.AgID]int
+
 	Writer io.Writer // чтобы писать в файлики а не в терминал
 }
 
@@ -140,11 +143,22 @@ func pct(count, total int) int {
 	return count * 100 / total
 }
 
+func (l *AggregateLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
+	for _, a := range agents {
+		if a.Score <= threshold && !a.Dead {
+			a.Dead = true
+			l.deathLog[a.ID] = round
+		}
+	}
+}
+
 // AllLogger сохраняет все раунды в срез.
 type AllLogger struct {
 	Logs   []RoundLog
 	Agents []*domain.Agent
 	Writer io.Writer
+
+	deathLog map[domain.AgID]int
 }
 
 func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
@@ -191,26 +205,63 @@ func (l *AllLogger) Flush() []RoundLog {
 	return result
 }
 
-// SilentLogger не сохраняет и не выводит ничего.
-type SilentLogger struct{}
+func (l *AllLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
+	for _, a := range agents {
+		if a.Score <= threshold && !a.Dead {
+			a.Dead = true
+			l.deathLog[a.ID] = round
+
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
+			fmt.Fprintf(l.Writer, "AGENT %s IS DEAD! Score: %d\n",
+				a.Name, a.Score,
+			)
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
+		}
+	}
+}
+
+// SilentLogger не сохраняет и не выводит ничего, кроме итогов
+type SilentLogger struct {
+	Writer io.Writer
+}
 
 func (l *SilentLogger) Log(entry RoundLog) {}
 func (l *SilentLogger) Flush() []RoundLog  { return nil }
+func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
+	for _, a := range agents {
+		if a.Score <= threshold && !a.Dead {
+			a.Dead = true
+		}
+	}
+}
 
-func PrintLeaderboard(agents []*domain.Agent) {
+func (l *AggregateLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
+}
+func (l *AllLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
+}
+func (l *SilentLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
+}
+
+func Leaderboard(agents []*domain.Agent) string {
 	sort.Slice(agents, func(i, j int) bool {
 		return agents[i].Score > agents[j].Score
 	})
 
-	fmt.Println()
-	fmt.Println(strings.Repeat("=", 50))
-	fmt.Println("FINAL LEADERBOARD")
-	fmt.Println(strings.Repeat("=", 50))
-	fmt.Printf("%s	| %-23s	| %8s\n", "TOP", "Strategy", "Score")
-	fmt.Println(strings.Repeat("-", 50))
+	var sb strings.Builder
+	fmt.Fprintf(&sb, "\n")
+	fmt.Fprintf(&sb, strings.Repeat("=", 50)+"\n")
+	fmt.Fprintf(&sb, "FINAL LEADERBOARD\n")
+	fmt.Fprintf(&sb, strings.Repeat("=", 50)+"\n")
+	fmt.Fprintf(&sb, "%s\t| %-23s\t| %8s\n", "TOP", "Strategy", "Score")
+	fmt.Fprintf(&sb, strings.Repeat("-", 50)+"\n")
 
 	for i, a := range agents {
-		fmt.Printf("№%-3d	%-3d) %-20s	|%8d\n", i+1, a.ID, a.Name, a.Score)
+		fmt.Fprintf(&sb, "№%-3d\t%-3d) %-20s\t|%8d\n", i+1, a.ID, a.Name, a.Score)
 	}
-	fmt.Println(strings.Repeat("=", 50))
+
+	fmt.Fprintf(&sb, strings.Repeat("=", 50)+"\n")
+	return sb.String()
 }

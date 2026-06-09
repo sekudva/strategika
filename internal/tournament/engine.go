@@ -6,7 +6,7 @@ import (
 
 // RunSimulation выполняет все раунды согласно конфигурации.
 // Возвращает итоговые счета агентов и ошибку (пока nil).
-func (cfg SimConfig) RunSimulation(agents []*domain.Agent) map[domain.AgID]int {
+func (cfg SimConfig) RunSimulation(agents []*domain.Agent) {
 	for round := 1; round <= cfg.Rounds; round++ {
 
 		// 1. Фаза решений (параллельно)
@@ -18,16 +18,9 @@ func (cfg SimConfig) RunSimulation(agents []*domain.Agent) map[domain.AgID]int {
 		// 3. Фаза применения
 		applyPhase(agents, decisions, cfg.Pairs, round, cfg.Logger)
 
-		if cfg.Logger != nil {
-			cfg.Logger.Flush()
-		}
+		cfg.Logger.Flush()
+
 	}
 
-	scores := make(map[domain.AgID]int, len(agents))
-
-	for _, a := range agents {
-		scores[a.ID] = a.Score
-	}
-
-	return scores
+	cfg.Logger.Finalize(agents)
 }
