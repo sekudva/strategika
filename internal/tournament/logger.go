@@ -10,6 +10,41 @@ import (
 	"github.com/sekudva/strategika/internal/domain"
 )
 
+/*
+	SILENT LOGGER
+*/
+
+// SilentLogger не сохраняет и не выводит ничего, кроме итогов
+type SilentLogger struct {
+	Writer io.Writer
+}
+
+func NewSilentLogger(w io.Writer) *SilentLogger {
+	if w == nil {
+		w = os.Stdout
+	}
+	return &SilentLogger{
+		Writer: w,
+	}
+}
+
+func (l *SilentLogger) Log(entry RoundLog) {}
+func (l *SilentLogger) Flush() []RoundLog  { return nil }
+func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
+	for _, a := range agents {
+		if a.Score <= threshold && !a.Dead {
+			a.Dead = true
+		}
+	}
+}
+func (l *SilentLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
+}
+
+/*
+	ALL LOGGER
+*/
+
 // RoundLog — одна запись о взаимодействии в раунде
 type RoundLog struct {
 	Round          int
@@ -17,6 +52,79 @@ type RoundLog struct {
 	Act1, Act2     domain.Act
 	Score1, Score2 int // очки, начисленные в этом раунде
 }
+
+// AllLogger сохраняет все раунды в срез.
+type AllLogger struct {
+	Logs   []RoundLog
+	Agents []*domain.Agent
+	Writer io.Writer
+}
+
+func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
+	if w == nil {
+		w = os.Stdout
+	}
+	return &AllLogger{
+		Agents: agents,
+		Writer: w,
+		Logs:   make([]RoundLog, 0),
+	}
+}
+
+func (l *AllLogger) Log(entry RoundLog) {
+	l.Logs = append(l.Logs, entry)
+}
+
+func (l *AllLogger) Flush() []RoundLog {
+	names := make(map[domain.AgID]string)
+	for _, a := range l.Agents {
+		names[a.ID] = a.Name
+	}
+
+	for _, entry := range l.Logs {
+		name1 := names[entry.Agent1]
+		name2 := names[entry.Agent2]
+		if name1 == "" {
+			name1 = fmt.Sprintf("Agent-%d", entry.Agent1)
+		}
+		if name2 == "" {
+			name2 = fmt.Sprintf("Agent-%d", entry.Agent2)
+		}
+
+		fmt.Fprintf(l.Writer, "[%3d] %-20s vs %-20s | %-5s vs %-5s | %+3d / %+3d\n",
+			entry.Round,
+			name1, name2,
+			entry.Act1.String(), entry.Act2.String(),
+			entry.Score1, entry.Score2,
+		)
+	}
+
+	result := l.Logs
+	l.Logs = nil
+	return result
+}
+
+func (l *AllLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
+	for _, a := range agents {
+		if a.Score <= threshold && !a.Dead {
+			a.Dead = true
+
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
+			fmt.Fprintf(l.Writer, "AGENT %s IS DEAD!	Score: %d	Round: %d\n",
+				a.Name, a.Score, round,
+			)
+
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
+		}
+	}
+}
+func (l *AllLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
+}
+
+/*
+	AGGREGATE LOGGER
+*/
 
 // AggregateLogger выводит агрегированную статистику каждые N раундов.
 // Хранит только последний снапшот для каждой пары.
@@ -153,108 +261,13 @@ func (l *AggregateLogger) MarkDead(agents []*domain.Agent, threshold int, round 
 	}
 }
 
-// AllLogger сохраняет все раунды в срез.
-type AllLogger struct {
-	Logs   []RoundLog
-	Agents []*domain.Agent
-	Writer io.Writer
-
-	deathLog map[domain.AgID]int
-}
-
-func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
-	if w == nil {
-		w = os.Stdout
-	}
-	return &AllLogger{
-		Agents:   agents,
-		Writer:   w,
-		deathLog: make(map[domain.AgID]int),
-		Logs:     make([]RoundLog, 0),
-	}
-}
-
-func (l *AllLogger) Log(entry RoundLog) {
-	l.Logs = append(l.Logs, entry)
-}
-
-func (l *AllLogger) Flush() []RoundLog {
-	names := make(map[domain.AgID]string)
-	for _, a := range l.Agents {
-		names[a.ID] = a.Name
-	}
-
-	for _, entry := range l.Logs {
-		name1 := names[entry.Agent1]
-		name2 := names[entry.Agent2]
-		if name1 == "" {
-			name1 = fmt.Sprintf("Agent-%d", entry.Agent1)
-		}
-		if name2 == "" {
-			name2 = fmt.Sprintf("Agent-%d", entry.Agent2)
-		}
-
-		fmt.Fprintf(l.Writer, "[%3d] %-20s vs %-20s | %-5s vs %-5s | %+3d / %+3d\n",
-			entry.Round,
-			name1, name2,
-			entry.Act1.String(), entry.Act2.String(),
-			entry.Score1, entry.Score2,
-		)
-	}
-
-	result := l.Logs
-	l.Logs = nil
-	return result
-}
-
-func (l *AllLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
-	for _, a := range agents {
-		if a.Score <= threshold && !a.Dead {
-			a.Dead = true
-			l.deathLog[a.ID] = round
-
-			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
-			fmt.Fprintf(l.Writer, "AGENT %s IS DEAD! Score: %d\n",
-				a.Name, a.Score,
-			)
-			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
-		}
-	}
-}
-
-// SilentLogger не сохраняет и не выводит ничего, кроме итогов
-type SilentLogger struct {
-	Writer io.Writer
-}
-
-func NewSilentLogger(w io.Writer) *SilentLogger {
-	if w == nil {
-		w = os.Stdout
-	}
-	return &SilentLogger{
-		Writer: w,
-	}
-}
-
-func (l *SilentLogger) Log(entry RoundLog) {}
-func (l *SilentLogger) Flush() []RoundLog  { return nil }
-func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
-	for _, a := range agents {
-		if a.Score <= threshold && !a.Dead {
-			a.Dead = true
-		}
-	}
-}
-
 func (l *AggregateLogger) Finalize(agents []*domain.Agent) {
 	fmt.Fprint(l.Writer, Leaderboard(agents))
 }
-func (l *AllLogger) Finalize(agents []*domain.Agent) {
-	fmt.Fprint(l.Writer, Leaderboard(agents))
-}
-func (l *SilentLogger) Finalize(agents []*domain.Agent) {
-	fmt.Fprint(l.Writer, Leaderboard(agents))
-}
+
+/*
+FINALIZE
+*/
 
 func Leaderboard(agents []*domain.Agent) string {
 	sort.Slice(agents, func(i, j int) bool {

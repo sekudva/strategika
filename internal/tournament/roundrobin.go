@@ -21,19 +21,10 @@ func (cfg SimConfig) RoundRobin(agents []*domain.Agent) {
 			agents[j].ResetMemory()
 
 			// Настраиваем пары для этой дуэли
-			duelCfg := cfg
-			duelCfg.Pairs = []Pair{{0, 1}}
-
-			// log
-			duelCfg.Logger = NewAggregateLogger(
-				cfg.Logger.(*AggregateLogger).Interval,
-				duelCfg.Pairs,
-				[]*domain.Agent{agents[i], agents[j]},
-				cfg.Logger.(*AggregateLogger).Writer,
-			)
+			cfg.Pairs = DuelPairs()
 
 			// Запускаем дуэль
-			duelCfg.RunSimulation([]*domain.Agent{agents[i], agents[j]})
+			cfg.RunSimulation([]*domain.Agent{agents[i], agents[j]})
 		}
 	}
 

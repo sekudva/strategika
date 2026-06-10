@@ -8,12 +8,15 @@ func (cfg SimConfig) RunEcosystem(agents []*domain.Agent, deathThreshold int) {
 	copy(active, agents)
 
 	for round := 1; round <= cfg.Rounds; round++ {
+
 		active = filterAlive(active)
+
 		if len(active) < 2 {
 			break
 		}
 
-		pairs := allPairs(active)
+		pairs := AllPairs(len(active))
+
 		decisions := decidePhase(active, pairs, round)
 		decisions = noisePhase(decisions, cfg.Noise, cfg.RNG)
 		applyPhase(active, decisions, pairs, round, cfg.Logger)
@@ -32,14 +35,4 @@ func filterAlive(agents []*domain.Agent) []*domain.Agent {
 		}
 	}
 	return alive
-}
-
-func allPairs(agents []*domain.Agent) []Pair {
-	pairs := make([]Pair, 0, len(agents)*(len(agents)-1)/2)
-	for i := range agents {
-		for j := i + 1; j < len(agents); j++ {
-			pairs = append(pairs, Pair{i, j})
-		}
-	}
-	return pairs
 }

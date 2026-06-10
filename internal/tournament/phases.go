@@ -19,26 +19,20 @@ func decidePhase(agents []*domain.Agent, pairs []Pair, round int) map[DirectedPa
 	var mu sync.Mutex
 	var wg sync.WaitGroup
 
+	decideRoutine := func(from, to int) {
+		defer wg.Done()
+		opRep := agents[to].Memory.Rep
+		act := agents[from].Decide(agents[to].ID, round, opRep)
+		mu.Lock()
+		results[DirectedPair{from, to}] = act
+		mu.Unlock()
+	}
+
 	for _, p := range pairs {
 		wg.Add(2) // по одной горутине на каждое направление
 
-		go func(from, to int) {
-			defer wg.Done()
-			opRep := agents[to].Memory.Rep
-			act := agents[from].Decide(agents[to].ID, round, opRep)
-			mu.Lock()
-			results[DirectedPair{from, to}] = act
-			mu.Unlock()
-		}(p[0], p[1])
-
-		go func(from, to int) {
-			defer wg.Done()
-			opRep := agents[to].Memory.Rep
-			act := agents[from].Decide(agents[to].ID, round, opRep)
-			mu.Lock()
-			results[DirectedPair{from, to}] = act
-			mu.Unlock()
-		}(p[1], p[0])
+		go decideRoutine(p[0], p[1])
+		go decideRoutine(p[1], p[0])
 	}
 	wg.Wait()
 
