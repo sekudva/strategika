@@ -21,16 +21,16 @@ func RunDuel() error {
 	// agent1 := presets.Joss()
 	//agent1 := presets.Paladin()
 	//agent1 := presets.AntiGrudger()
-	agent1 := presets.Crazy()
+	// agent1 := presets.Crazy()
 
-	//agent1 := presets.TitFor2Tats()
+	agent1 := presets.TitFor2Tats()
 	//agent2 := presets.ColdGhost()
 
 	//agent1 := presets.Journalist()
 	//agent1 := presets.TitForTat()
 
 	//agent1 := presets.AlwaysShare()
-	agent2 := presets.ExploiterTFT()
+	agent2 := presets.Boev()
 	// ===================================
 
 	f, err := os.Create("duel_log.txt")

@@ -47,10 +47,6 @@ func TullockMod() domain.Modifier {
 
 func AdamsMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		if len(ctx.History) < 2 {
-			return core
-		}
-
 		lastOp := ctx.History.OpLastAct()
 
 		// Инициализация
@@ -93,10 +89,6 @@ func AdamsMod() domain.Modifier {
 
 func EatherleyMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		if len(ctx.History) == 0 {
-			return core
-		}
-
 		lastOp := ctx.History.OpLastAct()
 
 		// Инициализация

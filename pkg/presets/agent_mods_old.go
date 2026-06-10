@@ -16,7 +16,7 @@ func GoByMajority() *domain.Agent {
 		Strategy:  strategies.AlwaysShare(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
-		Modifiers: []domain.Modifier{mod.GoByMajorityMod()},
+		Modifiers: []domain.Modifier{mod.Sleep(1, mod.GoByMajorityMod())},
 	}
 }
 
@@ -39,7 +39,7 @@ func WMAdams() *domain.Agent {
 		Strategy:  strategies.AlwaysShare(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
-		Modifiers: []domain.Modifier{mod.AdamsMod()},
+		Modifiers: []domain.Modifier{mod.Sleep(2, mod.AdamsMod())},
 	}
 }
 
@@ -51,7 +51,7 @@ func Eatherley() *domain.Agent {
 		Strategy:  strategies.TitForTat(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
-		Modifiers: []domain.Modifier{mod.EatherleyMod()},
+		Modifiers: []domain.Modifier{mod.Sleep(1, mod.EatherleyMod())},
 	}
 }
 

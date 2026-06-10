@@ -52,7 +52,7 @@ func NonClassicGroup() []*domain.Agent {
 		Warlock(),
 		Sorcerer(),
 		Monk(),
-		ExploiterTFT(),
+		Boev(),
 	}
 }
 

@@ -28,3 +28,12 @@ func WithProbability(prob float64, next domain.Modifier) domain.Modifier {
 		return core
 	}
 }
+
+func Sleep(awakeRound int, next domain.Modifier) domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if len(ctx.History) < awakeRound {
+			return core
+		}
+		return next(core, ctx)
+	}
+}

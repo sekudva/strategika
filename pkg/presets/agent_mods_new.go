@@ -29,9 +29,10 @@ func Journalist() *domain.Agent {
 }
 
 // best to any TFT strategy
-func ExploiterTFT() *domain.Agent {
+// Exploiter to TFT, author: Boev
+func Boev() *domain.Agent {
 	return &domain.Agent{
-		Name: "ExploiterTFT",
+		Name: "Boev-AntiTFT",
 		ID:   RequestID(101),
 
 		Strategy: &domain.Strategy{
