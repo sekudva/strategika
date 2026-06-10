@@ -21,7 +21,7 @@ func (cfg SimConfig) RunEcosystem(agents []*domain.Agent, deathThreshold int) {
 		cfg.Logger.MarkDead(active, deathThreshold, round)
 	}
 
-	cfg.Logger.Finalize(agents, deathThreshold)
+	cfg.Logger.Finalize(agents)
 }
 
 func filterAlive(agents []*domain.Agent) []*domain.Agent {

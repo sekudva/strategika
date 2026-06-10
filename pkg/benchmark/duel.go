@@ -2,7 +2,6 @@ package benchmark
 
 import (
 	"fmt"
-	"math"
 	"os"
 
 	"github.com/sekudva/strategika/internal/domain"
@@ -49,7 +48,7 @@ func RunDuel() error {
 
 	cfg.RunSimulation([]*domain.Agent{agent1, agent2})
 
-	cfg.Logger.Finalize([]*domain.Agent{agent1, agent2}, math.MinInt)
+	cfg.Logger.Finalize([]*domain.Agent{agent1, agent2})
 
 	return nil
 }

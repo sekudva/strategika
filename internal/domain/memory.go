@@ -10,7 +10,9 @@ type Rounds []Round
 type Memory struct {
 	History  map[AgID]Rounds
 	ModState map[AgID]map[Counter]int
-	Rep      Reputation
+
+	Rep       Reputation
+	DuelScore int
 }
 
 func NewMemory() *Memory {
@@ -21,6 +23,7 @@ func NewMemory() *Memory {
 			Coop: 0.5,
 			Def:  0.5,
 		},
+		DuelScore: 0,
 	}
 }
 

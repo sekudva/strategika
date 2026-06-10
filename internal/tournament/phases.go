@@ -79,7 +79,10 @@ func applyPhase(agents []*domain.Agent, decisions map[DirectedPair]domain.Act, p
 		payoffI, payoffJ := domain.Payoff(actItoJ, actJtoI)
 
 		agents[i].Score += payoffI
+		agents[i].Memory.DuelScore += payoffI
+
 		agents[j].Score += payoffJ
+		agents[j].Memory.DuelScore += payoffJ
 
 		// для репутации
 		prevActItoJ := agents[i].Memory.History[agents[j].ID].MyLastAct()

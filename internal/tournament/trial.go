@@ -1,8 +1,6 @@
 package tournament
 
 import (
-	"math"
-
 	"github.com/sekudva/strategika/internal/domain"
 )
 
@@ -42,6 +40,6 @@ func Circulaire(cfg SimConfig, leaders []*domain.Agent, group []*domain.Agent) e
 		trialCfg.RunSimulation(agents)
 	}
 
-	cfg.Logger.Finalize(leaders, math.MinInt)
+	cfg.Logger.Finalize(leaders)
 	return nil
 }

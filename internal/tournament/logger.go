@@ -127,11 +127,11 @@ func (l *AggregateLogger) Stats() string {
 
 		fmt.Fprintf(&sb, "%-15s → %-15s | %3d / %3d / %3d	| Score %-15s : %d\n",
 			l.Agents[i].Name, l.Agents[j].Name,
-			pct(c1[0], total1), pct(c1[1], total1), pct(c1[2], total1), l.Agents[i].Name, l.Agents[i].Score)
+			pct(c1[0], total1), pct(c1[1], total1), pct(c1[2], total1), l.Agents[i].Name, l.Agents[i].Memory.DuelScore)
 
 		fmt.Fprintf(&sb, "%-15s ← %-15s | %3d / %3d / %3d	| Score %-15s : %d\n\n",
 			l.Agents[i].Name, l.Agents[j].Name,
-			pct(c2[0], total2), pct(c2[1], total2), pct(c2[2], total2), l.Agents[j].Name, l.Agents[j].Score)
+			pct(c2[0], total2), pct(c2[1], total2), pct(c2[2], total2), l.Agents[j].Name, l.Agents[j].Memory.DuelScore)
 	}
 
 	return sb.String()
@@ -246,22 +246,22 @@ func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int
 	}
 }
 
-func (l *AggregateLogger) Finalize(agents []*domain.Agent, deathThreshold int) {
-	fmt.Fprint(l.Writer, Leaderboard(agents, deathThreshold))
+func (l *AggregateLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
 }
-func (l *AllLogger) Finalize(agents []*domain.Agent, deathThreshold int) {
-	fmt.Fprint(l.Writer, Leaderboard(agents, deathThreshold))
+func (l *AllLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
 }
-func (l *SilentLogger) Finalize(agents []*domain.Agent, deathThreshold int) {
-	fmt.Fprint(l.Writer, Leaderboard(agents, deathThreshold))
+func (l *SilentLogger) Finalize(agents []*domain.Agent) {
+	fmt.Fprint(l.Writer, Leaderboard(agents))
 }
 
-func Leaderboard(agents []*domain.Agent, deathThreshold int) string {
+func Leaderboard(agents []*domain.Agent) string {
 	sort.Slice(agents, func(i, j int) bool {
 		return agents[i].Score > agents[j].Score
 	})
 
-	deathThresholdPRINT := false
+	deathPRINT := false
 
 	var sb strings.Builder
 	fmt.Fprintf(&sb, "\n")
@@ -272,11 +272,11 @@ func Leaderboard(agents []*domain.Agent, deathThreshold int) string {
 	fmt.Fprintf(&sb, strings.Repeat("-", 50)+"\n")
 
 	for i, a := range agents {
-		if !deathThresholdPRINT && a.Score <= deathThreshold {
+		if !deathPRINT && a.Dead {
 			sb.WriteString(strings.Repeat("-", 50) + "\n")
 			sb.WriteString("☠ DEAD AGENTS ☠\n")
 			sb.WriteString(strings.Repeat("-", 50) + "\n")
-			deathThresholdPRINT = true
+			deathPRINT = true
 		}
 
 		fmt.Fprintf(&sb, "№%-3d\t%-3d) %-20s\t|%8d\n", i+1, a.ID, a.Name, a.Score)
