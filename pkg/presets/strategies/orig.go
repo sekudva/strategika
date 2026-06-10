@@ -31,11 +31,11 @@ func AntiGrudger() *domain.Strategy {
 			Mirror: &m,
 		},
 		Trigger: &domain.Trigger{
-			Act:   domain.Take,
+			Act:   domain.Share,
 			Count: 2,
 			Mode:  domain.TriggerExactly,
 			Reaction: domain.RuleValue{
-				Fix: domain.Take,
+				Fix: domain.Share,
 			},
 		},
 	}

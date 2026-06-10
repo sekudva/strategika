@@ -18,10 +18,10 @@ func RunDuel() error {
 	// agent2 := presets.AlwaysTake()
 
 	// agent1 := presets.Grudger()
-	agent1 := presets.Joss()
-	// agent1 := presets.Paladin()
-	// agent1 := presets.AntiGrudger()
-	// agent1 := presets.Crazy()
+	// agent1 := presets.Joss()
+	//agent1 := presets.Paladin()
+	//agent1 := presets.AntiGrudger()
+	agent1 := presets.Crazy()
 
 	//agent1 := presets.TitFor2Tats()
 	//agent2 := presets.ColdGhost()

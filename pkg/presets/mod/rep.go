@@ -135,7 +135,7 @@ func Exploiter() domain.Modifier {
 		case domain.Share:
 			if op != domain.Take && my != domain.Take {
 				return domain.Take
-			} else if my == domain.Take {
+			} else if punish > (safe*4) || my == domain.Take {
 				return domain.Hold
 			}
 
