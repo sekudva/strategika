@@ -16,3 +16,20 @@ type RoundLogger interface {
 	// MarkDead used in ecosystem to check dead agents.
 	MarkDead(agents []*domain.Agent, threshold int, round int)
 }
+
+type Tournament interface {
+	// RunSimulation - единичная симуляция дуэли.
+	RunSimulation(agents []*domain.Agent)
+
+	// RoundRobin - многоразовая симуляция дуэлей.
+	RoundRobin(agents []*domain.Agent)
+
+	// RunTrial - единичная симуляция ЛИДЕР / ГРУППА.
+	RunTrial(leader *domain.Agent, group []*domain.Agent)
+
+	// Circulaire - многоразовая симуляция ЛИДЕРЫ / ГРУППА.
+	Circulaire(leaders []*domain.Agent, group []*domain.Agent)
+
+	// RunEcosystem - параллельная симуляция в одной среде.
+	RunEcosystem(agents []*domain.Agent, deathThreshold int)
+}

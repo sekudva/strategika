@@ -33,9 +33,7 @@ func RunRoundRobinTournament() error {
 	cfg.Logger = tournament.NewAggregateLogger(100, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
-	err = tournament.RoundRobin(cfg, agents)
-	if err != nil {
-		return fmt.Errorf("tournament error: %w", err)
-	}
+	cfg.RoundRobin(agents)
+
 	return nil
 }

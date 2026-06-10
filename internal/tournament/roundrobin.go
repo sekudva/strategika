@@ -7,7 +7,7 @@ import (
 // RoundRobin запускает круговой турнир: каждая стратегия играет с каждой (включая саму с собой)
 // Агенты передаются уже созданными. Функция сама чистит их память перед каждой дуэлью,
 // но сохраняет накопленный счёт.
-func RoundRobin(cfg SimConfig, agents []*domain.Agent) error {
+func (cfg SimConfig) RoundRobin(agents []*domain.Agent) {
 	n := len(agents)
 
 	for _, a := range agents {
@@ -38,5 +38,4 @@ func RoundRobin(cfg SimConfig, agents []*domain.Agent) error {
 	}
 
 	cfg.Logger.Finalize(agents)
-	return nil
 }

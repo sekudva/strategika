@@ -273,9 +273,9 @@ func Leaderboard(agents []*domain.Agent) string {
 
 	for i, a := range agents {
 		if !deathPRINT && a.Dead {
-			sb.WriteString(strings.Repeat("-", 50) + "\n")
-			sb.WriteString("☠ DEAD AGENTS ☠\n")
-			sb.WriteString(strings.Repeat("-", 50) + "\n")
+			fmt.Fprintf(&sb, strings.Repeat("-", 50)+"\n")
+			fmt.Fprintf(&sb, "☠ DEAD AGENTS ☠\n")
+			fmt.Fprintf(&sb, strings.Repeat("-", 50)+"\n")
 			deathPRINT = true
 		}
 
