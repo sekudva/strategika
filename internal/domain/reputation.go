@@ -15,7 +15,7 @@ type Reputation struct {
 | Hold → Hold   | −           | +       |
 | Hold → Take   | −−          | +       |
 | Take → Share  | ·           | −−      |
-| Take → Hold   | ·           | +       |
+| Take → Hold   | ·           | -       |
 | Take → Take   | ·           | ++      |
 */
 // Дельта репутации
@@ -35,7 +35,7 @@ var reputationTable = [3][3]Reputation{
 	// Take
 	{
 		{0, -0.1},
-		{0, +0.05},
+		{0, -0.05},
 		{0, +0.1},
 	},
 }

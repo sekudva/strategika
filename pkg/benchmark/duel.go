@@ -2,6 +2,7 @@ package benchmark
 
 import (
 	"fmt"
+	"math"
 	"os"
 
 	"github.com/sekudva/strategika/internal/domain"
@@ -17,13 +18,19 @@ func RunDuel() error {
 	// agent2 := presets.AlwaysTake()
 
 	// agent1 := presets.Grudger()
-	// agent2 := presets.Joss()
+	agent1 := presets.Joss()
+	// agent1 := presets.Paladin()
+	// agent1 := presets.AntiGrudger()
+	// agent1 := presets.Crazy()
 
-	// agent1 := presets.EvilTFT()
-	agent2 := presets.ColdGhost()
+	//agent1 := presets.TitFor2Tats()
+	//agent2 := presets.ColdGhost()
 
-	agent1 := presets.Journalist()
-	//agent2 := presets.TitForTat()
+	//agent1 := presets.Journalist()
+	//agent1 := presets.TitForTat()
+
+	//agent1 := presets.AlwaysShare()
+	agent2 := presets.ExploiterTFT()
 	// ===================================
 
 	f, err := os.Create("duel_log.txt")
@@ -32,7 +39,7 @@ func RunDuel() error {
 	}
 	defer f.Close()
 
-	cfg, err := presets.DuelConfig(20, 0.0)
+	cfg, err := presets.DuelConfig(200, 0.0)
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
@@ -41,6 +48,8 @@ func RunDuel() error {
 	cfg.InfoTo(f)
 
 	cfg.RunSimulation([]*domain.Agent{agent1, agent2})
+
+	cfg.Logger.Finalize([]*domain.Agent{agent1, agent2}, math.MinInt)
 
 	return nil
 }

@@ -2,7 +2,6 @@ package benchmark
 
 import (
 	"fmt"
-	"math"
 	"os"
 
 	"github.com/sekudva/strategika/internal/tournament"
@@ -15,8 +14,10 @@ func RunArena() error {
 	// ========== ВЫБЕРИ ГРУППУ ==========
 	//agents := presets.EvilDominates()
 	//agents := presets.ClassicStrategies()
-	agents := presets.NonClassicGroup()
+	//agents := presets.NonClassicGroup()
 	// ===================================
+
+	agents := append(presets.ClassicStrategies(), presets.NonClassicGroup()...)
 
 	f, err := os.Create("arena_log.txt")
 	if err != nil {
@@ -24,7 +25,7 @@ func RunArena() error {
 	}
 	defer f.Close()
 
-	cfg, err := presets.ArenaConfig(len(agents), 200, 0.0)
+	cfg, err := presets.ArenaConfig(len(agents), 600, 0.0)
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
@@ -32,6 +33,7 @@ func RunArena() error {
 	cfg.Logger = tournament.NewAggregateLogger(200, cfg.Pairs, agents, f)
 	cfg.InfoTo(f)
 
-	cfg.RunEcosystem(agents, math.MinInt)
+	//cfg.RunEcosystem(agents, math.MinInt)
+	cfg.RunEcosystem(agents, 0)
 	return nil
 }

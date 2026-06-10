@@ -19,6 +19,10 @@ func ClassicStrategies() []*domain.Agent {
 		EvilTFT(),
 		Random(),
 		GroFman(),
+		GoByMajority(),
+		WMAdams(),
+		Eatherley(),
+		Cave(),
 	}
 }
 
@@ -38,7 +42,7 @@ func NonClassicGroup() []*domain.Agent {
 		ColdGhost(),
 		Crazy(),
 		Unfriendly(),
-		Irreconcilable(),
+		ZeroHold(),
 		StrictTeacher(),
 		Patient(),
 		Journalist(),
@@ -48,6 +52,7 @@ func NonClassicGroup() []*domain.Agent {
 		Warlock(),
 		Sorcerer(),
 		Monk(),
+		ExploiterTFT(),
 	}
 }
 

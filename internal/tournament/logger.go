@@ -45,6 +45,7 @@ func NewAggregateLogger(interval int, pairs []Pair, agents []*domain.Agent, w io
 		Interval: interval,
 		Pairs:    pairs,
 		Agents:   agents,
+		deathLog: make(map[domain.AgID]int),
 		counters: make(map[Pair][3]int),
 		Writer:   w,
 	}
@@ -166,9 +167,10 @@ func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
 		w = os.Stdout
 	}
 	return &AllLogger{
-		Agents: agents,
-		Writer: w,
-		Logs:   make([]RoundLog, 0),
+		Agents:   agents,
+		Writer:   w,
+		deathLog: make(map[domain.AgID]int),
+		Logs:     make([]RoundLog, 0),
 	}
 }
 
@@ -223,6 +225,15 @@ func (l *AllLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
 // SilentLogger не сохраняет и не выводит ничего, кроме итогов
 type SilentLogger struct {
 	Writer io.Writer
+}
+
+func NewSilentLogger(w io.Writer) *SilentLogger {
+	if w == nil {
+		w = os.Stdout
+	}
+	return &SilentLogger{
+		Writer: w,
+	}
 }
 
 func (l *SilentLogger) Log(entry RoundLog) {}

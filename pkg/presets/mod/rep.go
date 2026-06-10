@@ -84,3 +84,66 @@ func Quicksand() domain.Modifier {
 		return core
 	}
 }
+
+func Exploiter() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		n := len(ctx.History)
+		if n == 0 {
+			ctx.ModState[domain.PunishCounter] = 0 // сколько раз мой Take наказали
+			ctx.ModState[domain.SafeCounter] = 0   // сколько раз мой Take прошёл
+			return core
+		}
+
+		if n >= 1 {
+			myPrev := ctx.History.My2LastAct()
+			op := ctx.History.OpLastAct()
+
+			if myPrev != domain.Share {
+				if op == domain.Take {
+					ctx.ModState[domain.PunishCounter]++
+				} else {
+					ctx.ModState[domain.SafeCounter]++
+				}
+			}
+
+		}
+
+		if n <= 10 {
+			return core
+		}
+
+		myPrev := ctx.History.My2LastAct()
+		my := ctx.History.MyLastAct()
+		//opPrev := ctx.History.OpLastAct()
+		op := ctx.History.OpLastAct()
+
+		punish, safe := ctx.ModState[domain.PunishCounter], ctx.ModState[domain.SafeCounter]
+
+		switch myPrev {
+		case domain.Take:
+			if op != domain.Take || safe > punish {
+				return domain.Take
+			}
+			return domain.Hold
+
+		case domain.Hold:
+			if op != domain.Take {
+				return domain.Share
+			}
+			return domain.Hold
+
+		case domain.Share:
+			if op != domain.Take && my != domain.Take {
+				return domain.Take
+			} else if my == domain.Take {
+				return domain.Hold
+			}
+
+			return domain.Share
+
+		default:
+			return core
+		}
+
+	}
+}

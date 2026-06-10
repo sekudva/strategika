@@ -296,9 +296,9 @@ func Unfriendly() *domain.Agent {
 }
 
 // on hold do take
-func Irreconcilable() *domain.Agent {
+func ZeroHold() *domain.Agent {
 	return &domain.Agent{
-		Name:     "Irreconcilable",
+		Name:     "ZeroHold",
 		ID:       RequestID(52),
 		Strategy: strategies.Irreconcilable(),
 		Memory:   domain.NewMemory(),

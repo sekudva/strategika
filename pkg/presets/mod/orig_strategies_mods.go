@@ -11,7 +11,7 @@ import (
 func TullockMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if ctx.Round <= 11 {
-			return domain.Share
+			return core
 		}
 
 		// Смотрим последние 10 ходов оппонента
@@ -29,23 +29,26 @@ func TullockMod() domain.Modifier {
 		if coopCount >= 9 {
 			if rand.Float64() < 0.8 {
 				return domain.Share
+			} else {
+				return domain.Take
 			}
-			return domain.Take
 		}
 
 		// Иначе: кооперируем на (coopRate - 0.1)%
 		prob := max(0, coopRate-0.1)
 		if rand.Float64() < prob {
 			return domain.Share
+		} else {
+			return domain.Take
 		}
-		return domain.Take
+
 	}
 }
 
 func AdamsMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if len(ctx.History) < 2 {
-			return domain.Share
+			return core
 		}
 
 		lastOp := ctx.History.OpLastAct()
@@ -91,7 +94,7 @@ func AdamsMod() domain.Modifier {
 func EatherleyMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if len(ctx.History) == 0 {
-			return domain.Share
+			return core
 		}
 
 		lastOp := ctx.History.OpLastAct()
@@ -105,7 +108,7 @@ func EatherleyMod() domain.Modifier {
 
 		// Если оппонент только что дефектил → Take
 		if lastOp == domain.Take {
-			return domain.Take
+			return core
 		}
 
 		// Считаем кооперации оппонента
@@ -118,7 +121,7 @@ func EatherleyMod() domain.Modifier {
 		n := len(ctx.History)
 		p := float64(nj) / float64(n)
 		if rand.Float64() < p {
-			return domain.Share
+			return core
 		}
 		return domain.Take
 	}
@@ -132,28 +135,28 @@ func CaveMod() domain.Modifier {
 		}
 
 		// Инициализация счётчика дефектов
-		if _, ok := ctx.ModState[domain.RepeatCounter]; !ok {
-			ctx.ModState[domain.RepeatCounter] = 0
+		if _, ok := ctx.ModState[domain.DefectSum]; !ok {
+			ctx.ModState[domain.DefectSum] = 0
 		}
 
 		lastOp := ctx.History.OpLastAct()
 		if lastOp == domain.Take {
-			ctx.ModState[domain.RepeatCounter]++
+			ctx.ModState[domain.DefectSum]++
 		}
-		jdsum := ctx.ModState[domain.RepeatCounter]
-		jdpc := jdsum * 100 / n
+		defectSum := ctx.ModState[domain.DefectSum]
+		defectPc := defectSum * 100 / n
 
 		// Проверки на безумного оппонента
-		if (n > 19 && jdpc > 79) || (n > 29 && jdpc > 65) || (n > 39 && jdpc > 39) {
+		if (n > 19 && defectPc > 79) ||
+			(n > 29 && defectPc > 65) ||
+			(n > 39 && defectPc > 39) {
 			return domain.Take
 		}
 
 		// Если дефектов мало — случайный ответ
-		if jdsum <= 17 {
-			if rand.IntN(2) == 0 {
-				return domain.Share
-			}
-			return domain.Take
+		// (в агенте должна быть стратегия рандома)
+		if defectSum <= 17 {
+			return core
 		}
 
 		// Иначе всегда Take
@@ -165,72 +168,46 @@ func ChampionMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		n := len(ctx.History)
 		if n == 0 {
-			// Счётчик коопераций оппонента
-			ctx.ModState[domain.GoodStreakCounter] = 0
+			ctx.ModState[domain.CoopSum] = 0
 			return domain.Share
 		}
 
-		lastOp := ctx.History.OpLastAct()
-		if lastOp == domain.Share {
-			ctx.ModState[domain.GoodStreakCounter]++
+		if ctx.History.OpLastAct() == domain.Share {
+			ctx.ModState[domain.CoopSum]++
 		}
 
-		// Первые 10 ходов — Share
-		if n <= 10 {
-			return domain.Share
-		}
-
-		// Ходы 11-25 — TFT
+		// Ходы 11-25 — TFT (у агента должно быть TFT!)
 		if n <= 25 {
-			return lastOp
+			if n <= 10 {
+				return domain.Share
+			}
+			return core
 		}
 
-		// После 25 — условный TFT
-		coopRat := float64(ctx.ModState[domain.GoodStreakCounter]) / float64(n)
-		if lastOp == domain.Take && coopRat < 0.6 && rand.Float64() > coopRat {
+		// После 25 — условный TFT(с прощением)
+		coopRat := float64(ctx.ModState[domain.CoopSum]) / float64(n)
+
+		if ctx.History.OpLastAct() == domain.Take &&
+			coopRat < 0.6 && coopRat <= rand.Float64() {
 			return domain.Take
 		}
+
 		return domain.Share
 	}
 }
 
+// на 2 Take прощает 75%, на 1 предыдущий Take но следующий не Take - 100%
 func LeyvrazMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		n := len(ctx.History)
-		if n == 0 {
-			ctx.ModState[domain.PhaseStepCounter] = int(domain.Share)  // j1
-			ctx.ModState[domain.EscalationCounter] = int(domain.Share) // j2
-			return domain.Share
+		if len(ctx.History) == 0 {
+			return core
 		}
 
-		j2 := domain.Act(ctx.ModState[domain.EscalationCounter]) // позапрошлый
-		j1 := domain.Act(ctx.ModState[domain.PhaseStepCounter])  // прошлый
+		op := ctx.History.OpLastAct()      // последний
+		opPrev := ctx.History.Op2LastAct() // предпоследний
 
-		// Сдвигаем память
-		ctx.ModState[domain.EscalationCounter] = int(j1)
-		ctx.ModState[domain.PhaseStepCounter] = int(ctx.History.OpLastAct())
-
-		j := ctx.History.OpLastAct() // текущий ход оппонента
-
-		// Оба последних — Take
-		if j1 == domain.Take && j == domain.Take {
-			if rand.Float64() < 0.75 {
-				return domain.Take
-			}
-			return domain.Share
-		}
-
-		// Два хода назад был Take
-		if j2 == domain.Take {
+		if opPrev == domain.Take && !(op == domain.Take && rand.Float64() < 0.25) {
 			return domain.Take
-		}
-
-		// Прошлый ход был Take
-		if j1 == domain.Take {
-			if rand.Float64() < 0.5 {
-				return domain.Take
-			}
-			return domain.Share
 		}
 
 		return domain.Share

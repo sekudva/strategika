@@ -62,26 +62,34 @@ func JournalistMod() domain.Modifier {
 func GoByMajorityMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		if len(ctx.History) == 0 {
-			return domain.Share
+			return core
 		}
 
-		sum := 0.0
+		var shareCount, holdCount, takeCount int
 		for _, round := range ctx.History {
 			switch round.OpAct {
 			case domain.Share:
-				sum += 1.0
+				shareCount++
 			case domain.Hold:
-				sum += 0.5
+				holdCount++
 			case domain.Take:
-				sum += 0.0
+				takeCount++
 			}
 		}
-		average := sum / float64(len(ctx.History))
 
-		if average < 0.5 {
+		// Большинство Share → Share
+		if shareCount > holdCount && shareCount > takeCount {
+			return domain.Share
+		}
+		// Большинство Take → Take
+		if takeCount > shareCount && takeCount > holdCount {
 			return domain.Take
 		}
+		// Большинство Hold → Hold
+		if holdCount >= shareCount && holdCount >= takeCount {
+			return domain.Hold
+		}
 
-		return domain.Share
+		return core
 	}
 }

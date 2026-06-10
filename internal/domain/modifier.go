@@ -20,4 +20,8 @@ const (
 	PhaseStepCounter                    // шаг фазы оценки
 	ActRecorder                         // Так как действия тоже INT их можно хранить в счетчиках для удобства
 	CurrThresholdCounter                // Текущее пороговое значение
+	DefectSum                           // сумма отклонения
+	CoopSum                             // сумма коопераций
+	PunishCounter                       // счетчик наказаний
+	SafeCounter                         // счетчик успешных действий
 )

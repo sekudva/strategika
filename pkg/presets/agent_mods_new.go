@@ -28,21 +28,34 @@ func Journalist() *domain.Agent {
 	}
 }
 
+// best to any TFT strategy
+func ExploiterTFT() *domain.Agent {
+	return &domain.Agent{
+		Name: "ExploiterTFT",
+		ID:   RequestID(101),
+
+		Strategy: &domain.Strategy{
+			Neutral: domain.RuleValue{
+				Fix:  domain.Share,
+				Prob: map[domain.Act]float64{domain.Take: 0.3},
+			},
+		},
+
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.Exploiter()},
+	}
+}
+
 // ========== 11. RPG CLASSES ==========
 
 // Always nice to harmless, fights with ones who hurting others
 func Paladin() *domain.Agent {
-	n := domain.MirrorNice
 	return &domain.Agent{
 		Name: "Paladin",
 		ID:   RequestID(110),
 
-		Strategy: &domain.Strategy{
-			Neutral: domain.RuleValue{
-				Fix:    domain.Share,
-				Mirror: &n,
-			},
-		},
+		Strategy: strategies.TitForTat(),
 
 		Memory: domain.NewMemory(),
 		Score:  0,
@@ -99,7 +112,7 @@ func Rogue() *domain.Agent {
 		Memory: domain.NewMemory(),
 		Score:  0,
 		Modifiers: []domain.Modifier{
-			mod.WithProbability(0.9, mod.Quicksand()),
+			mod.Quicksand(),
 			mod.SeekFreak(),
 		},
 	}
@@ -133,16 +146,18 @@ func Warlock() *domain.Agent {
 			Neutral: domain.RuleValue{
 				Fix:    domain.Share,
 				Mirror: &d,
-				Prob:   map[domain.Act]float64{domain.Take: 0.3},
+				Prob: map[domain.Act]float64{
+					domain.Take: 0.2,
+					domain.Hold: 0.3,
+				},
 			},
 		},
 
 		Memory: domain.NewMemory(),
 		Score:  0,
 		Modifiers: []domain.Modifier{
-			mod.WithProbability(0.6, mod.Assistant()),
-			mod.WithProbability(0.6, mod.Mature()),
-			mod.WithProbability(0.3, mod.Quicksand()),
+			mod.WithProbability(0.2, mod.Mature()),
+			mod.WithProbability(0.2, mod.Quicksand()),
 		},
 	}
 }
@@ -158,8 +173,8 @@ func Sorcerer() *domain.Agent {
 		Memory: domain.NewMemory(),
 		Score:  0,
 		Modifiers: []domain.Modifier{
-			mod.WithProbability(0.3, mod.Assistant()),
 			mod.WithProbability(0.3, mod.Quicksand()),
+			mod.WithProbability(0.3, mod.Assistant()),
 		},
 	}
 }

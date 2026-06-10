@@ -48,7 +48,7 @@ func Eatherley() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Eatherley",
 		ID:        RequestID(133),
-		Strategy:  strategies.AlwaysShare(),
+		Strategy:  strategies.TitForTat(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
 		Modifiers: []domain.Modifier{mod.EatherleyMod()},
@@ -60,7 +60,7 @@ func Cave() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Cave",
 		ID:        RequestID(133),
-		Strategy:  strategies.AlwaysShare(),
+		Strategy:  strategies.Random(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
 		Modifiers: []domain.Modifier{mod.CaveMod()},

@@ -44,7 +44,7 @@ func (r Rounds) OpLastAct() Act {
 
 // Возвращает ПРЕДпоследний ход ПРОТИВНИКА
 func (r Rounds) Op2LastAct() Act {
-	if len(r) <= 0 {
+	if len(r) < 2 {
 		return NoAct
 	}
 	return r[len(r)-2].OpAct
@@ -57,6 +57,14 @@ func (r Rounds) MyLastAct() Act {
 		return NoAct
 	}
 	return r[len(r)-1].MyAct
+}
+
+// Возвращает МОЙ ПРЕДпоследний ход
+func (r Rounds) My2LastAct() Act {
+	if len(r) < 2 {
+		return NoAct
+	}
+	return r[len(r)-2].MyAct
 }
 
 // Для триггера внутри стратегии
