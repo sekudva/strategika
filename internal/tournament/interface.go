@@ -15,6 +15,9 @@ type RoundLogger interface {
 
 	// MarkDead used in ecosystem to check dead agents.
 	MarkDead(agents []*domain.Agent, threshold int, round int)
+
+	// ForDuel создаёт новый логгер для дуэли с указанными агентами и парами.
+	ForDuel(pairs []Pair, agents []*domain.Agent) RoundLogger
 }
 
 type Tournament interface {

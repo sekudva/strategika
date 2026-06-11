@@ -44,7 +44,7 @@ func Boev() *domain.Agent {
 
 		Memory:    domain.NewMemory(),
 		Score:     0,
-		Modifiers: []domain.Modifier{mod.Exploiter()},
+		Modifiers: []domain.Modifier{mod.Sleep(10, mod.Exploiter())},
 	}
 }
 

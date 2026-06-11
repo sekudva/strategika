@@ -28,8 +28,14 @@ func NewSilentLogger(w io.Writer) *SilentLogger {
 	}
 }
 
+func (l *SilentLogger) ForDuel(pairs []Pair, agents []*domain.Agent) RoundLogger {
+	return l // silent — не важно, можно тот же
+}
+
 func (l *SilentLogger) Log(entry RoundLog) {}
-func (l *SilentLogger) Flush() []RoundLog  { return nil }
+
+func (l *SilentLogger) Flush() []RoundLog { return nil }
+
 func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
 	for _, a := range agents {
 		if a.Score <= threshold && !a.Dead {
@@ -37,8 +43,9 @@ func (l *SilentLogger) MarkDead(agents []*domain.Agent, threshold int, round int
 		}
 	}
 }
+
 func (l *SilentLogger) Finalize(agents []*domain.Agent) {
-	fmt.Fprint(l.Writer, Leaderboard(agents))
+	fmt.Fprint(l.Writer, Leaderboard(agents, nil))
 }
 
 /*
@@ -67,6 +74,14 @@ func NewAllLogger(agents []*domain.Agent, w io.Writer) *AllLogger {
 	return &AllLogger{
 		Agents: agents,
 		Writer: w,
+		Logs:   make([]RoundLog, 0),
+	}
+}
+
+func (l *AllLogger) ForDuel(pairs []Pair, agents []*domain.Agent) RoundLogger {
+	return &AllLogger{
+		Agents: agents,
+		Writer: l.Writer,
 		Logs:   make([]RoundLog, 0),
 	}
 }
@@ -119,7 +134,7 @@ func (l *AllLogger) MarkDead(agents []*domain.Agent, threshold int, round int) {
 	}
 }
 func (l *AllLogger) Finalize(agents []*domain.Agent) {
-	fmt.Fprint(l.Writer, Leaderboard(agents))
+	fmt.Fprint(l.Writer, Leaderboard(agents, nil))
 }
 
 /*
@@ -156,6 +171,17 @@ func NewAggregateLogger(interval int, pairs []Pair, agents []*domain.Agent, w io
 		deathLog: make(map[domain.AgID]int),
 		counters: make(map[Pair][3]int),
 		Writer:   w,
+	}
+}
+
+func (l *AggregateLogger) ForDuel(pairs []Pair, agents []*domain.Agent) RoundLogger {
+	return &AggregateLogger{
+		Interval: l.Interval,
+		Pairs:    pairs,
+		Agents:   agents,
+		counters: make(map[Pair][3]int),
+		deathLog: make(map[domain.AgID]int),
+		Writer:   l.Writer,
 	}
 }
 
@@ -221,28 +247,26 @@ func (l *AggregateLogger) Stats() string {
 	for _, p := range l.Pairs {
 		i, j := p[0], p[1]
 
-		// Статистика агента i против j
-		c1 := l.counters[Pair{i, j}]
-		total1 := c1[0] + c1[1] + c1[2]
-
-		// Статистика агента j против i
-		c2 := l.counters[Pair{j, i}]
-		total2 := c2[0] + c2[1] + c2[2]
-
-		if total1 == 0 && total2 == 0 {
-			continue
-		}
-
-		fmt.Fprintf(&sb, "%-15s → %-15s | %3d / %3d / %3d	| Score %-15s : %d\n",
-			l.Agents[i].Name, l.Agents[j].Name,
-			pct(c1[0], total1), pct(c1[1], total1), pct(c1[2], total1), l.Agents[i].Name, l.Agents[i].Memory.DuelScore)
-
-		fmt.Fprintf(&sb, "%-15s ← %-15s | %3d / %3d / %3d	| Score %-15s : %d\n\n",
-			l.Agents[i].Name, l.Agents[j].Name,
-			pct(c2[0], total2), pct(c2[1], total2), pct(c2[2], total2), l.Agents[j].Name, l.Agents[j].Memory.DuelScore)
+		l.writeStatsLine(&sb, i, j, "→")
+		l.writeStatsLine(&sb, j, i, "←")
+		fmt.Fprintf(&sb, "\n")
 	}
 
 	return sb.String()
+}
+
+func (l *AggregateLogger) writeStatsLine(sb *strings.Builder, from, to int, arrow string) {
+	c := l.counters[Pair{from, to}]
+	total := c[0] + c[1] + c[2]
+	if total == 0 {
+		return
+	}
+	fmt.Fprintf(sb, "%-15s %s %-15s | %3d / %3d / %3d | Score %-15s : %5d		:: %5d\n",
+		l.Agents[from].Name, arrow, l.Agents[to].Name,
+		pct(c[0], total), pct(c[1], total), pct(c[2], total),
+		l.Agents[from].Name, l.Agents[from].Memory.DuelScore,
+		l.Agents[from].Score,
+	)
 }
 
 func pct(count, total int) int {
@@ -262,14 +286,14 @@ func (l *AggregateLogger) MarkDead(agents []*domain.Agent, threshold int, round 
 }
 
 func (l *AggregateLogger) Finalize(agents []*domain.Agent) {
-	fmt.Fprint(l.Writer, Leaderboard(agents))
+	fmt.Fprint(l.Writer, Leaderboard(agents, l.deathLog))
 }
 
 /*
 FINALIZE
 */
 
-func Leaderboard(agents []*domain.Agent) string {
+func Leaderboard(agents []*domain.Agent, deathLog map[domain.AgID]int) string {
 	sort.Slice(agents, func(i, j int) bool {
 		return agents[i].Score > agents[j].Score
 	})
@@ -292,7 +316,16 @@ func Leaderboard(agents []*domain.Agent) string {
 			deathPRINT = true
 		}
 
-		fmt.Fprintf(&sb, "№%-3d\t%-3d) %-20s\t|%8d\n", i+1, a.ID, a.Name, a.Score)
+		deathInfo := ""
+		if a.Dead {
+			if r, ok := deathLog[a.ID]; ok {
+				deathInfo = fmt.Sprintf(" ☠ r%d", r)
+			} else {
+				deathInfo = " ☠"
+			}
+		}
+
+		fmt.Fprintf(&sb, "№%-3d\t%-3d) %-20s\t|%8d	%s\n", i+1, a.ID, a.Name, a.Score, deathInfo)
 	}
 
 	fmt.Fprintf(&sb, strings.Repeat("=", 50)+"\n")
