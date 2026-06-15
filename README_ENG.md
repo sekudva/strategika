@@ -29,6 +29,11 @@ that changes the dynamics: you can defend without attacking in response.
 - Trial (1 × Group) — one strategy against a group
 - Arena (Many × Many) — all against all with reputation and unspoken coalitions
 
+    AND ADDITIONAL ADVANCED OPTIONS:
+- Round-Robin - like Duel, 1 × 1 many times, Axelrod's classic TOURNAMENT
+- Circulaire - like Trial, some strategies against a group
+- Ecosystem - like Arena, with death threshold score
+
 **Reputation.** In the Arena, agents observe others' interactions and form
 reputations of each other: who is a predator, who is prey, who is a defender.
 Inside each agent, a numerical ratio of certain action types is stored.
@@ -39,7 +44,7 @@ Complex strategies are assembled by adding modifiers.
 
 ### Planned Extensions
 
-- Ecosystem with mutations and survival
+- Advanced logic to ecosystem
 - Web-based strategy builder
 
 ___

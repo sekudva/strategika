@@ -154,3 +154,25 @@ func Exploiter() domain.Modifier {
 
 	}
 }
+
+// PavlovMod — Win-Stay, Lose-Shift для трёх действий.
+// Для базовой минусовой матрицы
+func Pavlov() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		my := ctx.History.MyLastAct()
+		op := ctx.History.OpLastAct()
+		myPayoff, _ := domain.Payoff(my, op)
+
+		if myPayoff >= 0 {
+			return my
+		}
+
+		switch my {
+		case domain.Share:
+			return domain.Take
+		default:
+			// в остальных случаях смена на Share
+			return domain.Share
+		}
+	}
+}
