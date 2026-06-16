@@ -1,41 +1,68 @@
 # STRATEGIKA
-## Наследие турнира Аксельрода
+## Legacy of Axelrod's Tournament
 
-Автор: Кудинова Селена
+**Author:** Selena Kudinova
+*Note: Comments in the project are often written in Russian (my native language). Please use a translator if you need clarity!*
 
-### История турнира стратегий
+### History of the Strategy Tournament
 
-Роберт Аксельрод, американский политолог, в 1984 году опубликовавший труд "Эволюция кооперации".
-Для естественного наблюдения за взаимодействием различных стратегий, Аксельрод в 1979 году создал турнир на основе многократного повторения ситуации из "Дилеммы заключенного", и пригласил коллег-исследователей из области теории игр создать собственные стратегии, на основе проводившихся 200 раундов-дуэлей.
-Позже, в 1980 году, к стратегиям, созданным профессионалами своих областей, присоединились любители, а также количество раундов было условно-случайным в рамках окола 200 раундов.
+**Robert Axelrod**, an American political scientist, published "The Evolution of Cooperation" in 1984.
+To naturally observe interactions between different strategies, Axelrod created a tournament in 1979 based on repeated iterations of the **"Prisoner's Dilemma"** (a game where two players choose to either cooperate or defect) and invited fellow researchers from game theory to create their own strategies, based on 200 duel rounds.
+Later, in 1980, hobbyists joined the strategies created by professionals in their fields, and the number of rounds became pseudo-random within the range of approximately 200 rounds.
 
-### Стратегика - наследник идеи
+### Strategika — Heir to the Idea
 
-Проект "Стратегика" создан на основе турниров Аксельрода с некоторыми изменениями и расширениями, написан на Go с использованием композиции и интерфейсов, параметрический подход.
-Цель проекта скорее не столько проведение турниров, сколько наблюдение за разной динамикой поведения в разных условиях. 
-Помимо классических дуэлей один-на-один реализованы режимы "испытание", где проводится испытание одной стратегии сразу перед множеством стратегий, и "арена" где стратегии сосуществуют одновременно. Существование таких полей позволяет ввести репутацию каждого агента-стратегии, негласные коалиции и расширение оригинальных правил "Дилеммы заключенного", введя нейтральное действие "Воздержание" помимо "Сотрудничества" и "Предательства". 
-Есть возможность выбирать конкретные стратегии, участвующие в соревнованиях, потому как универсальной стратегии-победительницы не может существовать и все зависит от внешних условий(то есть, кем являются стратегии-оппоненты).
+The **"Strategika"** project is built upon Axelrod's tournaments with several modifications and extensions, written in Go using composition and interfaces.
+The goal of the project is not so much to run tournaments as to **observe different behavioral dynamics under different conditions**.
+In addition to classic one-on-one duels, there are "trial" modes where one strategy is tested against a group of strategies, and "arena" modes where strategies coexist simultaneously. The existence of such arenas allows for the introduction of reputation for each strategy-agent, unspoken coalitions, and an extension of the original "Prisoner's Dilemma" rules by introducing a neutral action, "Abstain", alongside "Cooperate" and "Defect".
+It is possible to select specific strategies participating in the competition, since a universal winning strategy cannot exist and everything depends on external conditions (that is, who the opponent strategies are).
 
-### Механики
 
-**Три действия вместо двух.** В оригинале: "Кооперироваться" и "Предать". 
-У Стратегики существует третье действие, "Воздержаться" — нейтральное действие, 
-которое меняет динамику: можно защищаться, не атакуя в ответ.
+### Mechanics
 
-**Три формата турниров:**
-- Дуэль (1 × 1) — классика Аксельрода
-- Испытание (1 × Группа) — одна стратегия против группы
-- Арена (Множество × Множество) — все против всех с репутацией и негласными коалициями
+**Three actions instead of two.** In the original: "Cooperate" and "Defect".
+Strategika introduces a third action, "Abstain" — a neutral action
+that changes the dynamics: you can defend without attacking in response.
 
-**Репутация.** На Арене агенты видят чужие взаимодействия и формируют 
-репутацию друг друга: кто хищник, кто жертва, кто защитник.
-Внутри каждого агента хранится числовое соотношение определенных типов действий.
+- **Three interaction formats.**
+1)  **Duel (1×1)** — a classic one-on-one match.
+2)  **Trial (1×Group)** — a single strategy is tested against a group.
+3)  **Arena (M×M)** — all strategies interact simultaneously, building reputations and forming unspoken coalitions.
 
-**Стратегии из трёх правил.** Каждая стратегия описывается нейтральным
-состоянием, порогом возбудимости и реакцией. Значения могут быть фиксированные, вероятностные.
-Сложные стратегии собираются добавлением модификаторов.
+- **Plus advanced options:**
+4) **Round-Robin** — a tournament of many duels (1×1, many times). Original Tournament idea.
+5) **Circulaire** — a series of trials (some strategies against a group).
+6) **Ecosystem** — an arena with a death threshold, where low-scoring agents are eliminated.
 
-### Запланированные расширения
+**Reputation.** In the Arena, agents observe others' interactions and form
+reputations of each other: who is a predator, who is prey, who is a defender.
+Inside each agent, a numerical ratio of certain action types is stored.
 
-- Экосистема с мутациями и выживанием
-- Веб-конструктор стратегий
+**Strategies from three rules.** Each strategy is described by a neutral
+state, a trigger threshold, and a reaction. Values can be fixed or probabilistic.
+Complex strategies are assembled by adding modifiers.
+
+### How to Start
+
+1.  **Prerequisites:** Go 1.22 or higher installed.
+2.  **Run** from directory this README layed:
+    ```bash
+    go run ./cmd/main.go
+    ```
+
+### Planned Extensions
+
+- Advanced logic to ecosystem
+- Web-based strategy builder
+
+___
+### Personal. From the Author
+This project is deeply personal. Game theory is something I would love to pursue seriously, but I only understood that after the idea for this project was born. Before that, life felt like a fog.
+
+I have ADHD, and socialization has always been difficult. Since childhood, I made decisions based on other people's perceptions — it seemed to me that a person couldn't be wrong about me. In my head, I would build a hypothetical trajectory of the conversation and choose the words I thought would satisfy the other person. If they were assertive — I was assertive. If they were gentle — I was gentler still. But beyond that, I also read the environment: if someone forbade themselves from showing emotion, I wanted to help them with that, and I did it deliberately.
+
+Once I was told not to be sad, and I stopped showing sadness entirely — until people started getting angry at me for my constant cheerfulness. Since childhood I was told never to lie, and I lied for the first time at 17 — because everyone around me was lying and embellishing, and I didn't understand why that was rewarded.
+
+The diversity of people's characters and intentions both inspires and exhausts me. I've always wanted a tool that would give me abstract instructions for behavior in different situations. I studied animal behavior, replayed my favorite games choosing the "evil" path, argued aimlessly, and lied to friends. All of it came from a desire to experiment on my own imaginary proving ground. Because no one could truly understand my inner tossing. No one could experience this complete absence of a coherent identity — and this temptation to understand all intentions in the world without the lenses of my own perception.
+
+The nature of strategy tournament simulation turned out to be incredibly close to me. A tournament actually reflects the way I think. Thoughts and decisions that flash by in seconds during a conversation, and then linger for hours and days during reflection, go through similar trials. It's strange to find my own reflection not in one of the strategies, but in the tournament itself — and I want to cherish this feeling of unity with the concept, continuing and developing it as a tool for decision-making simulation.
