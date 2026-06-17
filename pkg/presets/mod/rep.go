@@ -35,6 +35,16 @@ func SeekSneak() domain.Modifier {
 	}
 }
 
+// SeekBrick - находит защищающихся дружелюбных и кооперирует
+func SeekBrick() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		if ctx.OpRep.Coop > 0.6 && ctx.OpRep.Def > 0.7 {
+			return domain.Take
+		}
+		return core
+	}
+}
+
 // Воин - ищет агрессивных и воюет с ними
 func Warrior() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
@@ -82,5 +92,27 @@ func Quicksand() domain.Modifier {
 			return domain.Take
 		}
 		return core
+	}
+}
+
+// PavlovMod — Win-Stay, Lose-Shift для трёх действий.
+func EvilPavlov() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		my := ctx.History.MyLastAct()
+		op := ctx.History.OpLastAct()
+		myPayoff, opPayoff := domain.Payoff(my, op)
+
+		if myPayoff > opPayoff {
+			return my
+		}
+
+		switch my {
+		case domain.Take:
+			return domain.Share
+		case domain.Share:
+			return domain.Hold
+		default:
+			return domain.Take
+		}
 	}
 }

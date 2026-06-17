@@ -66,3 +66,50 @@ func Cave() *domain.Agent {
 		Modifiers: []domain.Modifier{mod.CaveMod()},
 	}
 }
+
+// Pavlov — Win-Stay, Lose-Shift
+func Pavlov() *domain.Agent {
+	return &domain.Agent{
+		Name:      "Pavlov",
+		ID:        RequestID(70),
+		Strategy:  strategies.AlwaysShare(),
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.Sleep(1, mod.Pavlov())},
+	}
+}
+
+// Tullock — первые 11 ходов Share, потом вероятностная
+func Tullock() *domain.Agent {
+	return &domain.Agent{
+		Name:      "Tullock",
+		ID:        RequestID(71),
+		Strategy:  strategies.AlwaysShare(),
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.Sleep(11, mod.TullockMod())},
+	}
+}
+
+// Champion — 10 Share, 15 TFT, потом условный
+func Champion() *domain.Agent {
+	return &domain.Agent{
+		Name:      "Champion",
+		ID:        RequestID(72),
+		Strategy:  strategies.TitForTatNEW(), // TFT
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.ChampionMod()},
+	}
+}
+
+func Leyvraz() *domain.Agent {
+	return &domain.Agent{
+		Name:      "Leyvraz",
+		ID:        RequestID(73),
+		Strategy:  strategies.AlwaysShare(),
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.Sleep(1, mod.LeyvrazMod())},
+	}
+}

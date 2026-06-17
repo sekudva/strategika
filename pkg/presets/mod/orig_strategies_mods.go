@@ -96,8 +96,6 @@ func EatherleyMod() domain.Modifier {
 			ctx.ModState[domain.GoodStreakCounter] = 0 // nj — кооперации оппонента
 		}
 
-		nj := ctx.ModState[domain.GoodStreakCounter]
-
 		// Если оппонент только что дефектил → Take
 		if lastOp == domain.Take {
 			return core
@@ -105,16 +103,16 @@ func EatherleyMod() domain.Modifier {
 
 		// Считаем кооперации оппонента
 		if lastOp == domain.Share {
-			nj++
-			ctx.ModState[domain.GoodStreakCounter] = nj
+			ctx.ModState[domain.GoodStreakCounter]++
 		}
 
 		// Вероятность кооперации = доля коопераций оппонента
 		n := len(ctx.History)
-		p := float64(nj) / float64(n)
+		p := float64(ctx.ModState[domain.GoodStreakCounter]) / float64(n)
 		if rand.Float64() < p {
 			return core
 		}
+
 		return domain.Take
 	}
 }
@@ -191,10 +189,6 @@ func ChampionMod() domain.Modifier {
 // на 2 Take прощает 75%, на 1 предыдущий Take но следующий не Take - 100%
 func LeyvrazMod() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		if len(ctx.History) == 0 {
-			return core
-		}
-
 		op := ctx.History.OpLastAct()      // последний
 		opPrev := ctx.History.Op2LastAct() // предпоследний
 
@@ -203,5 +197,27 @@ func LeyvrazMod() domain.Modifier {
 		}
 
 		return domain.Share
+	}
+}
+
+// PavlovMod — Win-Stay, Lose-Shift для трёх действий.
+// Для базовой минусовой матрицы
+func Pavlov() domain.Modifier {
+	return func(core domain.Act, ctx domain.ModContext) domain.Act {
+		my := ctx.History.MyLastAct()
+		op := ctx.History.OpLastAct()
+		myPayoff, _ := domain.Payoff(my, op)
+
+		if myPayoff >= 0 {
+			return my
+		}
+
+		switch my {
+		case domain.Share:
+			return domain.Take
+		default:
+			// в остальных случаях смена на Share
+			return domain.Share
+		}
 	}
 }

@@ -44,7 +44,36 @@ func Boev() *domain.Agent {
 
 		Memory:    domain.NewMemory(),
 		Score:     0,
-		Modifiers: []domain.Modifier{mod.Sleep(10, mod.Exploiter())},
+		Modifiers: []domain.Modifier{mod.Exploiter()},
+	}
+}
+
+func Abuser() *domain.Agent {
+	return &domain.Agent{
+		Name: "Abuser",
+		ID:   RequestID(102),
+
+		Strategy: strategies.Random(),
+
+		Memory: domain.NewMemory(),
+		Score:  0,
+		Modifiers: []domain.Modifier{
+			mod.Exploiter(),
+			mod.Sleep(15, mod.SeekBrick()),
+			mod.Sleep(30, mod.SeekWeak()),
+		},
+	}
+}
+
+// Envy strategy.
+func EvilPavlov() *domain.Agent {
+	return &domain.Agent{
+		Name:      "EvilPavlov",
+		ID:        RequestID(103),
+		Strategy:  strategies.AlwaysShare(),
+		Memory:    domain.NewMemory(),
+		Score:     0,
+		Modifiers: []domain.Modifier{mod.Sleep(1, mod.EvilPavlov())},
 	}
 }
 

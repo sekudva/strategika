@@ -96,10 +96,12 @@ func GoByMajorityMod() domain.Modifier {
 func Exploiter() domain.Modifier {
 	return func(core domain.Act, ctx domain.ModContext) domain.Act {
 		n := len(ctx.History)
-		if n == 0 {
-			ctx.ModState[domain.PunishCounter] = 0 // сколько раз мой Take наказали
-			ctx.ModState[domain.SafeCounter] = 0   // сколько раз мой Take прошёл
-			return core
+
+		if _, ok := ctx.ModState[domain.PunishCounter]; !ok {
+			ctx.ModState[domain.PunishCounter] = 0
+		}
+		if _, ok := ctx.ModState[domain.SafeCounter]; !ok {
+			ctx.ModState[domain.SafeCounter] = 0
 		}
 
 		if n >= 1 {
@@ -152,27 +154,5 @@ func Exploiter() domain.Modifier {
 			return core
 		}
 
-	}
-}
-
-// PavlovMod — Win-Stay, Lose-Shift для трёх действий.
-// Для базовой минусовой матрицы
-func Pavlov() domain.Modifier {
-	return func(core domain.Act, ctx domain.ModContext) domain.Act {
-		my := ctx.History.MyLastAct()
-		op := ctx.History.OpLastAct()
-		myPayoff, _ := domain.Payoff(my, op)
-
-		if myPayoff >= 0 {
-			return my
-		}
-
-		switch my {
-		case domain.Share:
-			return domain.Take
-		default:
-			// в остальных случаях смена на Share
-			return domain.Share
-		}
 	}
 }
