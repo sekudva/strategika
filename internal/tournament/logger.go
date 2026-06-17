@@ -281,6 +281,10 @@ func (l *AggregateLogger) MarkDead(agents []*domain.Agent, threshold int, round 
 		if a.Score <= threshold && !a.Dead {
 			a.Dead = true
 			l.deathLog[a.ID] = round
+
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
+			fmt.Fprintf(l.Writer, "AGENT %s IS DEAD!\n", a.Name)
+			fmt.Fprintf(l.Writer, strings.Repeat("=", 50)+"\n")
 		}
 	}
 }

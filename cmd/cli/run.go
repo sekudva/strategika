@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"time"
 )
 
 // Run — основной хендлер, запускает меню и диспатчит режимы.
@@ -34,31 +35,15 @@ func Run() error {
 			handleEcosystem(rounds, noise)
 		case 7:
 			handleInfo()
+			pause()
 			continue
 		}
+
+		pause()
 	}
 }
 
-func readInt(prompt string, min, max int, defaultVal int) int {
-	fmt.Print(prompt)
-	var n int
-	_, err := fmt.Scanf("%d", &n)
-
-	if err != nil || n < min || n > max {
-		fmt.Scanln()
-		return defaultVal
-	}
-	return n
-}
-
-func readFloat(prompt string, min, max float64, defaultVal float64) float64 {
-	fmt.Print(prompt)
-	var f float64
-	_, err := fmt.Scanf("%f", &f)
-
-	if err != nil || f < min || f > max {
-		fmt.Scanln()
-		return defaultVal
-	}
-	return f
+func pause() {
+	fmt.Println("\n⏳ Return to menu in 5 seconds...")
+	time.Sleep(5 * time.Second)
 }

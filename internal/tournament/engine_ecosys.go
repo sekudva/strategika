@@ -22,6 +22,8 @@ func (cfg SimConfig) RunEcosystem(agents []*domain.Agent, deathThreshold int) {
 		applyPhase(active, decisions, pairs, round, cfg.Logger)
 
 		cfg.Logger.MarkDead(active, deathThreshold, round)
+
+		cfg.Logger.Flush()
 	}
 
 	cfg.Logger.Finalize(agents)

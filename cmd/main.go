@@ -1,4 +1,3 @@
-// cmd/strategika/main.go
 package main
 
 import (
@@ -15,9 +14,9 @@ func main() {
 	}
 }
 
+/* OFF-MENU ADVANCED TESTING CODE */
+
 // func main() {
-// 	// ========== ВЫБЕРИ ТЕСТ ==========
-// 	// Раскомментируй нужную строку:
 
 // 	// 1. Круговой турнир всех стратегий
 // 	// if err := benchmark.RunRoundRobinTournament(); err != nil {
