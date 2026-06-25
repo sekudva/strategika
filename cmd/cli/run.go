@@ -2,11 +2,21 @@ package cli
 
 import (
 	"fmt"
+	"os"
 	"time"
+
+	"github.com/sekudva/strategika/internal/service"
 )
 
 // Run — основной хендлер, запускает меню и диспатчит режимы.
 func Run() error {
+	service.Quick = Quick
+	service.Silent = Silent
+
+	if err := os.MkdirAll("results", 0755); err != nil {
+		return fmt.Errorf("cannot create results directory: %w", err)
+	}
+
 	for {
 		mode := MainMenu()
 		if mode == 0 {
