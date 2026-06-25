@@ -7,7 +7,7 @@ import (
 
 	"github.com/sekudva/strategika/internal/domain"
 	"github.com/sekudva/strategika/internal/tournament"
-	"github.com/sekudva/strategika/pkg/presets"
+	"github.com/sekudva/strategika/presets"
 )
 
 func handleDuel(rounds int, noise float64) {
@@ -17,7 +17,7 @@ func handleDuel(rounds int, noise float64) {
 	a1 := selectOne(selectGroup())
 	a2 := selectOne(selectGroup())
 
-	fmt.Printf("\nДуэль: %s vs %s\n", a1.Name, a2.Name)
+	fmt.Printf("\nDuel: %s VS %s\n", a1.Name, a2.Name)
 
 	f, err := os.Create("duel_log.txt")
 	if err != nil {
@@ -32,13 +32,17 @@ func handleDuel(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAllLogger([]*domain.Agent{a1, a2}, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAllLogger([]*domain.Agent{a1, a2}, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.RunSimulation([]*domain.Agent{a1, a2})
 
 	cfg.Logger.Finalize([]*domain.Agent{a1, a2})
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	Results(f.Name())
 }
 
 func handleRoundRobin(rounds int, noise float64) {
@@ -47,8 +51,12 @@ func handleRoundRobin(rounds int, noise float64) {
 
 	agents := selectEach(selectGroup())
 
-	noSelf := readInt("Исключить само-игры? 1 - да: ", 0, 1, 0) == 1
-	fmt.Printf("\nRound Robin: %d агентов, само-игры: %v\n", len(agents), !noSelf)
+	noSelf := true
+	if !Quick {
+		noSelf = readInt("Allow self-games? 0 - NO, 1 - YES [NO]: ", 0, 1, 0) == 0
+	}
+
+	fmt.Printf("\nRound Robin: %d agents, self-games: %v\n", len(agents), !noSelf)
 
 	f, err := os.Create("roundrobin_log.txt")
 	if err != nil {
@@ -63,17 +71,21 @@ func handleRoundRobin(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(rounds/2, tournament.DuelPairs(), agents, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAggregateLogger(rounds/2, tournament.DuelPairs(), agents, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.RoundRobin(agents, noSelf)
 
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	Results(f.Name())
 }
 
 func handleTrial(rounds int, noise float64) {
 	fmt.Println("\n=== TRIAL ===")
-	fmt.Println("Choose one lider and group:")
+	fmt.Println("Choose one leader and group:")
 
 	fmt.Println("\nChoose leader (or victim):")
 	leader := selectOne(selectGroup())
@@ -97,13 +109,17 @@ func handleTrial(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(rounds, cfg.Pairs, all, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAggregateLogger(rounds, cfg.Pairs, all, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.RunTrial(leader, group)
 
-	cfg.Logger.Finalize(all)
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	cfg.Logger.Finalize([]*domain.Agent{leader})
+	Results(f.Name())
 }
 
 func handleCirculaire(rounds int, noise float64) {
@@ -131,12 +147,16 @@ func handleCirculaire(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(rounds, tournament.TrialPairs(0, len(all)), all, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAggregateLogger(rounds, tournament.TrialPairs(0, len(all)), all, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.Circulaire(leaders, group)
 
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	Results(f.Name())
 }
 
 func handleArena(rounds int, noise float64) {
@@ -160,12 +180,17 @@ func handleArena(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(rounds/2, cfg.Pairs, agents, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAggregateLogger(rounds/2, cfg.Pairs, agents, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.RunSimulation(agents)
 
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	cfg.Logger.Finalize(agents)
+	Results(f.Name())
 }
 
 func handleEcosystem(rounds int, noise float64) {
@@ -174,7 +199,11 @@ func handleEcosystem(rounds int, noise float64) {
 
 	agents := selectEach(selectGroup())
 
-	threshold := readInt("Death threshold (scores) [0]: ", -100000, 100000, 0)
+	threshold := 0
+	if !Quick {
+		threshold = readInt("Death threshold (scores) [0]: ", -100000, 100000, 0)
+	}
+
 	fmt.Printf("\nEcosystem: %d agents, death threshold: %d\n", len(agents), threshold)
 
 	f, err := os.Create("ecosystem_log.txt")
@@ -190,12 +219,16 @@ func handleEcosystem(rounds int, noise float64) {
 		return
 	}
 
-	cfg.Logger = tournament.NewAggregateLogger(rounds/2, cfg.Pairs, agents, f)
+	if Silent {
+		cfg.Logger = tournament.NewSilentLogger(f)
+	} else {
+		cfg.Logger = tournament.NewAggregateLogger(rounds/2, cfg.Pairs, agents, f)
+	}
 	cfg.InfoTo(f)
 
 	cfg.RunEcosystem(agents, threshold)
 
-	fmt.Printf("\nResults in generated file: %s\n", f.Name())
+	Results(f.Name())
 }
 
 func handleInfo() {
@@ -205,4 +238,10 @@ func handleInfo() {
 		return
 	}
 	fmt.Println(strings.TrimSpace(string(data)))
+}
+
+func Results(name string) {
+	fmt.Printf("\nResults in generated file: %s\n", name)
+	fmt.Print("WARNING: This file will override previous version\nif you run simulation with same Simulation Mode!\n")
+	fmt.Print("If you want to save result, rename previous file.\n")
 }

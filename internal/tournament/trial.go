@@ -19,7 +19,13 @@ func (cfg SimConfig) Circulaire(leaders []*domain.Agent, group []*domain.Agent) 
 		for _, g := range group {
 			g.ResetMemory()
 		}
+		// Создаём новый логгер для этого лидера
+		all := append([]*domain.Agent{leader}, group...)
+		pairs := TrialPairs(0, len(all))
+		cfg.Logger = cfg.Logger.ForDuel(pairs, all)
+
 		cfg.RunTrial(leader, group)
 	}
+
 	cfg.Logger.Finalize(leaders)
 }

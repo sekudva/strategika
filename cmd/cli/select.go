@@ -6,16 +6,19 @@ import (
 	"strings"
 
 	"github.com/sekudva/strategika/internal/domain"
-	"github.com/sekudva/strategika/pkg/presets"
+	"github.com/sekudva/strategika/presets/agents"
 )
 
 var groups = []struct {
 	name string
 	fn   func() []*domain.Agent
 }{
-	{"All agents", presets.AllStrategies},
-	{"Classic", presets.ClassicStrategies},
-	{"Non-Classic", presets.NonClassicGroup},
+	{"All agents", agents.AllStrategies},
+	{"Classic", agents.Classic},
+	{"Non-Classic", agents.NonClassic},
+	{"Evil", agents.Evil},
+	{"Nice", agents.Nice},
+	{"Adaptable", agents.Adaptable},
 }
 
 func selectGroup() []*domain.Agent {
@@ -41,13 +44,13 @@ func selectEach(agents []*domain.Agent) []*domain.Agent {
 	}
 
 	fmt.Print("\nIf nothing chosen, the whole group will be returned!")
-	fmt.Print("\nEnter agent numbers separated by space:\n> ")
+	fmt.Print("\nEnter agent numbers separated by COMMA(,):\n> ")
 
 	var input string
 	fmt.Scanf("%s", &input)
 
 	var selected []*domain.Agent
-	for _, s := range strings.Split(input, " ") {
+	for _, s := range strings.Split(input, ",") {
 		n, err := strconv.Atoi(strings.TrimSpace(s))
 		if err == nil && n >= 1 && n <= len(agents) {
 			selected = append(selected, agents[n-1])

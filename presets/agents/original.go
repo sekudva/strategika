@@ -1,9 +1,9 @@
-package presets
+package agents
 
 import (
 	"github.com/sekudva/strategika/internal/domain"
-	"github.com/sekudva/strategika/pkg/presets/mod"
-	"github.com/sekudva/strategika/pkg/presets/strategies"
+	"github.com/sekudva/strategika/presets/mods"
+	"github.com/sekudva/strategika/presets/strategies"
 )
 
 // ========== 13. ORIGINAL TOURNAMENT ==========
@@ -59,7 +59,7 @@ func Eatherley() *domain.Agent {
 func Cave() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Cave",
-		ID:        RequestID(133),
+		ID:        RequestID(134),
 		Strategy:  strategies.Random(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
@@ -71,7 +71,7 @@ func Cave() *domain.Agent {
 func Pavlov() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Pavlov",
-		ID:        RequestID(70),
+		ID:        RequestID(135),
 		Strategy:  strategies.AlwaysShare(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
@@ -83,7 +83,7 @@ func Pavlov() *domain.Agent {
 func Tullock() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Tullock",
-		ID:        RequestID(71),
+		ID:        RequestID(136),
 		Strategy:  strategies.AlwaysShare(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
@@ -95,7 +95,7 @@ func Tullock() *domain.Agent {
 func Champion() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Champion",
-		ID:        RequestID(72),
+		ID:        RequestID(137),
 		Strategy:  strategies.TitForTatNEW(), // TFT
 		Memory:    domain.NewMemory(),
 		Score:     0,
@@ -106,10 +106,20 @@ func Champion() *domain.Agent {
 func Leyvraz() *domain.Agent {
 	return &domain.Agent{
 		Name:      "Leyvraz",
-		ID:        RequestID(73),
+		ID:        RequestID(138),
 		Strategy:  strategies.AlwaysShare(),
 		Memory:    domain.NewMemory(),
 		Score:     0,
 		Modifiers: []domain.Modifier{mod.Sleep(1, mod.LeyvrazMod())},
+	}
+}
+
+func GroFman() *domain.Agent {
+	return &domain.Agent{
+		Name:     "GroFman",
+		ID:       RequestID(139),
+		Strategy: strategies.GroFman(),
+		Memory:   domain.NewMemory(),
+		Score:    0,
 	}
 }

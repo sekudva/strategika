@@ -15,9 +15,12 @@ func Run() error {
 		var rounds int
 		var noise float64
 
-		if mode != 7 {
+		if mode != 7 || !Quick {
 			rounds = readInt("Количество раундов [200]: ", 1, 10000, 200)
 			noise = readFloat("Шум канала (0.0-1.0) [0.0]: ", 0.0, 1.0, 0.0)
+		} else if Quick {
+			rounds = 200
+			noise = 0.0
 		}
 
 		switch mode {

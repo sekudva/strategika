@@ -232,7 +232,6 @@ func (l *AggregateLogger) increment(c *[3]int, act domain.Act) {
 
 // Flush выводит финальную статистику и не хранит историю.
 func (l *AggregateLogger) Flush() []RoundLog {
-
 	if l.round%l.Interval == 0 {
 		fmt.Fprintf(l.Writer, "\n--- Round %d ---\n%s", l.round, l.Stats())
 		l.counters = make(map[Pair][3]int)
@@ -247,19 +246,21 @@ func (l *AggregateLogger) Stats() string {
 	for _, p := range l.Pairs {
 		i, j := p[0], p[1]
 
-		l.writeStatsLine(&sb, i, j, "→")
-		l.writeStatsLine(&sb, j, i, "←")
-		fmt.Fprintf(&sb, "\n")
+		first := l.writeStatsLine(&sb, i, j, "→")
+		second := l.writeStatsLine(&sb, j, i, "←")
+		if first || second {
+			fmt.Fprintf(&sb, "\n")
+		}
 	}
 
 	return sb.String()
 }
 
-func (l *AggregateLogger) writeStatsLine(sb *strings.Builder, from, to int, arrow string) {
+func (l *AggregateLogger) writeStatsLine(sb *strings.Builder, from, to int, arrow string) bool {
 	c := l.counters[Pair{from, to}]
 	total := c[0] + c[1] + c[2]
 	if total == 0 {
-		return
+		return false
 	}
 	fmt.Fprintf(sb, "%-15s %s %-15s | %3d / %3d / %3d | Score %-15s : %5d		:: %5d\n",
 		l.Agents[from].Name, arrow, l.Agents[to].Name,
@@ -267,6 +268,7 @@ func (l *AggregateLogger) writeStatsLine(sb *strings.Builder, from, to int, arro
 		l.Agents[from].Name, l.Agents[from].Memory.DuelScore,
 		l.Agents[from].Score,
 	)
+	return true
 }
 
 func pct(count, total int) int {
