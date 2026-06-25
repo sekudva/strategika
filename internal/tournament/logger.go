@@ -248,6 +248,7 @@ func (l *AggregateLogger) Stats() string {
 
 		first := l.writeStatsLine(&sb, i, j, "→")
 		second := l.writeStatsLine(&sb, j, i, "←")
+
 		if first || second {
 			fmt.Fprintf(&sb, "\n")
 		}

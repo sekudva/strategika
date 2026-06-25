@@ -14,10 +14,10 @@ func handleDuel(rounds int, noise float64) {
 	fmt.Println("\n=== DUEL ===")
 	fmt.Println("Choose 2 strategies:")
 
-	a1 := selectOne(selectGroup())
-	a2 := selectOne(selectGroup())
+	agent1 := selectOne(selectGroup())
+	agent2 := selectOne(selectGroup())
 
-	fmt.Printf("\nDuel: %s VS %s\n", a1.Name, a2.Name)
+	fmt.Printf("\nDuel: %s VS %s\n", agent1.Name, agent2.Name)
 
 	f, err := os.Create("duel_log.txt")
 	if err != nil {
@@ -35,13 +35,13 @@ func handleDuel(rounds int, noise float64) {
 	if Silent {
 		cfg.Logger = tournament.NewSilentLogger(f)
 	} else {
-		cfg.Logger = tournament.NewAllLogger([]*domain.Agent{a1, a2}, f)
+		cfg.Logger = tournament.NewAllLogger([]*domain.Agent{agent1, agent2}, f)
 	}
 	cfg.InfoTo(f)
 
-	cfg.RunSimulation([]*domain.Agent{a1, a2})
+	cfg.RunSimulation([]*domain.Agent{agent1, agent2})
 
-	cfg.Logger.Finalize([]*domain.Agent{a1, a2})
+	cfg.Logger.Finalize([]*domain.Agent{agent1, agent2})
 	Results(f.Name())
 }
 
@@ -128,6 +128,7 @@ func handleCirculaire(rounds int, noise float64) {
 
 	fmt.Println("\nChoose leaders:")
 	leaders := selectEach(selectGroup())
+
 	fmt.Println("Choose group:")
 	group := selectEach(selectGroup())
 
@@ -232,7 +233,7 @@ func handleEcosystem(rounds int, noise float64) {
 }
 
 func handleInfo() {
-	data, err := os.ReadFile("info.md")
+	data, err := os.ReadFile("info.txt")
 	if err != nil {
 		fmt.Println("Info file not found.")
 		return
