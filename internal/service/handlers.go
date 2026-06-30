@@ -26,7 +26,7 @@ func RunDuel(a1, a2 *domain.Agent, rounds int, noise float64, filename string) e
 		return fmt.Errorf("config error: %w", err)
 	}
 
-	cfg.Logger = newLogger(cfg, []*domain.Agent{a1, a2}, f)
+	cfg.Logger = newLogger(cfg, []*domain.Agent{a1, a2}, f, false)
 
 	cfg.InfoTo(f)
 
@@ -48,7 +48,7 @@ func RunRoundRobin(agents []*domain.Agent, rounds int, noise float64, noSelf boo
 		return fmt.Errorf("config error: %w", err)
 	}
 
-	cfg.Logger = newLogger(cfg, agents, f)
+	cfg.Logger = newLogger(cfg, agents, f, true)
 
 	cfg.InfoTo(f)
 
@@ -69,7 +69,7 @@ func RunTrial(leader *domain.Agent, group []*domain.Agent, rounds int, noise flo
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
-	cfg.Logger = newLogger(cfg, all, f)
+	cfg.Logger = newLogger(cfg, all, f, true)
 	cfg.InfoTo(f)
 	cfg.RunTrial(leader, group)
 	cfg.Logger.Finalize([]*domain.Agent{leader})
@@ -88,7 +88,7 @@ func RunCirculaire(leaders []*domain.Agent, group []*domain.Agent, rounds int, n
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
-	cfg.Logger = newLogger(cfg, all, f)
+	cfg.Logger = newLogger(cfg, all, f, true)
 	cfg.InfoTo(f)
 	cfg.Circulaire(leaders, group)
 	return nil
@@ -105,7 +105,7 @@ func RunArena(agents []*domain.Agent, rounds int, noise float64, filename string
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
-	cfg.Logger = newLogger(cfg, agents, f)
+	cfg.Logger = newLogger(cfg, agents, f, true)
 	cfg.InfoTo(f)
 	cfg.RunSimulation(agents)
 	cfg.Logger.Finalize(agents)
@@ -123,22 +123,21 @@ func RunEcosystem(agents []*domain.Agent, rounds int, noise float64, deathThresh
 	if err != nil {
 		return fmt.Errorf("config error: %w", err)
 	}
-	cfg.Logger = newLogger(cfg, agents, f)
+	cfg.Logger = newLogger(cfg, agents, f, true)
 	cfg.InfoTo(f)
 	cfg.RunEcosystem(agents, deathThreshold)
 	return nil
 }
 
-func newLogger(cfg tournament.SimConfig, agents []*domain.Agent, w *os.File) tournament.RoundLogger {
+func newLogger(cfg tournament.SimConfig, agents []*domain.Agent, w *os.File, all bool) tournament.RoundLogger {
 	/// flag
 	if Silent {
 		return tournament.NewSilentLogger(w)
 	}
-	// DuelConfig возвращает AllLogger по умолчанию,
-	if len(cfg.Pairs) == 1 {
+
+	if all {
 		return tournament.NewAllLogger(agents, w)
 	}
 
-	// остальные — AggregateLogger
 	return tournament.NewAggregateLogger(cfg.Rounds/2, cfg.Pairs, agents, w)
 }
